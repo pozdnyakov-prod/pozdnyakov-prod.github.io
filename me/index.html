@@ -2,68 +2,65 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="Владимир — CEO & Founder. Личный бренд и позиционирование для дизайнеров.">
 <title>Владимир — AI Digital</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23fff'/%3E%3Ctext x='32' y='46' font-size='44' text-anchor='middle' font-family='Georgia,serif' fill='%230a0a0a'%3EV%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --b:#0a0a0a;--w:#ffffff;--g1:#707070;--g2:#e2e2e2;--g3:#f5f4f2;
-  --fd:'Cormorant Garamond',Georgia,serif;--fb:'Inter',system-ui,sans-serif;
-  box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
+  --w:#ffffff;--b:#0a0a0a;--line:#e3e3e3;--soft:#f1f1f1;
+  --fd:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --fb:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:inherit}
-html{scroll-behavior:smooth}
-html,body{height:100%}
-body{background:var(--w);color:var(--b);font-family:var(--fb);font-weight:300;overflow-x:hidden;cursor:none}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--w);color:var(--b);font-family:var(--fb);font-weight:400;overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 body.lock{overflow:hidden}
-
-/* CURSOR */
-#cd,#cr{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
-#cd{width:6px;height:6px;background:var(--w);transition:background .35s}
-#cr{width:36px;height:36px;border:1px solid rgba(255,255,255,.5);transition:width .3s,height .3s,background .3s,border-color .3s}
-#cr.h{width:54px;height:54px;background:rgba(255,255,255,.07)}
-body.lm #cd{background:var(--b)}
-body.lm #cr{border-color:rgba(10,10,10,.4)}
-body.lm #cr.h{background:rgba(10,10,10,.04)}
+section[id]{scroll-margin-top:56px}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:1px solid var(--b);outline-offset:4px}
 
 /* PROGRESS */
-#pb{position:fixed;top:0;left:0;height:1px;background:rgba(255,255,255,.35);z-index:9000;transform-origin:left;transform:scaleX(0);transition:transform .1s,background .35s}
-body.lm #pb{background:rgba(10,10,10,.3)}
+#pb{position:fixed;top:0;left:0;height:2px;width:100%;background:var(--b);z-index:9000;transform-origin:left;transform:scaleX(0)}
 
 /* PRELOADER */
-#pl{position:fixed;inset:0;background:var(--b);z-index:8000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:transform .9s cubic-bezier(.16,1,.3,1)}
+#pl{position:fixed;inset:0;background:var(--w);z-index:8000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform .9s var(--ease)}
 #pl.done{transform:translateY(-100%)}
-#pl-title{font-family:var(--fd);font-size:clamp(1rem,2.5vw,1.5rem);color:rgba(255,255,255,.25);font-weight:300;letter-spacing:.35em;text-transform:uppercase;margin-bottom:48px}
-#pl-num{font-family:var(--fd);font-size:clamp(5rem,14vw,11rem);font-weight:300;color:var(--w);letter-spacing:-.04em;line-height:1;min-width:200px;text-align:center}
-#pl-bar{width:180px;height:1px;background:rgba(255,255,255,.1);margin-top:44px;position:relative;overflow:hidden}
-#pl-fill{position:absolute;top:0;left:0;height:100%;background:rgba(255,255,255,.45);width:0}
+#pl-title{font-family:var(--fd);font-size:clamp(1rem,2.5vw,1.4rem);font-weight:400;letter-spacing:.35em;text-transform:uppercase;margin-bottom:44px}
+#pl-num{font-family:var(--fd);font-size:clamp(5rem,14vw,11rem);font-weight:300;letter-spacing:-.04em;line-height:1;min-width:200px;text-align:center}
+#pl-bar{width:180px;height:1px;background:var(--line);margin-top:40px;position:relative;overflow:hidden}
+#pl-fill{position:absolute;top:0;left:0;height:100%;background:var(--b);width:0}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:26px 52px;display:flex;justify-content:space-between;align-items:center;transition:background .35s,backdrop-filter .35s,padding .35s,border-color .35s}
-nav.sc{padding:16px 52px;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);background:rgba(10,10,10,.88);border-bottom:1px solid rgba(255,255,255,.07)}
-nav.lm.sc{background:rgba(255,255,255,.92);border-bottom-color:var(--g2)}
-.nlogo{font-family:var(--fd);font-size:1.1rem;font-weight:400;letter-spacing:.08em;text-decoration:none;color:var(--w);transition:color .35s}
-nav.lm .nlogo{color:var(--b)}
-.nlinks{display:flex;gap:40px;list-style:none}
-.nlinks a{font-size:.79rem;font-weight:400;color:rgba(255,255,255,.45);text-decoration:none;letter-spacing:.02em;transition:color .2s}
-.nlinks a:hover{color:var(--w)}
-nav.lm .nlinks a{color:var(--g1)}
-nav.lm .nlinks a:hover{color:var(--b)}
-.nbadge{display:flex;align-items:center;gap:9px;font-size:.73rem;letter-spacing:.06em;color:rgba(255,255,255,.38);font-weight:400;transition:color .35s}
-nav.lm .nbadge{color:var(--g1)}
-.ndot{width:7px;height:7px;border-radius:50%;background:#4ade80;flex-shrink:0;animation:blink 2.2s ease infinite}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:26px 52px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;transition:background .35s,padding .35s,border-color .35s;border-bottom:1px solid transparent}
+nav.sc{padding:16px 52px;background:rgba(255,255,255,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom-color:var(--line)}
+.nlogo{font-family:var(--fd);font-size:1.2rem;font-weight:400;letter-spacing:.08em;text-decoration:none;justify-self:start}
+.nlinks{display:flex;gap:40px;list-style:none;justify-self:center}
+.nlinks a{font-size:.8rem;font-weight:400;text-decoration:none;letter-spacing:.02em;position:relative;padding:4px 0}
+.nlinks a::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--b);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.nlinks a:hover::after{transform:scaleX(1)}
+.nright{display:flex;align-items:center;gap:28px;justify-self:end}
+.nbadge{display:flex;align-items:center;gap:9px;font-size:.73rem;letter-spacing:.05em;font-weight:400}
+.ndot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:blink 2.2s ease infinite}
 @keyframes blink{0%,100%{opacity:1}55%{opacity:.3}}
-.nbrg{display:none;flex-direction:column;gap:5px;cursor:none}
-.nbrg span{display:block;width:22px;height:1px;background:var(--w);transition:all .3s}
-nav.lm .nbrg span{background:var(--b)}
+.lang{display:flex;align-items:center;gap:9px}
+.lang button{background:none;border:none;font-size:.73rem;font-weight:400;letter-spacing:.1em;cursor:pointer;padding:6px 2px;position:relative}
+.lang button::after{content:'';position:absolute;left:0;right:0;bottom:1px;height:1px;background:var(--b);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.lang button.on::after{transform:scaleX(1)}
+.lang i{width:1px;height:11px;background:var(--line)}
+.nbrg{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px 0}
+.nbrg span{display:block;width:22px;height:1px;background:var(--b);transition:transform .3s}
 
 /* MOBILE MENU */
-#mm{position:fixed;inset:0;background:var(--b);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+#mm{position:fixed;inset:0;background:var(--w);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:38px;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
 #mm.open{opacity:1;visibility:visible}
-#mm a{font-family:var(--fd);font-size:clamp(2.2rem,10vw,3.8rem);font-weight:300;color:var(--w);text-decoration:none;letter-spacing:.05em;transform:translateY(28px);opacity:0;transition:transform .5s ease,opacity .5s ease}
+#mm a{font-family:var(--fd);font-size:clamp(2.2rem,10vw,3.8rem);font-weight:300;text-decoration:none;letter-spacing:.04em;transform:translateY(28px);opacity:0;transition:transform .5s ease,opacity .5s ease}
 #mm.open a{transform:none;opacity:1}
 #mm.open a:nth-child(1){transition-delay:.06s}
 #mm.open a:nth-child(2){transition-delay:.12s}
@@ -74,184 +71,163 @@ nav.lm .nbrg span{background:var(--b)}
 .rv{opacity:0;transform:translateY(30px);transition:opacity .85s ease,transform .85s ease}
 .rv.vis{opacity:1;transform:none}
 .rl{overflow:hidden}
-.rl .ri{display:block;transform:translateY(108%);transition:transform .95s cubic-bezier(.16,1,.3,1)}
+.rl .ri{display:block;transform:translateY(108%);transition:transform .95s var(--ease)}
 .rl.vis .ri{transform:none}
 
-/* ═══ HERO ═══ */
-#hero{min-height:100svh;background:var(--b);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:110px 48px 150px;position:relative;overflow:hidden;text-align:center}
-.hgrid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.045) 1px,transparent 1px);background-size:36px 36px;pointer-events:none}
-.hglow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.03) 0%,transparent 65%);pointer-events:none}
-.hbadge{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;letter-spacing:.1em;color:rgba(255,255,255,.45);font-weight:400;border:1px solid rgba(255,255,255,.14);padding:8px 20px;border-radius:100px;margin-bottom:52px;position:relative;z-index:2;opacity:0;animation:fi .6s ease 1.9s forwards}
+/* HERO */
+#hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:110px 48px 150px;position:relative;overflow:hidden;text-align:center}
+.hgrid{position:absolute;inset:0;background-image:radial-gradient(rgba(10,10,10,.12) 1px,transparent 1px);background-size:34px 34px;-webkit-mask-image:radial-gradient(ellipse at center,#000 15%,transparent 70%);mask-image:radial-gradient(ellipse at center,#000 15%,transparent 70%);pointer-events:none}
+.hbadge{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;letter-spacing:.08em;font-weight:400;border:1px solid rgba(10,10,10,.22);padding:8px 20px;border-radius:100px;margin-bottom:48px;position:relative;z-index:2;opacity:0;animation:fi .6s ease 1.9s forwards}
 @keyframes fi{to{opacity:1}}
-#hname{font-family:var(--fd);font-size:clamp(4.2rem,12vw,11rem);font-weight:300;color:var(--w);line-height:.92;letter-spacing:-.028em;margin-bottom:32px;overflow:hidden;position:relative;z-index:2}
-#hname .c{display:inline-block;transform:translateY(110%);transition:transform 1s cubic-bezier(.16,1,.3,1)}
-.hsub{font-family:var(--fd);font-size:clamp(1.3rem,2.8vw,2.3rem);font-weight:300;font-style:italic;color:rgba(255,255,255,.4);line-height:1.3;margin-bottom:52px;position:relative;z-index:2;opacity:0;animation:fi .8s ease 2.3s forwards}
-.hdesc{font-size:clamp(.85rem,1vw,.95rem);font-weight:300;color:rgba(255,255,255,.35);line-height:1.75;max-width:400px;margin:0 auto 52px;position:relative;z-index:2;opacity:0;animation:fi .8s ease 2.5s forwards}
+#hname{font-family:var(--fd);font-size:clamp(4.2rem,12vw,11rem);font-weight:300;line-height:.95;letter-spacing:-.028em;margin-bottom:calc(30px - .2em);overflow:hidden;position:relative;z-index:2;white-space:nowrap;padding-bottom:.2em}
+#hname .c{display:inline-block;transform:translateY(110%);transition:transform 1s var(--ease)}
+.hsub{font-family:var(--fd);font-size:clamp(1.3rem,2.8vw,2.3rem);font-weight:300;font-style:italic;line-height:1.3;margin-bottom:34px;position:relative;z-index:2;opacity:0;animation:fi .8s ease 2.3s forwards}
+.hdesc{font-size:clamp(.88rem,1vw,.98rem);font-weight:400;line-height:1.75;max-width:440px;margin:0 auto 46px;position:relative;z-index:2;opacity:0;animation:fi .8s ease 2.5s forwards}
 .hctarow{display:flex;gap:16px;align-items:center;justify-content:center;position:relative;z-index:2;opacity:0;animation:fi .8s ease 2.7s forwards}
-.hscroll{position:absolute;bottom:72px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;z-index:2;opacity:0;animation:fi 1s ease 3.1s forwards}
-.hscroll span{font-size:.64rem;letter-spacing:.16em;color:rgba(255,255,255,.25);font-weight:400}
-.hscroll-v{width:1px;height:36px;background:rgba(255,255,255,.12);position:relative;overflow:hidden}
-.hscroll-v::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:50%;background:rgba(255,255,255,.55);animation:drip 2.2s ease infinite 3.5s}
+.hscroll{position:absolute;bottom:56px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;z-index:2;opacity:0;animation:fi 1s ease 3.1s forwards}
+.hscroll span{font-size:.64rem;letter-spacing:.16em;font-weight:400}
+.hscroll-v{width:1px;height:36px;background:var(--line);position:relative;overflow:hidden}
+.hscroll-v::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:50%;background:var(--b);animation:drip 2.2s ease infinite 3.5s}
 @keyframes drip{to{top:200%}}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 30px;text-decoration:none;font-size:.85rem;font-weight:400;letter-spacing:.04em;position:relative;overflow:hidden;transition:color .4s;font-family:var(--fb)}
-.btn-ghost{border:1px solid rgba(255,255,255,.28);color:var(--w)}
-.btn-ghost::before{content:'';position:absolute;inset:0;background:var(--w);transform:translateX(-101%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
-.btn-ghost:hover::before{transform:none}
-.btn-ghost:hover{color:var(--b)}
-.btn-ghost span{position:relative;z-index:1}
-.btn-fill-w{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7)}
-.btn-fill-w::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.12);transform:translateX(-101%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
-.btn-fill-w:hover::before{transform:none}
-.btn-fill-w:hover{color:var(--w)}
-.btn-fill-w span{position:relative;z-index:1}
-.btn-dark{background:var(--b);color:var(--w)}
-.btn-dark::before{content:'';position:absolute;inset:0;background:var(--w);transform:translateX(-101%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
-.btn-dark:hover::before{transform:none}
-.btn-dark:hover{color:var(--b)}
-.btn-dark span{position:relative;z-index:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 32px;text-decoration:none;font-size:.85rem;font-weight:400;letter-spacing:.04em;position:relative;overflow:hidden;border:1px solid var(--b);background:transparent;cursor:pointer;transition:letter-spacing .5s var(--ease)}
+.btn::before{content:'';position:absolute;inset:0;background:var(--soft);transform:translateX(-101%);transition:transform .5s var(--ease)}
+.btn:hover::before{transform:none}
+.btn:hover{letter-spacing:.07em}
+.btn span{position:relative;z-index:1}
+.btn-b{border-color:#c9c9c9}
 
-/* TICKER */
-.ticker{background:var(--b);overflow:hidden;padding:17px 0;border-top:1px solid rgba(255,255,255,.05)}
-.ticker-t{display:flex;white-space:nowrap;animation:tick 26s linear infinite}
-.ticker-t span{font-size:.72rem;letter-spacing:.13em;color:rgba(255,255,255,.28);font-weight:400}
-@keyframes tick{to{transform:translateX(-50%)}}
-
-/* SEC COMMON */
-.sp{padding:120px 52px}
+/* SECTIONS */
+.sp{padding:120px 52px;border-top:1px solid var(--line);background:var(--w)}
 .ct{max-width:1200px;margin:0 auto}
-.snum{font-size:.68rem;font-weight:400;letter-spacing:.16em;color:var(--g1);display:block;margin-bottom:16px}
-.sh{font-family:var(--fd);font-size:clamp(2.2rem,4vw,3.5rem);font-weight:300;letter-spacing:-.015em;line-height:1.15}
+.snum{font-size:.7rem;font-weight:400;letter-spacing:.16em;display:block;margin-bottom:18px}
+.sh{font-family:var(--fd);font-size:clamp(2.3rem,4.2vw,3.7rem);font-weight:300;letter-spacing:-.015em;line-height:1.12}
 .sh em{font-style:italic}
 
 /* ABOUT */
-#about{background:var(--w)}
-.ab-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:80px;align-items:start;margin-top:56px}
-.abtxt{font-size:1rem;line-height:1.85;color:#3a3a3a;margin-bottom:20px}
-.abst{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;border-top:1px solid var(--g2);padding-top:32px}
-.stc{padding-right:16px}
-.stn{font-family:var(--fd);font-size:2.9rem;font-weight:300;letter-spacing:-.025em;line-height:1}
-.stl{font-size:.7rem;color:var(--g1);margin-top:7px;font-weight:400;line-height:1.4}
-.abrh{font-family:var(--fd);font-size:1.5rem;font-weight:300;font-style:italic;margin-bottom:32px;color:var(--g1)}
-.abblk{padding:26px 0;border-top:1px solid var(--g2)}
-.abblk:last-child{border-bottom:1px solid var(--g2)}
-.abblt{font-size:.875rem;font-weight:500;margin-bottom:9px}
-.abbld{font-size:.875rem;line-height:1.75;color:#5a5a5a;font-weight:300}
+.ab-rows{display:grid;grid-template-columns:1fr 1fr;column-gap:80px;margin-top:64px}
+.abh{grid-row:1;font-family:var(--fd);font-size:1.8rem;font-weight:300;font-style:italic;padding-bottom:26px;line-height:1.1}
+.abblk{grid-row:var(--r);padding:30px 0;border-top:1px solid var(--line)}
+.abblk.last{border-bottom:1px solid var(--line)}
+.l{grid-column:1}.r{grid-column:2}
+.abblt{font-size:.92rem;font-weight:500;margin-bottom:10px}
+.abbld{font-size:.95rem;line-height:1.8;font-weight:400}
+.abst{display:grid;grid-template-columns:repeat(4,1fr);margin-top:100px;border-top:1px solid var(--b)}
+.stc{padding:34px 0 0 32px;border-left:1px solid var(--line)}
+.stc:first-child{padding-left:0;border-left:none}
+.stn{font-family:var(--fd);font-size:clamp(3.4rem,14vw,12.5rem);font-weight:300;letter-spacing:-.045em;line-height:.9}
+.stl{font-size:.85rem;margin-top:18px;font-weight:400}
 
 /* CASES */
-#cases{background:var(--g3)}
-.chdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px}
-.chint{font-size:.73rem;color:var(--g1);letter-spacing:.04em;padding-bottom:4px}
-.clist{border-top:1px solid var(--g2)}
-.ci{display:grid;grid-template-columns:40px 1fr 24px;gap:28px;align-items:center;padding:36px 0;border-bottom:1px solid var(--g2);cursor:pointer;position:relative;overflow:hidden;transition:padding .4s}
-.ci::before{content:'';position:absolute;inset:0;background:var(--b);transform:translateX(-101%);transition:transform .6s cubic-bezier(.16,1,.3,1);z-index:0}
-.ci:hover::before{transform:none}
-.cinum{font-size:.68rem;color:var(--g1);font-weight:400;position:relative;z-index:1;transition:color .4s}
-.ci:hover .cinum{color:rgba(255,255,255,.35)}
-.ciinfo{position:relative;z-index:1}
-.ciniche{font-size:.68rem;color:var(--g1);letter-spacing:.08em;margin-bottom:9px;font-weight:400;transition:color .4s}
-.ci:hover .ciniche{color:rgba(255,255,255,.35)}
-.cititle{font-family:var(--fd);font-size:clamp(1.15rem,2.2vw,1.9rem);font-weight:400;letter-spacing:-.01em;transition:color .4s}
-.ci:hover .cititle{color:var(--w)}
-.ciarr{font-size:1.5rem;font-weight:300;color:var(--g1);transition:color .4s,transform .35s;position:relative;z-index:1;line-height:1}
-.ci:hover .ciarr{color:var(--w);transform:rotate(45deg)}
-.ci:hover{padding:36px 24px}
-
-/* OVERLAY */
-#ov{position:fixed;inset:0;background:var(--b);z-index:500;transform:translateY(100%);transition:transform .75s cubic-bezier(.16,1,.3,1);overflow-y:auto;-webkit-overflow-scrolling:touch}
-#ov.open{transform:none}
-.ovbar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:22px 52px;background:rgba(10,10,10,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06);z-index:10}
-.ovcasenick{font-size:.68rem;letter-spacing:.14em;color:rgba(255,255,255,.3);font-weight:400}
-.ovclsbtn{font-size:.79rem;color:rgba(255,255,255,.5);background:none;border:none;cursor:none;font-family:var(--fb);font-weight:400;letter-spacing:.04em;transition:color .2s}
-.ovclsbtn:hover{color:var(--w)}
-.ovbody{padding:68px 52px 90px;max-width:1200px;margin:0 auto}
-.ovtitle{font-family:var(--fd);font-size:clamp(2.2rem,5.5vw,5rem);font-weight:300;color:var(--w);line-height:.95;letter-spacing:-.028em;margin-bottom:72px}
-.ovtitle em{font-style:italic;color:rgba(255,255,255,.4)}
-.ovgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px;padding-top:52px;border-top:1px solid rgba(255,255,255,.07)}
-.ovlbl{font-size:.67rem;letter-spacing:.14em;color:rgba(255,255,255,.3);font-weight:400;margin-bottom:18px;display:block}
-.ovtxt{font-size:.9375rem;line-height:1.85;color:rgba(255,255,255,.65);font-weight:300}
-.ovres{margin-top:72px;padding-top:52px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:baseline;gap:28px;flex-wrap:wrap}
-.ovresnum{font-family:var(--fd);font-size:clamp(3.5rem,7vw,6.5rem);font-weight:300;color:var(--w);letter-spacing:-.03em;line-height:1}
-.ovresdesc{font-size:.9375rem;color:rgba(255,255,255,.4);font-weight:300;max-width:300px;line-height:1.65}
+.chdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;gap:16px}
+.chint{font-size:.75rem;letter-spacing:.04em;padding-bottom:6px}
+.clist{border-top:1px solid var(--b)}
+.ci{display:grid;grid-template-columns:40px 1fr 24px;gap:28px;align-items:center;padding:38px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.cinum{font-size:.7rem;font-weight:400}
+.cinum,.ciinfo{transition:transform .55s var(--ease)}
+.ci:hover .cinum,.ci:hover .ciinfo{transform:translateX(-14px)}
+.ciniche{font-size:.7rem;letter-spacing:.08em;margin-bottom:9px;font-weight:400}
+.cititle{font-family:var(--fd);font-size:clamp(1.25rem,2.3vw,2rem);font-weight:400;letter-spacing:-.01em;line-height:1.2}
+.ciarr{font-size:1.5rem;font-weight:300;line-height:1;transition:transform .5s var(--ease)}
+.ci:hover .ciarr{transform:rotate(90deg)}
 
 /* PROJECTS */
-#projects{background:var(--w)}
-.prgrid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:56px;background:var(--g2)}
-.pc{background:var(--w);padding:52px 44px;position:relative;overflow:hidden;text-decoration:none;color:var(--b);display:block}
-.pc::after{content:'';position:absolute;inset:0;background:var(--b);transform:translateY(101%);transition:transform .6s cubic-bezier(.16,1,.3,1)}
-.pc:hover::after{transform:none}
-.pcin{position:relative;z-index:1;transition:color .4s}
-.pc:hover .pcin{color:var(--w)}
-.pcst{font-size:.67rem;letter-spacing:.12em;color:var(--g1);margin-bottom:52px;font-weight:400;transition:color .4s}
-.pc:hover .pcst{color:rgba(255,255,255,.38)}
-.pcname{font-family:var(--fd);font-size:clamp(1.8rem,2.5vw,2.6rem);font-weight:300;letter-spacing:-.015em;margin-bottom:14px;line-height:1.1}
-.pcdesc{font-size:.875rem;line-height:1.75;color:#5a5a5a;font-weight:300;transition:color .4s}
-.pc:hover .pcdesc{color:rgba(255,255,255,.55)}
-.pcarr{display:inline-flex;width:42px;height:42px;border:1px solid currentColor;align-items:center;justify-content:center;margin-top:36px;font-size:1.1rem;transition:transform .35s}
+.prgrid{display:grid;grid-template-columns:1fr 1fr;margin-top:56px;border-top:1px solid var(--b)}
+.pc{padding:52px 44px;border-bottom:1px solid var(--line);cursor:pointer;overflow:hidden}
+.pc+.pc{border-left:1px solid var(--line)}
+.pcin{transition:transform .55s var(--ease)}
+.pc:hover .pcin{transform:translateX(-14px)}
+.pcst{font-size:.7rem;letter-spacing:.12em;margin-bottom:52px;font-weight:400}
+.pcname{font-family:var(--fd);font-size:clamp(1.9rem,2.7vw,2.7rem);font-weight:300;letter-spacing:-.015em;margin-bottom:14px;line-height:1.1}
+.pcdesc{font-size:.92rem;line-height:1.75;font-weight:400;max-width:420px}
+.pcarr{display:inline-flex;width:42px;height:42px;border:1px solid var(--b);align-items:center;justify-content:center;margin-top:36px;font-size:1.1rem;transition:transform .5s var(--ease)}
 .pc:hover .pcarr{transform:rotate(-45deg)}
 
-/* CONTACT */
-#contact{background:var(--b);padding:120px 52px}
-.cthead{font-family:var(--fd);font-size:clamp(3.5rem,8.5vw,8.5rem);font-weight:300;color:var(--w);line-height:.93;letter-spacing:-.032em;margin:40px 0 68px}
-.cthead em{font-style:italic;color:rgba(255,255,255,.35)}
-.ctbot{display:flex;justify-content:space-between;align-items:center;padding-top:48px;border-top:1px solid rgba(255,255,255,.07)}
-.ctsoc{display:flex;gap:32px}
-.ctsoc a{font-size:.8rem;color:rgba(255,255,255,.32);text-decoration:none;transition:color .2s;font-weight:400}
-.ctsoc a:hover{color:var(--w)}
+/* OVERLAY */
+#ov{position:fixed;inset:0;background:var(--w);z-index:500;transform:translateY(100%);visibility:hidden;transition:transform .75s var(--ease),visibility 0s .75s;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#ov.open{transform:none;visibility:visible;transition:transform .75s var(--ease),visibility 0s 0s}
+.ovbar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:22px 52px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:10}
+.ovcasenick{font-size:.72rem;letter-spacing:.14em;font-weight:400}
+.ovclsbtn{font-size:.8rem;background:none;border:none;cursor:pointer;font-weight:400;letter-spacing:.04em;padding:6px 0}
+.ovbody{padding:68px 52px 100px;max-width:1200px;margin:0 auto}
+.ovtitle{font-family:var(--fd);font-size:clamp(2.3rem,5.5vw,5rem);font-weight:300;line-height:.98;letter-spacing:-.028em;margin-bottom:68px}
+.ovtitle em{font-style:italic}
+.ovgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px;padding-top:50px;border-top:1px solid var(--b)}
+.ovlbl{font-size:.7rem;letter-spacing:.14em;font-weight:500;margin-bottom:18px;display:block}
+.ovtxt{font-size:.97rem;line-height:1.85;font-weight:400}
+.ovres{display:flex;align-items:baseline;gap:24px;flex-wrap:wrap}
+.ovresnum{font-family:var(--fd);font-size:clamp(3.2rem,6vw,5.5rem);font-weight:300;letter-spacing:-.03em;line-height:1}
+.ovresdesc{font-size:.95rem;font-weight:400;max-width:300px;line-height:1.65}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:56px 64px;padding-top:50px;border-top:1px solid var(--b)}
+.pfull{grid-column:1/-1;padding-top:44px;border-top:1px solid var(--line)}
+.pcl{list-style:none}
+.pcl li{display:flex;justify-content:space-between;gap:20px;padding:14px 0;border-top:1px solid var(--line);font-size:.97rem}
+.pcl li:last-child{border-bottom:1px solid var(--line)}
+.pcl b{font-family:var(--fd);font-size:1.3rem;font-weight:400}
+.pcl span{text-align:right}
+.pbtns{display:flex;gap:14px;margin-top:60px;flex-wrap:wrap}
 
-/* FOOTER */
-footer{padding:22px 52px;background:var(--b);border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center}
-footer span{font-size:.7rem;color:rgba(255,255,255,.2);font-weight:300}
+/* CONTACT */
+#contact{padding:120px 52px;min-height:80vh;display:flex;align-items:center}
+.cthead{font-family:var(--fd);font-size:clamp(3.4rem,8.5vw,8.5rem);font-weight:300;line-height:.95;letter-spacing:-.032em;margin:36px 0 64px}
+.cthead em{font-style:italic}
+.ctbot{display:flex;justify-content:space-between;align-items:center;padding-top:44px;border-top:1px solid var(--b);gap:24px}
+.ctsoc{display:flex;gap:32px}
+.ctsoc a{font-size:.82rem;text-decoration:none;font-weight:400;position:relative;padding:4px 0}
+.ctsoc a::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--b);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.ctsoc a:hover::after{transform:scaleX(1)}
+footer{padding:22px 52px;background:var(--w);border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}
+footer span{font-size:.72rem;font-weight:400}
 
 /* RESPONSIVE */
+@media(max-width:1100px){.nbadge{display:none}}
 @media(max-width:900px){
-  nav,nav.sc{padding:18px 24px}
-  .nlinks,.nbadge{display:none}
+  nav,nav.sc{padding:18px 24px;grid-template-columns:1fr auto}
+  .nlinks{display:none}
   .nbrg{display:flex}
+  .nright{gap:20px}
   #hero{padding:100px 24px 130px}
-  .sp{padding:80px 24px}
-  #contact{padding:80px 24px}
-  .ab-grid{grid-template-columns:1fr;gap:48px}
-  .abst{grid-template-columns:repeat(2,1fr);gap:24px}
-  .chdr{flex-direction:column;align-items:flex-start;gap:6px}
-  .ci{grid-template-columns:32px 1fr 22px;gap:16px}
-  .ci:hover{padding:36px 16px}
-  .ovbar{padding:18px 24px}
-  .ovbody{padding:48px 24px 68px}
-  .ovgrid{grid-template-columns:1fr;gap:32px}
+  .sp,#contact{padding:80px 24px}
+  .ab-rows{grid-template-columns:1fr;margin-top:48px}
+  .l,.r{grid-column:1;grid-row:auto}
+  .l{order:1}.r{order:2}
+  .abh.r{margin-top:56px}
+  .abst{grid-template-columns:repeat(2,1fr);margin-top:64px}
+  .stc{padding:28px 0 0 20px}
+  .stc:nth-child(odd){padding-left:0;border-left:none}
+  .stc:nth-child(n+3){margin-top:36px;border-top:1px solid var(--line);padding-top:28px}
+  .stn{font-size:clamp(3.6rem,19vw,6.5rem)}
+  .chdr{flex-direction:column;align-items:flex-start;gap:8px}
+  .ci{grid-template-columns:30px 1fr 22px;gap:14px;padding:30px 0}
   .prgrid{grid-template-columns:1fr}
-  .cthead{font-size:clamp(2.8rem,10vw,5rem)}
-  .ctbot{flex-direction:column;gap:28px;align-items:flex-start}
-  footer{padding:18px 24px;flex-direction:column;gap:8px}
+  .pc{padding:40px 6px}
+  .pc+.pc{border-left:none}
+  .ovbar{padding:18px 24px}
+  .ovbody{padding:48px 24px 72px}
+  .ovgrid,.pgrid{grid-template-columns:1fr;gap:36px}
+  .cthead{font-size:clamp(2.8rem,10.5vw,5rem)}
+  .ctbot{flex-direction:column;align-items:flex-start;gap:28px}
+  footer{padding:18px 24px;flex-direction:column;align-items:flex-start;gap:6px}
   .hctarow{flex-direction:column;gap:12px}
+  .hctarow .btn{min-width:210px}
+}
+@media(max-width:380px){
+  #hname{font-size:clamp(2.6rem,16vw,4.2rem)}
+  .cthead{font-size:clamp(2.4rem,13vw,5rem)}
+}
+@media(hover:none){
+  .ci:hover .cinum,.ci:hover .ciinfo,.pc:hover .pcin{transform:none}
+  .btn:hover{letter-spacing:.04em}
 }
 @media(prefers-reduced-motion:reduce){
-  #cd,#cr{display:none}
-  body{cursor:auto}
-  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  html{scroll-behavior:auto}
+  *{animation-duration:.001ms!important;animation-delay:0s!important;transition-duration:.001ms!important}
 }
-
-/* LANG SWITCH */
-.nright{display:flex;align-items:center;gap:28px}
-.lang{display:flex;align-items:center;gap:9px}
-.lang button{background:none;border:none;font-family:var(--fb);font-size:.73rem;font-weight:400;letter-spacing:.1em;color:rgba(255,255,255,.35);cursor:none;padding:6px 2px;position:relative;transition:color .35s}
-.lang button::after{content:'';position:absolute;left:0;right:0;bottom:1px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.16,1,.3,1)}
-.lang button.on{color:var(--w)}
-.lang button.on::after{transform:scaleX(1)}
-.lang button:hover{color:var(--w)}
-.lang i{width:1px;height:11px;background:rgba(255,255,255,.2);transition:background .35s}
-nav.lm .lang button{color:#9a9a9a}
-nav.lm .lang button.on,nav.lm .lang button:hover{color:var(--b)}
-nav.lm .lang i{background:var(--g2)}
-@media(max-width:900px){.nright{gap:20px}}
-@media(hover:none){.lang button{cursor:pointer;padding:10px 4px}}
 </style>
 </head>
 <body class="lock">
 
-<div id="cd"></div>
-<div id="cr"></div>
 <div id="pb"></div>
 
 <div id="pl">
@@ -282,7 +258,7 @@ nav.lm .lang i{background:var(--g2)}
       <i></i>
       <button type="button" data-l="en" aria-pressed="false">EN</button>
     </div>
-    <div class="nbrg" id="nbrg" onclick="toggleMM()">
+    <div class="nbrg" id="nbrg" onclick="toggleMM()" role="button" aria-label="Menu" tabindex="0">
       <span id="b1"></span><span id="b2"></span>
     </div>
   </div>
@@ -291,60 +267,42 @@ nav.lm .lang i{background:var(--g2)}
 <!-- HERO -->
 <section id="hero">
   <div class="hgrid"></div>
-  <div class="hglow"></div>
   <div class="hbadge"><span class="ndot"></span><span data-t="open">Открыт к проектам · 2026</span></div>
   <h1 id="hname">Владимир</h1>
   <p class="hsub" data-t="hsub">Строю личные бренды для дизайнеров</p>
   <p class="hdesc" data-t="hdesc">Берём дизайнеров с топовыми работами — и превращаем их в экспертов, к которым выстраивается очередь</p>
   <div class="hctarow">
-    <a href="#cases" class="btn btn-ghost"><span data-t="btn_cases">Смотреть кейсы</span></a>
-    <a href="https://t.me/vlpozd" class="btn btn-fill-w" target="_blank" rel="noopener"><span data-t="write">Написать</span></a>
+    <a href="#cases" class="btn btn-a"><span data-t="btn_cases">Смотреть кейсы</span></a>
+    <a href="https://t.me/vlpozd" class="btn btn-b" target="_blank" rel="noopener"><span data-t="write">Написать</span></a>
   </div>
-  <div class="hscroll">
-    <span data-t="scroll">скролл</span>
-    <div class="hscroll-v"></div>
-  </div>
+  <div class="hscroll"><span data-t="scroll">скролл</span><div class="hscroll-v"></div></div>
 </section>
-
-<div class="ticker">
-  <div class="ticker-t">
-    <span data-t="ticker">ЛИЧНЫЙ БРЕНД &nbsp;·&nbsp; ПОЗИЦИОНИРОВАНИЕ &nbsp;·&nbsp; ДИЗАЙНЕРЫ &nbsp;·&nbsp; AI DIGITAL &nbsp;·&nbsp; РЕЗУЛЬТАТ &nbsp;·&nbsp; ЭКСПЕРТНОСТЬ &nbsp;·&nbsp; УПАКОВКА &nbsp;·&nbsp; СИСТЕМЫ &nbsp;·&nbsp; </span>
-    <span data-t="ticker">ЛИЧНЫЙ БРЕНД &nbsp;·&nbsp; ПОЗИЦИОНИРОВАНИЕ &nbsp;·&nbsp; ДИЗАЙНЕРЫ &nbsp;·&nbsp; AI DIGITAL &nbsp;·&nbsp; РЕЗУЛЬТАТ &nbsp;·&nbsp; ЭКСПЕРТНОСТЬ &nbsp;·&nbsp; УПАКОВКА &nbsp;·&nbsp; СИСТЕМЫ &nbsp;·&nbsp; </span>
-  </div>
-</div>
 
 <!-- ABOUT 01 -->
 <section id="about" class="sp">
   <div class="ct">
     <span class="snum rv" data-t="ab_n">01 — Обо мне</span>
-    <h2 class="sh rl rv"><span class="ri" data-t="ab_h">Мне 16, и два года<br>я <em>строю бизнесы</em></span></h2>
-    <div class="ab-grid">
-      <div>
-        <p class="abtxt rv" data-t="ab1">Не жду «подходящего возраста». За два года прошёл путь от первых проб до системного бизнеса с реальными кейсами — берусь за задачи и довожу до результата.</p>
-        <p class="abtxt rv" data-t="ab2">Специализируюсь на одном: беру дизайнеров с сильными работами, без позиционирования и личного бренда — и строю им систему, которая привлекает нужных клиентов.</p>
-        <p class="abtxt rv" data-t="ab3">Нет лишних людей в цепочке. Сам веду каждый проект и несу личную ответственность за результат. Без размытия на команду.</p>
-        <div class="abst">
-          <div class="stc rv"><div class="stn" data-count="16" data-sfx="">0</div><div class="stl" data-t="st1">лет</div></div>
-          <div class="stc rv"><div class="stn" data-count="2" data-sfx="+">0</div><div class="stl" data-t="st2">года в деле</div></div>
-          <div class="stc rv"><div class="stn" data-count="2" data-sfx="">0</div><div class="stl" data-t="st3">продукта</div></div>
-          <div class="stc rv"><div class="stn" data-count="3" data-sfx="+">0</div><div class="stl" data-t="st4">кейса</div></div>
-        </div>
-      </div>
-      <div>
-        <div class="abrh rv" data-t="abrh">Как работаю</div>
-        <div class="abblk rv">
-          <div class="abblt" data-t="ab_t1">Беру ответственность полностью</div>
-          <div class="abbld" data-t="ab_d1">Не консультирую — делаю. Ставлю цель, определяю путь и довожу до конкретного измеримого результата.</div>
-        </div>
-        <div class="abblk rv">
-          <div class="abblt" data-t="ab_t2">Работаю только с сильными</div>
-          <div class="abbld" data-t="ab_d2">Берусь за тех, у кого уже есть качество в работах. Моя задача — сделать так, чтобы за это качество платили.</div>
-        </div>
-        <div class="abblk rv">
-          <div class="abblt" data-t="ab_t3">Гарантирую результат</div>
-          <div class="abbld" data-t="ab_d3">Фиксируем цель на старте. Если не достигли — продолжаю работу без доплат. Без оговорок.</div>
-        </div>
-      </div>
+    <h2 class="sh rl"><span class="ri" data-t="ab_h">Мне 16, и два года<br>я <em>строю бизнесы</em></span></h2>
+
+    <div class="ab-rows">
+      <div class="abh l rv" data-t="ab_l">Кто я</div>
+      <div class="abh r rv" data-t="abrh">Как работаю</div>
+
+      <div class="abblk l rv" style="--r:2"><div class="abblt" data-t="ab_lt1">Путь</div><div class="abbld" data-t="ab1">Не жду «подходящего возраста». За два года прошёл путь от первых проб до системного бизнеса с реальными кейсами — берусь за задачи и довожу до результата.</div></div>
+      <div class="abblk r rv" style="--r:2"><div class="abblt" data-t="ab_t1">Беру ответственность полностью</div><div class="abbld" data-t="ab_d1">Не консультирую — делаю. Ставлю цель, определяю путь и довожу до конкретного измеримого результата.</div></div>
+
+      <div class="abblk l rv" style="--r:3"><div class="abblt" data-t="ab_lt2">Фокус</div><div class="abbld" data-t="ab2">Специализируюсь на одном: беру дизайнеров с сильными работами, без позиционирования и личного бренда — и строю им систему, которая привлекает нужных клиентов.</div></div>
+      <div class="abblk r rv" style="--r:3"><div class="abblt" data-t="ab_t2">Работаю только с сильными</div><div class="abbld" data-t="ab_d2">Берусь за тех, у кого уже есть качество в работах. Моя задача — сделать так, чтобы за это качество платили.</div></div>
+
+      <div class="abblk l last rv" style="--r:4"><div class="abblt" data-t="ab_lt3">Без посредников</div><div class="abbld" data-t="ab3">Нет лишних людей в цепочке. Сам веду каждый проект и несу личную ответственность за результат. Без размытия на команду.</div></div>
+      <div class="abblk r last rv" style="--r:4"><div class="abblt" data-t="ab_t3">Гарантирую результат</div><div class="abbld" data-t="ab_d3">Фиксируем цель на старте. Если не достигли — продолжаю работу без доплат. Без оговорок.</div></div>
+    </div>
+
+    <div class="abst">
+      <div class="stc rv"><div class="stn" data-count="16" data-sfx="">0</div><div class="stl" data-t="st1">лет</div></div>
+      <div class="stc rv"><div class="stn" data-count="2" data-sfx="+">0</div><div class="stl" data-t="st2">года в деле</div></div>
+      <div class="stc rv"><div class="stn" data-count="2" data-sfx="">0</div><div class="stl" data-t="st3">продукта</div></div>
+      <div class="stc rv"><div class="stn" data-count="3" data-sfx="+">0</div><div class="stl" data-t="st4">кейса</div></div>
     </div>
   </div>
 </section>
@@ -360,82 +318,73 @@ nav.lm .lang i{background:var(--g2)}
       <div class="chint" data-t="c_hint">нажми, чтобы открыть</div>
     </div>
     <div class="clist">
-      <div class="ci rv" onclick="openCase(0)">
+      <div class="ci rv" onclick="openCase(0)" role="button" tabindex="0">
         <div class="cinum">01</div>
-        <div class="ciinfo">
-          <div class="ciniche">UI / UX Design</div>
-          <div class="cititle" data-t="c1t">С 3 до 15 заявок — дизайнер без имени в рынке</div>
-        </div>
+        <div class="ciinfo"><div class="ciniche">UI / UX Design</div><div class="cititle" data-t="c1t">С 3 до 15 заявок — дизайнер без имени в рынке</div></div>
         <div class="ciarr">+</div>
       </div>
-      <div class="ci rv" onclick="openCase(1)">
+      <div class="ci rv" onclick="openCase(1)" role="button" tabindex="0">
         <div class="cinum">02</div>
-        <div class="ciinfo">
-          <div class="ciniche">Brand Design</div>
-          <div class="cititle" data-t="c2t">Первые 5 прямых клиентов за 45 дней</div>
-        </div>
+        <div class="ciinfo"><div class="ciniche">Brand Design</div><div class="cititle" data-t="c2t">Первые 5 прямых клиентов за 45 дней</div></div>
         <div class="ciarr">+</div>
       </div>
-      <div class="ci rv" onclick="openCase(2)">
+      <div class="ci rv" onclick="openCase(2)" role="button" tabindex="0">
         <div class="cinum">03</div>
-        <div class="ciinfo">
-          <div class="ciniche">Motion Design</div>
-          <div class="cititle" data-t="c3t">Очередь на 3 месяца и рост чека ×1.8</div>
-        </div>
+        <div class="ciinfo"><div class="ciniche">Motion Design</div><div class="cititle" data-t="c3t">Очередь на 3 месяца и рост чека ×1.8</div></div>
         <div class="ciarr">+</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CASE OVERLAY -->
-<div id="ov">
-  <div class="ovbar">
-    <span class="ovcasenick" id="ov-nick"></span>
-    <button class="ovclsbtn" onclick="closeCase()" data-t="close">— Закрыть ✕</button>
-  </div>
-  <div class="ovbody" id="ov-body"></div>
-</div>
-
 <!-- PROJECTS 03 -->
 <section id="projects" class="sp">
   <div class="ct">
     <span class="snum rv" data-t="p_n">03 — Продукты</span>
-    <h2 class="sh rl rv"><span class="ri" data-t="p_h">Строю <em>своё</em></span></h2>
+    <h2 class="sh rl"><span class="ri" data-t="p_h">Строю <em>своё</em></span></h2>
     <div class="prgrid">
-      <a href="#" class="pc rv">
+      <div class="pc rv" onclick="openProject(0)" role="button" tabindex="0">
         <div class="pcin">
           <div class="pcst" data-t="p1s">Активно</div>
           <div class="pcname">Digital Wave</div>
           <div class="pcdesc" data-t="p1d">AI-агентство цифровой упаковки и систем позиционирования для дизайнеров</div>
           <div class="pcarr">↗</div>
         </div>
-      </a>
-      <a href="#" class="pc rv">
+      </div>
+      <div class="pc rv" onclick="openProject(1)" role="button" tabindex="0">
         <div class="pcin">
           <div class="pcst" data-t="p2s">В разработке</div>
           <div class="pcname">LeadPilot AI</div>
           <div class="pcdesc" data-t="p2d">Telegram-бот автоматического поиска и квалификации лидов через SerpAPI и GPT</div>
           <div class="pcarr">↗</div>
         </div>
-      </a>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- OVERLAY (cases + projects) -->
+<div id="ov" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="ovbar">
+    <span class="ovcasenick" id="ov-nick"></span>
+    <button class="ovclsbtn" id="ov-close" onclick="closeOv()" data-t="close">— Закрыть ✕</button>
+  </div>
+  <div class="ovbody" id="ov-body"></div>
+</div>
+
 <!-- CONTACT 04 -->
-<section id="contact">
-  <div class="ct">
-    <span class="snum rv" style="color:rgba(255,255,255,.3)" data-t="ct_n">04 — Контакт</span>
+<section id="contact" class="sp">
+  <div class="ct" style="width:100%">
+    <span class="snum rv" data-t="ct_n">04 — Контакт</span>
     <h2 class="cthead">
-      <span class="rl rv"><span class="ri" data-t="ct1">Обсудим</span></span><br>
-      <span class="rl rv"><span class="ri" data-t="ct2"><em>проект?</em></span></span>
+      <span class="rl"><span class="ri" data-t="ct1">Обсудим</span></span>
+      <span class="rl"><span class="ri" data-t="ct2"><em>проект?</em></span></span>
     </h2>
     <div class="ctbot rv">
-      <a href="https://t.me/vlpozd" class="btn btn-ghost" target="_blank"><span data-t="ct_btn">Написать в Telegram</span></a>
+      <a href="https://t.me/vlpozd" class="btn btn-a" target="_blank" rel="noopener"><span data-t="ct_btn">Написать в Telegram</span></a>
       <div class="ctsoc">
-        <a href="#" target="_blank">Instagram</a>
-        <a href="#" target="_blank">YouTube</a>
+        <a href="#" target="_blank" rel="noopener">Instagram</a>
+        <a href="#" target="_blank" rel="noopener">YouTube</a>
       </div>
     </div>
   </div>
@@ -447,241 +396,256 @@ nav.lm .lang i{background:var(--g2)}
 </footer>
 
 <script>
+/* ═══ DATA ═══ */
+const URLS={dw:'',lp:''}; /* ссылки на сайты проектов: вставь адрес — кнопка «Перейти на сайт» появится в окне проекта */
+const TG='https://t.me/vlpozd';
+
 const casesRU=[
   {nick:'UI / UX Design',
    title:'С 3 до 15 заявок —<br><em>дизайнер без имени в рынке</em>',
    task:'Артём — UI/UX дизайнер, 5 лет опыта, портфолио без изъянов. Но клиенты находили его только по рекомендациям: ни позиционирования, ни онлайн-присутствия. Три случайные заявки в месяц — и то повезло.',
    work:'Разработали позиционирование «дизайнер продуктов для B2B SaaS». Переупаковали Behance и LinkedIn под целевую аудиторию. Создали личный лендинг. Запустили входящий трафик через контент-стратегию.',
-   result:'×5',
-   rdesc:'рост входящих заявок за 60 дней. Средний чек вырос в 2.3 раза — за счёт правильного позиционирования.'},
+   result:'×5',rdesc:'рост входящих заявок за 60 дней. Средний чек вырос в 2.3 раза — за счёт правильного позиционирования.'},
   {nick:'Brand Design',
    title:'Первые 5 прямых клиентов —<br><em>за 45 дней</em>',
    task:'Катя делала брендинг для студий — качественно, но за студийный чек. Хотела прямых клиентов на своих условиях. Проблема: никто не знал, что она существует как самостоятельный специалист.',
    work:'Сформировали позиционирование «бренд-дизайнер для premium малого бизнеса». Упаковали Telegram-канал. Перестроили портфолио под прямые продажи. Выстроили воронку через личный контент.',
-   result:'5 клиентов',
-   rdesc:'первых прямых проектов за 45 дней. Доход вырос в 2 раза — без студийных посредников.'},
+   result:'5 клиентов',rdesc:'первых прямых проектов за 45 дней. Доход вырос в 2 раза — без студийных посредников.'},
   {nick:'Motion Design',
    title:'Очередь на 3 месяца —<br><em>рост чека ×1.8</em>',
    task:'Никита делал крутые моушн-ролики и продавал их дёшево — никто не понимал ценности. Полная невидимость в рынке, работа через биржи, постоянный демпинг.',
    work:'Создали личный бренд с нуля: концепция, стиль, позиционирование как «motion-специалист для digital-продуктов». Запустили Telegram-канал с разбором работ. Вышли на прямые переговоры с продуктовыми командами.',
-   result:'3 месяца',
-   rdesc:'очередь из клиентов. Чек вырос в 1.8 раза. Больше ни одной биржи.'}
+   result:'3 месяца',rdesc:'очередь из клиентов. Чек вырос в 1.8 раза. Больше ни одной биржи.'}
+];
+const casesEN=[
+  {nick:'UI / UX Design',title:'From 3 to 15 leads —<br><em>a designer nobody knew</em>',
+   task:'Artem is a UI/UX designer with 5 years of experience and a flawless portfolio. But clients found him only through referrals: no positioning, no online presence. Three random leads a month — and that was a lucky month.',
+   work:'We built the positioning “product designer for B2B SaaS”, repackaged Behance and LinkedIn for the target audience, created a personal landing page and launched inbound traffic through a content strategy.',
+   result:'×5',rdesc:'more inbound leads in 60 days. The average rate grew 2.3× thanks to the right positioning.'},
+  {nick:'Brand Design',title:'First 5 direct clients —<br><em>in 45 days</em>',
+   task:'Katya did branding for studios — high quality, but at a studio rate. She wanted direct clients on her own terms. The problem: nobody knew she existed as an independent specialist.',
+   work:'We built the positioning “brand designer for premium small business”, packaged her Telegram channel, rebuilt the portfolio for direct sales and set up a funnel through personal content.',
+   result:'5 clients',rdesc:'first direct projects in 45 days. Income doubled — with no studio in between.'},
+  {nick:'Motion Design',title:'A 3-month waiting list —<br><em>rate up 1.8×</em>',
+   task:'Nikita made great motion videos and sold them cheap — nobody understood their value. Completely invisible in the market, working through freelance exchanges, constant price dumping.',
+   work:'We built a personal brand from scratch: concept, style, positioning as a “motion specialist for digital products”. Launched a Telegram channel with work breakdowns and moved to direct talks with product teams.',
+   result:'3 months',rdesc:'of clients in the queue. Rate up 1.8×. No more freelance exchanges.'}
 ];
 
-function openCase(i){
-  const c=casesFor()[i];curCase=i;
-  document.getElementById('ov-nick').textContent=c.nick;
-  fillCase(c);
-  document.getElementById('ov').scrollTop=0;
-  document.getElementById('ov').classList.add('open');
-  document.body.classList.add('lock');
-}
-function fillCase(c){
-  document.getElementById('ov-body').innerHTML=`
-    <h2 class="ovtitle">${c.title}</h2>
-    <div class="ovgrid">
-      <div><span class="ovlbl">Задача</span><p class="ovtxt">${c.task}</p></div>
-      <div><span class="ovlbl">Что сделали</span><p class="ovtxt">${c.work}</p></div>
-      <div>
-        <span class="ovlbl">Результат</span>
-        <div class="ovres">
-          <div class="ovresnum">${c.result}</div>
-          <div class="ovresdesc">${c.rdesc}</div>
-        </div>
-      </div>
-    </div>`;
-}
-function closeCase(){
-  curCase=-1;
-  document.getElementById('ov').classList.remove('open');
-  document.body.classList.remove('lock');
-}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCase()});
+const PROJ={
+ ru:[
+  {name:'Digital Wave',
+   who:'CEO & Founder. Сам веду каждый проект и отвечаю за результат.',
+   offer:'Превращаю сильное портфолио дизайнера в позиционирование и личный бренд — чтобы клиенты выбирали тебя, а не просто лайкали работы. Цель фиксируем на старте и гарантируем результат.',
+   cases:[['Артём','UI/UX дизайн'],['Катя','Бренд-дизайн'],['Никита','Моушн-дизайн']],
+   about:'Digital Wave — AI-агентство цифровой упаковки и позиционирования. Работаем с дизайнерами, у которых сильные работы, но нет личного бренда и понятного оффера. Формулируем позиционирование, упаковываем профиль и лендинг, выстраиваем систему входящих заявок с помощью AI.',
+   about_cases:'В кейсах — дизайнеры из UI/UX, брендинга и моушна. У всех были сильные работы и не было позиционирования. После упаковки выросли входящие заявки и средний чек.',url:URLS.dw},
+  {name:'LeadPilot AI',
+   who:'CEO & Founder. Веду продукт от идеи до запуска.',
+   offer:'Telegram-бот, который сам находит потенциальных клиентов и отбирает подходящих — меньше ручного поиска, больше целевых заявок.',
+   cases:[],
+   about:'LeadPilot AI — Telegram-бот для генерации лидов. Ищет компании и специалистов через SerpAPI, отсеивает неподходящих с помощью GPT и отдаёт готовый список. Для тех, кто продаёт услуги и хочет сократить ручной поиск клиентов.',
+   about_cases:'Продукт в разработке. Первые кейсы появятся после запуска.',url:URLS.lp}
+ ],
+ en:[
+  {name:'Digital Wave',
+   who:'CEO & Founder. I run every project myself and own the result.',
+   offer:'I turn a designer’s strong portfolio into positioning and a personal brand — so clients choose you instead of just liking your work. We fix the goal at the start and I guarantee the result.',
+   cases:[['Artem','UI/UX design'],['Katya','Brand design'],['Nikita','Motion design']],
+   about:'Digital Wave is an AI agency for digital packaging and positioning. We work with designers who have strong work but no personal brand or clear offer. We define the positioning, package the profile and landing page, and build an AI-powered system for inbound leads.',
+   about_cases:'The cases are designers from UI/UX, branding and motion. All of them had strong work and no positioning. After packaging, their inbound leads and average rate grew.',url:URLS.dw},
+  {name:'LeadPilot AI',
+   who:'CEO & Founder. I take the product from idea to launch.',
+   offer:'A Telegram bot that finds potential clients on its own and picks the right ones — less manual searching, more targeted leads.',
+   cases:[],
+   about:'LeadPilot AI is a Telegram bot for lead generation. It searches for companies and specialists via SerpAPI, filters out poor fits with GPT and returns a ready list. For people who sell services and want to cut manual client search.',
+   about_cases:'The product is in development. The first cases will appear after launch.',url:URLS.lp}
+ ]
+};
+const LBL={
+ ru:{task:'Задача',work:'Что сделали',res:'Результат',who:'Кто я',srv:'Услуги',cs:'Кейсы',ab:'О проекте',ac:'Про кейсы',tg:'Написать в Telegram',site:'Перейти на сайт'},
+ en:{task:'Task',work:'What we did',res:'Result',who:'Who I am',srv:'Services',cs:'Cases',ab:'About the project',ac:'About the cases',tg:'Message on Telegram',site:'Visit the site'}
+};
+const EN={
+ n_about:'About',n_cases:'Cases',n_projects:'Projects',n_contact:'Contact',
+ open:'Open to projects · 2026',
+ hsub:'I build personal brands for designers',
+ hdesc:'We take designers with top-tier portfolios and turn them into experts with a waiting list',
+ btn_cases:'View cases',write:'Message me',scroll:'scroll',
+ ab_n:'01 — About me',
+ ab_h:'I’m 16, and for two years<br>I’ve been <em>building businesses</em>',
+ ab_l:'Who I am',abrh:'How I work',
+ ab_lt1:'Path',ab_lt2:'Focus',ab_lt3:'No middlemen',
+ ab1:'I don’t wait for the “right age”. In two years I’ve gone from first experiments to a systematic business with real cases — I take on tasks and see them through to results.',
+ ab2:'I specialize in one thing: designers with strong work but no positioning or personal brand. I build them a system that attracts the right clients.',
+ ab3:'No extra people in the chain. I run every project myself and take personal responsibility for the result. No hiding behind a team.',
+ st1:'years old',st2:'years in business',st3:'products',st4:'cases',
+ ab_t1:'I take full responsibility',ab_d1:'I don’t consult — I do. I set the goal, define the path and deliver a concrete, measurable result.',
+ ab_t2:'I work only with the strong',ab_d2:'I take on people whose work already has quality. My job is to make sure they get paid for it.',
+ ab_t3:'I guarantee results',ab_d3:'We fix the goal at the start. If we don’t reach it, I keep working at no extra cost. No small print.',
+ c_n:'02 — Cases',c_h:'Proven by <em>results</em>',c_hint:'click to open',
+ c1t:'From 3 to 15 leads — a designer nobody knew',c2t:'First 5 direct clients in 45 days',c3t:'A 3-month waiting list and a 1.8× higher rate',
+ close:'— Close ✕',
+ p_n:'03 — Products',p_h:'Building <em>my own</em>',
+ p1s:'Active',p2s:'In development',
+ p1d:'AI agency for digital packaging and positioning systems for designers',
+ p2d:'Telegram bot that finds and qualifies leads automatically via SerpAPI and GPT',
+ ct_n:'04 — Contact',ct1:'Let’s discuss',ct2:'<em>a project?</em>',ct_btn:'Message on Telegram',
+ foot:'Made with attention to detail'
+};
 
-// NAV MODE
-const nb=document.getElementById('nav');
-function updateNav(){
-  const hero=document.getElementById('hero');
-  const contact=document.getElementById('contact');
-  const hb=hero.offsetTop+hero.offsetHeight;
-  const ct=contact.offsetTop;
-  const sy=window.scrollY;
-  const light=sy>=hb-80&&sy<ct-80;
-  nb.classList.toggle('lm',light);
-  nb.classList.toggle('sc',sy>60);
-  document.body.classList.toggle('lm',light);
-}
-window.addEventListener('scroll',()=>{
-  updateNav();
-  document.getElementById('pb').style.transform=`scaleX(${scrollY/(document.body.scrollHeight-innerHeight)})`;
-});
-
-// PRELOADER
-(function(){
-  let n=0;
-  const pn=document.getElementById('pl-num'),pf=document.getElementById('pl-fill');
-  const iv=setInterval(()=>{
-    n=Math.min(n+Math.random()*3.5+1.2,100);
-    const r=Math.floor(n);
-    pn.textContent=r+'%';
-    pf.style.width=r+'%';
-    if(n>=100){
-      clearInterval(iv);
-      setTimeout(()=>{
-        document.getElementById('pl').classList.add('done');
-        document.body.classList.remove('lock');
-        animName(NAME[lang]);
-      },320);
-    }
-  },30);
-})();
-
-function animName(t){
-  const el=document.getElementById('hname');
-  const txt=t||el.textContent;
-  el.innerHTML='';
-  [...txt].forEach((ch,i)=>{
-    const s=document.createElement('span');
-    s.className='c';
-    s.textContent=ch===' '?'\u00A0':ch;
-    s.style.transitionDelay=i*.055+'s';
-    el.appendChild(s);
-  });
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    el.querySelectorAll('.c').forEach(c=>c.style.transform='none');
-  }));
-}
-
-// CURSOR
-const cd=document.getElementById('cd'),cr=document.getElementById('cr');
-let mx=0,my=0,rx=0,ry=0;
-if(window.innerWidth>900){
-  document.addEventListener('mousemove',e=>{
-    mx=e.clientX;my=e.clientY;
-    cd.style.left=mx+'px';cd.style.top=my+'px';
-  });
-  (function loop(){
-    rx+=(mx-rx)*.11;ry+=(my-ry)*.11;
-    cr.style.left=rx+'px';cr.style.top=ry+'px';
-    requestAnimationFrame(loop);
-  })();
-  document.querySelectorAll('a,button,.ci,.pc').forEach(el=>{
-    el.addEventListener('mouseenter',()=>cr.classList.add('h'));
-    el.addEventListener('mouseleave',()=>cr.classList.remove('h'));
-  });
-}else{cd.style.display=cr.style.display='none';}
-
-// MOBILE MENU
-function toggleMM(){
-  const m=document.getElementById('mm'),o=m.classList.toggle('open');
-  document.getElementById('b1').style.transform=o?'translateY(6px) rotate(45deg)':'';
-  document.getElementById('b2').style.transform=o?'translateY(-6px) rotate(-45deg)':'';
-}
-function closeMM(){
-  document.getElementById('mm').classList.remove('open');
-  ['b1','b2'].forEach(id=>document.getElementById(id).style.transform='');
-}
-
-// REVEAL
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(!e.isIntersecting)return;
-    e.target.classList.add('vis');
-    obs.unobserve(e.target);
-  });
-},{threshold:.12});
-document.querySelectorAll('.rv,.rl').forEach(el=>obs.observe(el));
-
-// STATS COUNT-UP
-const stObs=new IntersectionObserver(([e])=>{
-  if(!e.isIntersecting)return;
-  e.target.querySelectorAll('[data-count]').forEach((el,i)=>{
-    setTimeout(()=>{
-      const t=+el.dataset.count,sfx=el.dataset.sfx||'';
-      const d=1100,s=performance.now();
-      (function u(now){
-        const p=Math.min((now-s)/d,1),ease=1-Math.pow(1-p,3);
-        el.textContent=Math.round(ease*t)+sfx;
-        if(p<1)requestAnimationFrame(u);
-      })(performance.now());
-    },i*120);
-  });
-  stObs.unobserve(e.target);
-},{threshold:.35});
-const sts=document.querySelector('.abst');
-if(sts)stObs.observe(sts);
-
-// ═══ LANGUAGE (RU / EN) ═══
-const EN={"n_about": "About", "n_cases": "Cases", "n_projects": "Projects", "n_contact": "Contact", "open": "Open to projects · 2026", "hsub": "I build personal brands for designers", "hdesc": "We take designers with top-tier portfolios and turn them into experts with a waiting list", "btn_cases": "View cases", "write": "Message me", "scroll": "scroll", "ticker": "PERSONAL BRAND &nbsp;·&nbsp; POSITIONING &nbsp;·&nbsp; DESIGNERS &nbsp;·&nbsp; AI DIGITAL &nbsp;·&nbsp; RESULTS &nbsp;·&nbsp; EXPERTISE &nbsp;·&nbsp; PACKAGING &nbsp;·&nbsp; SYSTEMS &nbsp;·&nbsp; ", "ab_n": "01 — About me", "ab_h": "I’m 16, and for two years<br>I’ve been <em>building businesses</em>", "ab1": "I don’t wait for the “right age”. In two years I’ve gone from first experiments to a systematic business with real cases — I take on tasks and see them through to results.", "ab2": "I specialize in one thing: designers with strong work but no positioning or personal brand. I build them a system that attracts the right clients.", "ab3": "No extra people in the chain. I run every project myself and take personal responsibility for the result. No hiding behind a team.", "st1": "years old", "st2": "years in business", "st3": "products", "st4": "cases", "abrh": "How I work", "ab_t1": "I take full responsibility", "ab_d1": "I don’t consult — I do. I set the goal, define the path and deliver a concrete, measurable result.", "ab_t2": "I work only with the strong", "ab_d2": "I take on people whose work already has quality. My job is to make sure they get paid for it.", "ab_t3": "I guarantee results", "ab_d3": "We fix the goal at the start. If we don’t reach it, I keep working at no extra cost. No small print.", "c_n": "02 — Cases", "c_h": "Proven by <em>results</em>", "c_hint": "click to open", "c1t": "From 3 to 15 leads — a designer nobody knew", "c2t": "First 5 direct clients in 45 days", "c3t": "A 3-month waiting list and a 1.8× higher rate", "close": "— Close ✕", "p_n": "03 — Products", "p_h": "Building <em>my own</em>", "p1s": "Active", "p2s": "In development", "p1d": "AI agency for digital packaging and positioning systems for designers", "p2d": "Telegram bot that finds and qualifies leads automatically via SerpAPI and GPT", "ct_n": "04 — Contact", "ct1": "Let’s discuss", "ct2": "<em>a project?</em>", "ct_btn": "Message on Telegram", "foot": "Made with attention to detail"};
-const casesEN=[{"nick": "UI / UX Design", "title": "From 3 to 15 leads —<br><em>a designer nobody knew</em>", "task": "Artem is a UI/UX designer with 5 years of experience and a flawless portfolio. But clients found him only through referrals: no positioning, no online presence. Three random leads a month — and that was a lucky month.", "work": "We built the positioning “product designer for B2B SaaS”, repackaged Behance and LinkedIn for the target audience, created a personal landing page and launched inbound traffic through a content strategy.", "result": "×5", "rdesc": "more inbound leads in 60 days. The average rate grew 2.3× thanks to the right positioning."}, {"nick": "Brand Design", "title": "First 5 direct clients —<br><em>in 45 days</em>", "task": "Katya did branding for studios — high quality, but at a studio rate. She wanted direct clients on her own terms. The problem: nobody knew she existed as an independent specialist.", "work": "We built the positioning “brand designer for premium small business”, packaged her Telegram channel, rebuilt the portfolio for direct sales and set up a funnel through personal content.", "result": "5 clients", "rdesc": "first direct projects in 45 days. Income doubled — with no studio in between."}, {"nick": "Motion Design", "title": "A 3-month waiting list —<br><em>rate up 1.8×</em>", "task": "Nikita made great motion videos and sold them cheap — nobody understood their value. Completely invisible in the market, working through freelance exchanges, constant price dumping.", "work": "We built a personal brand from scratch: concept, style, positioning as a “motion specialist for digital products”. Launched a Telegram channel with work breakdowns and moved to direct talks with product teams.", "result": "3 months", "rdesc": "of clients in the queue. Rate up 1.8×. No more freelance exchanges."}];
+/* ═══ STATE ═══ */
 const NAME={ru:'Владимир',en:'Vladimir'};
 const TITLE={ru:'Владимир — AI Digital',en:'Vladimir — AI Digital'};
-let lang='ru',curCase=-1,langBusy=false;
+let lang='ru',cur=null,langBusy=false,lastFocus=null;
 const casesFor=()=>lang==='en'?casesEN:casesRU;
+const $=id=>document.getElementById(id);
 const tEls=[...document.querySelectorAll('[data-t]')];
 tEls.forEach(el=>{el.dataset.ru=el.innerHTML});
 
-function applyLang(l){
-  lang=l;
-  tEls.forEach(el=>{
-    const k=el.dataset.t;
-    el.innerHTML=(l==='en'&&EN[k]!==undefined)?EN[k]:el.dataset.ru;
-  });
-  document.documentElement.lang=l;
-  document.title=TITLE[l];
-  document.querySelectorAll('#lang button').forEach(b=>{
-    const on=b.dataset.l===l;
-    b.classList.toggle('on',on);
-    b.setAttribute('aria-pressed',on);
-  });
-  if(curCase>=0){
-    const c=casesFor()[curCase];
-    document.getElementById('ov-nick').textContent=c.nick;
-    fillCase(c);
+/* ═══ OVERLAY ═══ */
+function renderOverlay(){
+  if(!cur)return;
+  const L=LBL[lang],body=$('ov-body');
+  if(cur.k==='case'){
+    const c=casesFor()[cur.i];
+    $('ov-nick').textContent=c.nick;
+    body.innerHTML=`
+      <h2 class="ovtitle">${c.title}</h2>
+      <div class="ovgrid">
+        <div><span class="ovlbl">${L.task}</span><p class="ovtxt">${c.task}</p></div>
+        <div><span class="ovlbl">${L.work}</span><p class="ovtxt">${c.work}</p></div>
+        <div><span class="ovlbl">${L.res}</span><div class="ovres"><div class="ovresnum">${c.result}</div><div class="ovresdesc">${c.rdesc}</div></div></div>
+      </div>`;
+  }else{
+    const p=PROJ[lang][cur.i];
+    $('ov-nick').textContent=p.name;
+    const list=p.cases.length?`<div><span class="ovlbl">${L.cs}</span><ul class="pcl">${p.cases.map(c=>`<li><b>${c[0]}</b><span>${c[1]}</span></li>`).join('')}</ul></div>`:'';
+    const site=p.url?`<a class="btn btn-b" href="${p.url}" target="_blank" rel="noopener"><span>${L.site} ↗</span></a>`:'';
+    body.innerHTML=`
+      <h2 class="ovtitle">${p.name}</h2>
+      <div class="pgrid">
+        <div><span class="ovlbl">${L.who}</span><p class="ovtxt">${p.who}</p></div>
+        <div><span class="ovlbl">${L.srv}</span><p class="ovtxt">${p.offer}</p></div>
+        ${list}
+        <div><span class="ovlbl">${L.ab}</span><p class="ovtxt">${p.about}</p></div>
+        <div class="pfull"><span class="ovlbl">${L.ac}</span><p class="ovtxt" style="max-width:720px">${p.about_cases}</p></div>
+      </div>
+      <div class="pbtns">
+        <a class="btn btn-a" href="${TG}" target="_blank" rel="noopener"><span>${L.tg}</span></a>${site}
+      </div>`;
   }
 }
-function inView(el){
-  const r=el.getBoundingClientRect();
-  return r.bottom>0&&r.top<innerHeight&&r.right>0&&r.left<innerWidth;
+function openOv(k,i){
+  lastFocus=document.activeElement;
+  cur={k,i};renderOverlay();
+  const ov=$('ov');ov.scrollTop=0;ov.classList.add('open');ov.setAttribute('aria-hidden','false');
+  document.body.classList.add('lock');
+  setTimeout(()=>$('ov-close').focus({preventScroll:true}),50);
 }
-function shown(el){
-  return !el.closest('.rv:not(.vis)')&&!el.closest('.rl:not(.vis)')&&+getComputedStyle(el).opacity>.05;
+const openCase=i=>openOv('case',i);
+const openProject=i=>openOv('proj',i);
+function closeOv(){
+  cur=null;
+  const ov=$('ov');ov.classList.remove('open');ov.setAttribute('aria-hidden','true');
+  document.body.classList.remove('lock');
+  if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true});
 }
-const hn=document.getElementById('hname');
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&cur)closeOv();
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('[role=button]:not(button)')){e.preventDefault();e.target.click();}
+});
+
+/* ═══ LANGUAGE ═══ */
+function applyLang(l){
+  lang=l;
+  tEls.forEach(el=>{const k=el.dataset.t;el.innerHTML=(l==='en'&&EN[k]!==undefined)?EN[k]:el.dataset.ru});
+  document.documentElement.lang=l;document.title=TITLE[l];
+  renderOverlay();
+}
+function markLang(l){
+  document.querySelectorAll('#lang button').forEach(b=>{const on=b.dataset.l===l;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
+}
+const inView=el=>{const r=el.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight&&r.right>0&&r.left<innerWidth};
+const shown=el=>!el.closest('.rv:not(.vis)')&&!el.closest('.rl:not(.vis)')&&+getComputedStyle(el).opacity>.05;
+const hn=$('hname');
 async function switchLang(l){
   if(l===lang||langBusy)return;
-  langBusy=true;
-  document.querySelectorAll('#lang button').forEach(b=>{
-    const on=b.dataset.l===l;
-    b.classList.toggle('on',on);
-    b.setAttribute('aria-pressed',on);
-  });
-  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  if(reduce){applyLang(l);animName(NAME[l]);langBusy=false;try{localStorage.setItem('lang',l)}catch(e){};return}
+  langBusy=true;markLang(l);
+  const save=()=>{try{localStorage.setItem('lang',l)}catch(e){}};
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches||!hn.animate){applyLang(l);animName(NAME[l]);save();langBusy=false;return}
   const vis=tEls.filter(el=>inView(el)&&shown(el));
-  const heroVis=inView(hn);
   const hide=[{opacity:1,filter:'blur(0px)'},{opacity:0,filter:'blur(10px)'}];
   const show=[{opacity:0,filter:'blur(10px)'},{opacity:1,filter:'blur(0px)'}];
   const outs=vis.map((el,i)=>el.animate(hide,{duration:380,delay:Math.min(i*14,260),easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}));
-  let hOut=null;
-  if(heroVis)hOut=hn.animate(hide,{duration:380,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'});
+  const hOut=inView(hn)?hn.animate(hide,{duration:380,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}):null;
   await Promise.all(outs.map(a=>a.finished).concat(hOut?[hOut.finished]:[]));
   applyLang(l);
   vis.forEach((el,i)=>el.animate(show,{duration:620,delay:Math.min(i*22,420),easing:'cubic-bezier(.16,1,.3,1)',fill:'backwards'}));
   outs.forEach(a=>a.cancel());
-  if(hOut){hOut.cancel();}
-  animName(NAME[l]);
-  try{localStorage.setItem('lang',l)}catch(e){}
+  if(hOut)hOut.cancel();
+  animName(NAME[l]);save();
   setTimeout(()=>{langBusy=false},900);
 }
-document.querySelectorAll('#lang button').forEach(b=>{
-  b.addEventListener('click',()=>switchLang(b.dataset.l));
-});
+document.querySelectorAll('#lang button').forEach(b=>b.addEventListener('click',()=>switchLang(b.dataset.l)));
+(function(){let s=null;try{s=localStorage.getItem('lang')}catch(e){}if(s==='en'){applyLang('en');markLang('en')}})();
+
+/* ═══ PRELOADER + HERO NAME ═══ */
 (function(){
-  let saved=null;
-  try{saved=localStorage.getItem('lang')}catch(e){}
-  if(saved==='en')applyLang('en');
+  let n=0;const pn=$('pl-num'),pf=$('pl-fill');
+  const iv=setInterval(()=>{
+    n=Math.min(n+Math.random()*3.5+1.2,100);
+    const r=Math.floor(n);pn.textContent=r+'%';pf.style.width=r+'%';
+    if(n>=100){clearInterval(iv);setTimeout(()=>{
+      $('pl').classList.add('done');document.body.classList.remove('lock');animName(NAME[lang]);
+    },320)}
+  },30);
 })();
+function animName(t){
+  const el=$('hname');el.innerHTML='';
+  [...t].forEach((ch,i)=>{
+    const s=document.createElement('span');s.className='c';s.textContent=ch===' '?' ':ch;
+    s.style.transitionDelay=i*.055+'s';el.appendChild(s);
+  });
+  requestAnimationFrame(()=>requestAnimationFrame(()=>el.querySelectorAll('.c').forEach(c=>c.style.transform='none')));
+}
+
+/* ═══ NAV, PROGRESS, MENU ═══ */
+const nb=$('nav'),pb=$('pb');
+function onScroll(){
+  nb.classList.toggle('sc',scrollY>60);
+  const h=document.documentElement.scrollHeight-innerHeight;
+  pb.style.transform=`scaleX(${h>0?Math.min(scrollY/h,1):0})`;
+}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+function toggleMM(){
+  const o=$('mm').classList.toggle('open');
+  $('b1').style.transform=o?'translateY(3px) rotate(45deg)':'';
+  $('b2').style.transform=o?'translateY(-3px) rotate(-45deg)':'';
+}
+function closeMM(){
+  $('mm').classList.remove('open');
+  $('b1').style.transform='';$('b2').style.transform='';
+}
+
+/* ═══ REVEAL + COUNTERS ═══ */
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('vis');obs.unobserve(e.target)})},{threshold:.12});
+document.querySelectorAll('.rv,.rl').forEach(el=>obs.observe(el));
+const stObs=new IntersectionObserver(([e])=>{
+  if(!e.isIntersecting)return;
+  e.target.querySelectorAll('[data-count]').forEach((el,i)=>{
+    setTimeout(()=>{
+      const t=+el.dataset.count,sfx=el.dataset.sfx||'',d=1400,s=performance.now();
+      (function u(now){
+        const p=Math.min((now-s)/d,1),ease=1-Math.pow(1-p,3);
+        el.textContent=Math.round(ease*t)+sfx;
+        if(p<1)requestAnimationFrame(u);
+      })(s);
+    },i*140);
+  });
+  stObs.unobserve(e.target);
+},{threshold:.3});
+const sts=document.querySelector('.abst');if(sts)stObs.observe(sts);
 </script>
 </body>
 </html>
