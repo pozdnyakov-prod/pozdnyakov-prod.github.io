@@ -1,0 +1,86 @@
+/* Digital Wave — soft light cursor. Desktop-only ambient pointer light. */
+.soft-light-cursor {
+  position: fixed;
+  z-index: 210;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 400px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(-999px,-999px,0);
+  transition: opacity .45s ease;
+  contain: layout style paint;
+  will-change: transform;
+}
+
+.soft-light-cursor.is-visible { opacity: .8; }
+
+.soft-light-cursor__halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center,
+      rgba(255,255,255,.26) 0,
+      rgba(220,224,231,.16) 17%,
+      rgba(157,164,176,.09) 37%,
+      rgba(96,101,112,.035) 53%,
+      transparent 72%);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  opacity: .84;
+  transform: scale(1);
+  transition: transform .65s cubic-bezier(.16,1,.3,1), opacity .45s ease, filter .45s ease;
+  will-change: transform;
+}
+
+.soft-light-cursor__core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  border: 1px solid rgba(255,255,255,.42);
+  border-radius: 50%;
+  background: rgba(255,255,255,.2);
+  box-shadow: 0 0 18px rgba(255,255,255,.25), 0 0 34px rgba(184,190,201,.16);
+  opacity: .44;
+  transform: translate(-50%,-50%) scale(.72);
+  transition: width .5s cubic-bezier(.16,1,.3,1), height .5s cubic-bezier(.16,1,.3,1), opacity .35s ease, transform .5s cubic-bezier(.16,1,.3,1);
+}
+
+.soft-light-cursor.is-interactive .soft-light-cursor__halo {
+  filter: blur(7px);
+  opacity: .9;
+  transform: scale(.72);
+}
+
+.soft-light-cursor.is-interactive .soft-light-cursor__core {
+  width: 26px;
+  height: 26px;
+  opacity: .72;
+  transform: translate(-50%,-50%) scale(1);
+}
+
+.soft-light-cursor.is-pressed .soft-light-cursor__halo {
+  opacity: 1;
+  transform: scale(.58);
+}
+
+.soft-light-cursor.is-pressed .soft-light-cursor__core {
+  transform: translate(-50%,-50%) scale(.78);
+}
+
+body.intro-active .soft-light-cursor__halo {
+  background:
+    radial-gradient(circle at center,
+      rgba(255,255,255,.16) 0,
+      rgba(165,88,251,.105) 22%,
+      rgba(73,34,229,.07) 42%,
+      transparent 71%);
+}
+
+@media (hover: none), (pointer: coarse), (max-width: 760px) {
+  .soft-light-cursor { display: none !important; }
+}

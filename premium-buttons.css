@@ -1,0 +1,704 @@
+/* Digital Wave — premium motion buttons
+   Inspired by the supplied flow/orbit/compact button references. */
+
+.premium-button {
+  --pb-height: 54px;
+  --pb-icon-size: 42px;
+  --pb-inset: 5px;
+  --pb-travel: 0px;
+  --pb-pointer-x: 50%;
+  --pb-pointer-y: 50%;
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  min-width: 188px;
+  min-height: var(--pb-height);
+  padding: 0 calc(var(--pb-icon-size) + var(--pb-inset) + 17px) 0 22px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  border: 1px solid rgba(255,255,255,.46);
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+  font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 680;
+  letter-spacing: .015em;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transform: translateZ(0);
+  transition:
+    color .55s cubic-bezier(.16,1,.3,1),
+    background .55s cubic-bezier(.16,1,.3,1),
+    border-color .4s ease,
+    box-shadow .55s cubic-bezier(.16,1,.3,1),
+    transform .35s cubic-bezier(.16,1,.3,1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.premium-button::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle 90px at var(--pb-pointer-x) var(--pb-pointer-y), rgba(255,255,255,.23), transparent 72%);
+  opacity: 0;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+
+.premium-button::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -70%;
+  left: -28%;
+  width: 24%;
+  height: 240%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+  filter: blur(5px);
+  opacity: 0;
+  transform: translateX(-240%) rotate(18deg);
+  transition: transform .9s cubic-bezier(.16,1,.3,1), opacity .3s ease;
+  pointer-events: none;
+}
+
+.premium-button__label {
+  position: relative;
+  z-index: 2;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition:
+    color .45s ease,
+    opacity .35s ease,
+    transform .72s cubic-bezier(.16,1,.3,1),
+    filter .45s ease;
+  will-change: transform;
+}
+
+.premium-button__orbit {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  right: var(--pb-inset);
+  display: grid;
+  width: var(--pb-icon-size);
+  height: var(--pb-icon-size);
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  box-shadow: 0 7px 18px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.13);
+  transform: translate3d(0,-50%,0);
+  transform-origin: center;
+  transition:
+    color .45s ease,
+    background .45s ease,
+    border-color .45s ease,
+    box-shadow .55s ease,
+    transform .78s cubic-bezier(.16,1,.3,1);
+  will-change: transform;
+}
+
+.premium-button__orbit::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: inherit;
+  opacity: .8;
+}
+
+.premium-button__orbit svg {
+  position: relative;
+  z-index: 1;
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.55;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform .55s cubic-bezier(.16,1,.3,1);
+}
+
+.premium-button--light {
+  border-color: rgba(255,255,255,.9);
+  background: linear-gradient(180deg, #fff 0%, #efefec 100%);
+  color: #090909;
+  box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 rgba(0,0,0,.08), 0 12px 32px rgba(0,0,0,.18);
+}
+
+.premium-button--light .premium-button__orbit {
+  border-color: rgba(255,255,255,.16);
+  background: #0a0a0a;
+  color: #fff;
+}
+
+.premium-button--dark {
+  border-color: rgba(255,255,255,.5);
+  background: linear-gradient(180deg, rgba(18,18,18,.96), rgba(3,3,3,.98));
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 14px 38px rgba(0,0,0,.22);
+  backdrop-filter: blur(12px);
+}
+
+.premium-button--dark .premium-button__orbit {
+  border-color: rgba(0,0,0,.08);
+  background: #fff;
+  color: #090909;
+}
+
+.premium-button--focus {
+  border-color: rgba(255,255,255,.3);
+  background: rgba(8,8,8,.68);
+  color: #f7f7f4;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 12px 30px rgba(0,0,0,.16);
+  backdrop-filter: blur(14px);
+}
+
+.premium-button--focus .premium-button__orbit {
+  border-color: rgba(0,0,0,.08);
+  background: #f5f5f2;
+  color: #080808;
+}
+
+.premium-button--utility {
+  --pb-height: 42px;
+  --pb-icon-size: 32px;
+  --pb-inset: 4px;
+  min-width: 0;
+  padding: 0 calc(var(--pb-icon-size) + var(--pb-inset) + 14px) 0 16px;
+  border-color: rgba(255,255,255,.24);
+  background: rgba(9,9,10,.52);
+  color: #d2d2d2;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.055), 0 10px 26px rgba(0,0,0,.14);
+  font-size: 10px;
+  backdrop-filter: blur(12px);
+}
+
+.premium-button--utility .premium-button__orbit {
+  border-color: rgba(255,255,255,.18);
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 5px 14px rgba(0,0,0,.18);
+}
+
+.premium-button:is(:hover, :focus-visible) {
+  border-color: rgba(255,255,255,.98);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 17px 42px rgba(0,0,0,.26);
+  transform: translate3d(0,-2px,0);
+}
+
+.premium-button:is(:hover, :focus-visible)::before { opacity: 1; }
+.premium-button:is(:hover, :focus-visible)::after {
+  opacity: .8;
+  transform: translateX(760%) rotate(18deg);
+}
+
+.premium-button:is(:hover, :focus-visible) .premium-button__orbit {
+  transform: translate3d(calc(-1 * var(--pb-travel)), -50%, 0) rotate(-5deg);
+}
+
+.premium-button:is(:hover, :focus-visible) .premium-button__label {
+  transform: translateX(calc(var(--pb-icon-size) * .72));
+}
+
+.premium-button:is(:hover, :focus-visible) .premium-button__orbit svg {
+  transform: translate(1px,-1px) rotate(4deg);
+}
+
+.premium-button--light:is(:hover, :focus-visible) {
+  background: linear-gradient(180deg, #fff, #f7f7f4);
+  color: #080808;
+}
+
+.premium-button--light:is(:hover, :focus-visible) .premium-button__orbit {
+  background: #111;
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.14);
+}
+
+.premium-button--dark:is(:hover, :focus-visible),
+.premium-button--focus:is(:hover, :focus-visible),
+.premium-button--utility:is(:hover, :focus-visible) {
+  background: #f7f7f4;
+  color: #080808;
+}
+
+.premium-button--dark:is(:hover, :focus-visible) .premium-button__orbit,
+.premium-button--focus:is(:hover, :focus-visible) .premium-button__orbit,
+.premium-button--utility:is(:hover, :focus-visible) .premium-button__orbit {
+  border-color: #151515;
+  background: #090909;
+  color: #fff;
+}
+
+.premium-button:active {
+  transform: translate3d(0,0,0) scale(.975);
+  transition-duration: .12s;
+}
+
+.premium-button:focus-visible {
+  outline: 2px solid rgba(255,255,255,.95);
+  outline-offset: 3px;
+}
+
+.premium-button[disabled],
+.premium-button[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: .5;
+  pointer-events: none;
+}
+
+/* Context sizing */
+.header-actions .premium-button {
+  --pb-height: 44px;
+  --pb-icon-size: 34px;
+  --pb-inset: 4px;
+  min-width: 126px;
+  min-height: var(--pb-height);
+  padding: 0 calc(var(--pb-icon-size) + 17px) 0 16px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 720;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+.hero .eyebrow.premium-button {
+  --pb-height: 38px;
+  --pb-icon-size: 28px;
+  --pb-inset: 4px;
+  min-width: 0;
+  min-height: var(--pb-height);
+  margin: 0 auto 25px;
+  padding: 0 calc(var(--pb-icon-size) + 14px) 0 15px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 999px;
+  background: linear-gradient(140deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  color: #b9b9b9;
+  font-size: 9px;
+  font-weight: 640;
+  letter-spacing: .12em;
+}
+
+.hero .button-hero.premium-button {
+  min-width: 244px;
+  border-radius: 999px;
+}
+
+.intro-controls .premium-button {
+  --pb-height: 38px;
+  --pb-icon-size: 28px;
+  --pb-inset: 4px;
+  min-height: var(--pb-height);
+  padding: 0 calc(var(--pb-icon-size) + 14px) 0 14px;
+  border: 1px solid rgba(255,255,255,.17);
+  border-radius: 999px;
+  background: rgba(7,7,10,.54);
+  color: #aaa7b2;
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  backdrop-filter: blur(14px);
+}
+
+.intro-controls .premium-button:is(:hover, :focus-visible) {
+  border-color: rgba(255,255,255,.82);
+  background: rgba(247,247,244,.96);
+  color: #080808;
+}
+
+.faq-intro > a.premium-button {
+  display: inline-flex;
+  margin-top: 26px;
+  padding-bottom: 0;
+  border-bottom: 1px solid rgba(255,255,255,.24);
+  color: #d2d2d2;
+}
+
+.contact-links a.premium-button {
+  width: fit-content;
+  max-width: 100%;
+  color: #d2d2d2;
+  text-transform: none;
+}
+
+.back-link.premium-button {
+  margin-bottom: 60px;
+  color: #d2d2d2;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* Premium round controls for native button-like UI. */
+.faq-list summary span {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 50%;
+  background: rgba(255,255,255,.04);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 10px 24px rgba(0,0,0,.18);
+  backdrop-filter: blur(12px);
+}
+
+.faq-list details.is-open summary span {
+  border-color: #fff;
+  background: #fff;
+  color: #080808;
+  box-shadow: 0 12px 28px rgba(0,0,0,.25);
+  transform: rotate(45deg) scale(.92);
+}
+
+.menu-button {
+  transition: border-color .35s ease, box-shadow .45s ease, transform .35s cubic-bezier(.16,1,.3,1);
+}
+
+.menu-button:is(:hover, :focus-visible) {
+  border-color: #fff;
+  box-shadow: 0 10px 28px rgba(0,0,0,.24), 0 0 0 4px rgba(255,255,255,.07);
+  transform: translateY(-2px) rotate(2deg);
+}
+
+@media (max-width: 760px) {
+  .premium-button {
+    --pb-height: 52px;
+    --pb-icon-size: 40px;
+    --pb-inset: 5px;
+    max-width: 100%;
+    min-height: var(--pb-height);
+  }
+
+  .button-row .premium-button,
+  .cta-box .premium-button,
+  .contact-form .premium-button {
+    width: 100%;
+  }
+
+  .hero .button-row .premium-button {
+    width: auto;
+    min-width: 228px;
+  }
+
+  .hero .eyebrow.premium-button {
+    --pb-height: 36px;
+    --pb-icon-size: 27px;
+    min-height: var(--pb-height);
+    margin-bottom: 21px;
+    font-size: 7px;
+  }
+
+  .intro-controls {
+    gap: 10px;
+  }
+
+  .intro-controls .premium-button {
+    --pb-height: 36px;
+    --pb-icon-size: 27px;
+    min-height: var(--pb-height);
+    font-size: 7px;
+  }
+
+  .contact-links a.premium-button {
+    width: 100%;
+  }
+}
+
+/* v25 — three deliberately different button systems from the supplied videos. */
+
+/* 01 / FLOW: outlined monochrome capsule, full-surface inversion, free arrow. */
+.premium-button--flow {
+  --pb-icon-size: 19px;
+  border-color: rgba(255,255,255,.72);
+  background: rgba(4,4,4,.72);
+  color: #f7f7f4;
+  padding-right: 46px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 12px 32px rgba(0,0,0,.16);
+  backdrop-filter: blur(12px);
+}
+
+.premium-button--flow::before {
+  background: #f7f7f4;
+  opacity: 0;
+}
+
+.premium-button--flow::after {
+  display: none;
+}
+
+.premium-button--flow .premium-button__orbit {
+  width: var(--pb-icon-size);
+  height: var(--pb-icon-size);
+  border: 0;
+  background: transparent;
+  color: currentColor;
+  box-shadow: none;
+}
+
+.premium-button--flow .premium-button__orbit::before {
+  display: none;
+}
+
+.premium-button--flow:is(:hover, :focus-visible) {
+  border-color: #f7f7f4;
+  background: #f7f7f4;
+  color: #080808;
+  box-shadow: 0 17px 38px rgba(0,0,0,.26), 0 0 0 1px rgba(255,255,255,.1);
+}
+
+.premium-button--flow:is(:hover, :focus-visible)::before {
+  opacity: 1;
+}
+
+.premium-button--flow:is(:hover, :focus-visible) .premium-button__label {
+  transform: translateX(25px);
+}
+
+.premium-button--flow:is(:hover, :focus-visible) .premium-button__orbit {
+  color: #080808;
+  transform: translate3d(calc(-1 * var(--pb-travel)), -50%, 0) rotate(-8deg);
+}
+
+.button-dark.premium-button--flow {
+  border-color: #0a0a0a;
+  background: #0a0a0a;
+  color: #fff;
+}
+
+.button-dark.premium-button--flow:is(:hover, :focus-visible) {
+  border-color: #0a0a0a;
+  background: #fff;
+  color: #090909;
+}
+
+.premium-button--flow.premium-button--utility {
+  --pb-height: 42px;
+  --pb-icon-size: 18px;
+  --pb-inset: 13px;
+  padding-right: 45px;
+  background: rgba(7,7,8,.58);
+}
+
+.premium-button--flow.premium-button--utility .premium-button__orbit {
+  border: 0;
+  background: transparent;
+  color: currentColor;
+  box-shadow: none;
+}
+
+.premium-button--flow.premium-button--utility:is(:hover, :focus-visible) {
+  background: #f7f7f4;
+  color: #080808;
+}
+
+.hero .eyebrow.premium-button--flow {
+  --pb-icon-size: 16px;
+  --pb-inset: 12px;
+  padding-right: 42px;
+}
+
+/* 02 / ORBIT: white capsule with a dark circular control travelling edge-to-edge. */
+.premium-button--orbit {
+  --pb-icon-size: 42px;
+  --pb-inset: 5px;
+  border-color: rgba(255,255,255,.94);
+  background: linear-gradient(180deg,#fff 0%,#ecece8 100%);
+  color: #080808;
+  box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 rgba(0,0,0,.09), 0 13px 34px rgba(0,0,0,.2);
+}
+
+.premium-button--orbit::before {
+  background: radial-gradient(circle 100px at var(--pb-pointer-x) var(--pb-pointer-y), rgba(255,255,255,.76), transparent 72%);
+}
+
+.premium-button--orbit .premium-button__orbit {
+  border-color: rgba(255,255,255,.13);
+  background: #0a0a0a;
+  color: #fff;
+  box-shadow: 0 7px 18px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.16);
+}
+
+.premium-button--orbit:is(:hover, :focus-visible) {
+  border-color: #fff;
+  background: linear-gradient(180deg,#fff,#f7f7f4);
+  color: #080808;
+}
+
+.premium-button--orbit:is(:hover, :focus-visible) .premium-button__orbit {
+  border-color: #151515;
+  background: #0a0a0a;
+  color: #fff;
+  transform: translate3d(calc(-1 * var(--pb-travel)), -50%, 0) rotate(-8deg);
+}
+
+.premium-button--orbit:is(:hover, :focus-visible) .premium-button__label {
+  transform: translateX(calc(var(--pb-icon-size) * .72));
+}
+
+/* 03 / MORPH: a floating violet arrow expands into the “Подробнее” pill. */
+.premium-button--morph {
+  --pb-closed-size: 54px;
+  --pb-icon-size: 40px;
+  --pb-inset: 7px;
+  width: var(--pb-closed-size);
+  min-width: var(--pb-closed-size);
+  max-width: 182px;
+  padding: 0;
+  border-color: transparent;
+  background: transparent;
+  color: #fff;
+  box-shadow: none;
+  perspective: 600px;
+  transition:
+    width .76s cubic-bezier(.16,1,.3,1),
+    color .45s ease,
+    transform .35s cubic-bezier(.16,1,.3,1);
+}
+
+.premium-button--morph::before {
+  inset: 0;
+  border: 1px solid rgba(197,186,255,.48);
+  background:
+    radial-gradient(circle 110px at var(--pb-pointer-x) var(--pb-pointer-y), rgba(255,255,255,.2), transparent 68%),
+    linear-gradient(135deg,#3213a7 0%,#5933dc 48%,#7a58ff 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.24), 0 16px 36px rgba(43,20,141,.28);
+  opacity: 1;
+  transform: scaleX(1);
+  transform-origin: center;
+  transition: border-color .4s ease, box-shadow .55s ease, background .55s ease;
+}
+
+.premium-button--morph::after {
+  display: none;
+}
+
+.premium-button--morph .premium-button__label {
+  position: absolute;
+  left: 22px;
+  opacity: 0;
+  filter: blur(7px);
+  transform: translateX(-9px) scale(.96);
+  text-shadow: 0 1px 12px rgba(0,0,0,.25);
+}
+
+.premium-button--morph .premium-button__orbit {
+  border-color: rgba(255,255,255,.32);
+  background: rgba(8,6,20,.32);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.17), 0 8px 20px rgba(18,8,65,.28);
+  backdrop-filter: blur(8px);
+}
+
+.premium-button--morph:is(:hover, :focus-visible) {
+  width: 182px;
+  border-color: transparent;
+  background: transparent;
+  color: #fff;
+  box-shadow: none;
+}
+
+.premium-button--morph:is(:hover, :focus-visible)::before {
+  border-color: rgba(215,207,255,.75);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 18px 42px rgba(73,34,229,.36);
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.premium-button--morph:is(:hover, :focus-visible) .premium-button__label {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateX(0) scale(1);
+}
+
+.premium-button--morph:is(:hover, :focus-visible) .premium-button__orbit {
+  border-color: rgba(255,255,255,.42);
+  background: rgba(18,8,66,.22);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.17), 0 8px 20px rgba(18,8,65,.28);
+  transform: translate3d(0, -50%, 0) rotate(-4deg) scale(1.03);
+}
+
+@media (max-width: 760px) {
+  .premium-button--flow {
+    --pb-icon-size: 19px;
+    padding-right: 46px;
+  }
+
+  .premium-button--orbit {
+    --pb-icon-size: 40px;
+  }
+
+  .premium-button--morph {
+    --pb-icon-size: 40px;
+  }
+
+  .premium-button--flow.premium-button--utility,
+  .hero .eyebrow.premium-button--flow {
+    --pb-icon-size: 17px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .faq-intro > a.premium-button {
+    transform: none;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .faq-intro > a.premium-button::before,
+  .faq-intro > a.premium-button::after {
+    display: none;
+  }
+
+  .faq-intro > a.premium-button:is(:hover, :focus-visible) {
+    border-color: rgba(255,255,255,.72);
+    background: rgba(4,4,4,.72);
+    color: #f7f7f4;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 12px 32px rgba(0,0,0,.16);
+    transform: none;
+  }
+
+  .faq-intro > a.premium-button:is(:hover, :focus-visible) .premium-button__label {
+    transform: none;
+  }
+
+  .faq-intro > a.premium-button:is(:hover, :focus-visible) .premium-button__orbit {
+    color: currentColor;
+    transform: translate3d(0, -50%, 0);
+  }
+
+  .faq-list summary span {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .premium-button--morph {
+    width: 182px;
+    min-width: 182px;
+  }
+
+  .premium-button--morph .premium-button__label {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-button--morph::before,
+  .premium-button--morph .premium-button__label,
+  .premium-button--morph .premium-button__orbit {
+    transition-duration: .01ms !important;
+  }
+}

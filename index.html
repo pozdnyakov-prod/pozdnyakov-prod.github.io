@@ -1,14 +1,361 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>pozdnyakov-prod</title>
-<meta http-equiv="refresh" content="0; url=me/">
-<link rel="canonical" href="me/">
-<style>body{background:#0a0a0a;color:#fff;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}a{color:#fff}</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050505">
+  <meta name="description" content="Pozdnyakov Prod — контент и AI-маркетинг для дизайнеров: позиционирование, личный бренд, упаковка профиля и контент-система.">
+  <title>Pozdnyakov Prod — контент и AI-маркетинг для дизайнеров</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css?v=63">
+  <link rel="stylesheet" href="horizon-v2.css?v=35">
+  <link rel="stylesheet" href="premium-buttons.css?v=38">
+  <link rel="stylesheet" href="soft-light-cursor.css?v=29">
+  <link rel="stylesheet" href="pp.css?v=1">
 </head>
-<body>
-<a href="me/">pozdnyakov-prod</a>
+<body class="intro-active">
+  <section class="intro" id="intro" aria-label="Интро Pozdnyakov Prod">
+    <audio id="introAudio" src="assets/intro-music.mp3" preload="auto" playsinline></audio>
+    <div class="intro-horizon" aria-hidden="true">
+      <span class="intro-glow intro-glow-wide"></span>
+      <span class="intro-glow intro-glow-violet"></span>
+      <span class="intro-glow intro-glow-white"></span>
+      <span class="intro-moon"></span>
+    </div>
+    <div class="intro-content">
+      <p class="intro-welcome intro-type" data-type-start="350" data-type-step="45">Welcome to the</p>
+      <h1 class="intro-wordmark intro-type" data-type-start="1100" data-type-step="60">Pozdnyakov Prod</h1>
+      <p class="intro-subline intro-type" data-type-start="2100" data-type-step="35">Content &amp; AI marketing for designers</p>
+      <p class="intro-capabilities intro-type" data-type-start="3400" data-type-step="28">Positioning · Personal Brand · Content · Threads</p>
+    </div>
+    <div class="intro-progress" aria-hidden="true"><i><b></b></i></div>
+    <div class="intro-controls">
+      <button class="sound-button" id="soundButton" type="button" aria-pressed="false">Включить музыку</button>
+      <button class="skip-button" id="skipIntro" type="button">Пропустить</button>
+    </div>
+  </section>
+
+  <div class="site-shell" id="top">
+    <header class="site-header" id="siteHeader">
+      <a class="brand" href="#top" aria-label="Pozdnyakov Prod — на главную">
+        <span class="brand-mark">PP</span>
+        <span>Pozdnyakov Prod</span>
+      </a>
+      <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span>
+        <span class="sr-only">Открыть меню</span>
+      </button>
+      <nav class="main-nav" id="mainNav" aria-label="Основная навигация">
+        <a href="#services">Услуги</a>
+        <a href="#process">Процесс</a>
+        <a href="#cases">Кейсы</a>
+        <a href="#pricing">Цены</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="header-actions">
+        <a class="header-contact" href="#contact">Контакты</a>
+        <a class="header-cta" href="#audit">Мини-аудит</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero section" id="hero" aria-labelledby="heroTitle">
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-horizon" aria-hidden="true"><span></span></div>
+        <div class="hero-layout container">
+          <div class="hero-copy">
+            <p class="eyebrow hero-kicker">CONTENT &amp; AI MARKETING FOR DESIGNERS</p>
+            <h1 id="heroTitle">
+              <span class="hero-line"><span>Убираем точки, где</span></span>
+              <span class="hero-line"><span>теряются заказчики</span></span>
+            </h1>
+            <p class="hero-lead">Разбираем, где заказчик не понимает, чем дизайнер отличается, не доверяет или не доходит до сообщения — и собираем позиционирование, профиль и контент вокруг результата.</p>
+            <div class="button-row">
+              <a class="button button-hero" href="#audit">Получить мини-аудит</a>
+            </div>
+          </div>
+        </div>
+        <a class="hero-scroll" href="#manifesto"><span>Scroll</span><i></i></a>
+      </section>
+
+      <div class="marquee" aria-label="Направления Pozdnyakov Prod">
+        <div class="marquee-track">
+          <div class="marquee-group" aria-hidden="true"><span>POSITIONING</span><i></i><span>PERSONAL BRAND</span><i></i><span>PROFILE</span><i></i><span>CONTENT</span><i></i><span>THREADS</span><i></i></div>
+          <div class="marquee-group" aria-hidden="true"><span>POSITIONING</span><i></i><span>PERSONAL BRAND</span><i></i><span>PROFILE</span><i></i><span>CONTENT</span><i></i><span>THREADS</span><i></i></div>
+        </div>
+      </div>
+
+      <section class="manifesto section container" id="manifesto">
+        <p class="section-index">01 / Позиционирование</p>
+        <p class="manifesto-text reveal">Не просто портфолио. Не просто посты. <span>Система, которая ведёт заказчика от первого касания до сообщения.</span></p>
+      </section>
+
+      <section class="section container" id="problems">
+        <div class="section-heading reveal">
+          <div><p class="section-index">02 / Где теряются заказчики</p><h2>Работы могут быть сильными. Путь до них — непонятным.</h2></div>
+          <p>Чаще всего заказчик уходит не из-за уровня работ, а между первым просмотром профиля и решением написать.</p>
+        </div>
+        <div class="comparison reveal">
+          <div class="comparison-column muted-column">
+            <p class="comparison-label">Сейчас</p>
+            <div><span>01</span><p>Сильное портфолио, но отличие не считывается.</p></div>
+            <div><span>02</span><p>Непонятно, для кого вы и какие задачи решаете.</p></div>
+            <div><span>03</span><p>Контент выходит от случая к случаю и не ведёт к заказу.</p></div>
+            <div><span>04</span><p>Чтобы написать, контакты приходится искать.</p></div>
+          </div>
+          <div class="comparison-column light-column">
+            <p class="comparison-label">После Pozdnyakov Prod</p>
+            <div><span>01</span><p>Оффер понятен с первых секунд.</p></div>
+            <div><span>02</span><p>Ниша и тип задач названы прямо.</p></div>
+            <div><span>03</span><p>Контент снимает сомнения и ведёт дальше.</p></div>
+            <div><span>04</span><p>Следующий шаг до сообщения очевиден.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container" id="audience">
+        <div class="section-heading compact reveal">
+          <div><p class="section-index">03 / Для кого</p><h2>Дизайнеры на разных этапах роста</h2></div>
+        </div>
+        <div class="bento-grid">
+          <article class="bento-card bento-wide reveal"><span class="card-number">01</span><div><p class="card-kicker">Фрилансер</p><h3>Сильные работы, но слабая упаковка</h3><p>Помогаем ясно показать, что вы делаете, для кого и чем отличаетесь от других дизайнеров.</p></div><span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M5 13 13 5M7 5h6v6"/></svg></span></article>
+          <article class="bento-card reveal"><span class="card-number">02</span><div><p class="card-kicker">UI/UX и веб</p><h3>Кейсы есть — заказчик их не понимает</h3><p>Переводим кейсы с языка дизайна на язык задач бизнеса.</p></div></article>
+          <article class="bento-card reveal"><span class="card-number">03</span><div><p class="card-kicker">Бренд и графика</p><h3>Выбирают по цене, а не по уровню</h3><p>Выстраиваем позиционирование, которое объясняет ценность до разговора о цене.</p></div></article>
+          <article class="bento-card bento-wide reveal"><span class="card-number">04</span><div><p class="card-kicker">Эксперт</p><h3>Есть опыт, но нет личного бренда</h3><p>Связываем позиционирование, профиль, контент и Threads в одну систему.</p></div><span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M5 13 13 5M7 5h6v6"/></svg></span></article>
+        </div>
+      </section>
+
+      <section class="section container" id="services">
+        <div class="section-heading reveal">
+          <div><p class="section-index">04 / Решение</p><h2>Собираем только то, что влияет на выбранную задачу</h2></div>
+          <p>Не продаём инструменты отдельно от смысла. Сначала определяем точку потери, затем проектируем связку.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card reveal"><span>01</span><div class="feature-icon">✦</div><h3>Аудит и стратегия</h3><p>Диагностика профиля, оффера, портфолио, контента и точки обращения.</p></article>
+          <article class="feature-card reveal"><span>02</span><div class="feature-icon">Aa</div><h3>Позиционирование</h3><p>Кто вы, для кого работаете и почему выбирают вас, а не другого дизайнера.</p></article>
+          <article class="feature-card reveal"><span>03</span><div class="feature-icon">◫</div><h3>Упаковка профиля</h3><p>Шапка, закрепы, структура портфолио и понятный следующий шаг.</p></article>
+          <article class="feature-card reveal"><span>04</span><div class="feature-icon">⌁</div><h3>Контент-система</h3><p>Рубрики, темы и план публикаций, который ведёт к сообщению.</p></article>
+          <article class="feature-card reveal"><span>05</span><div class="feature-icon">→</div><h3>Threads</h3><p>Форматы и темы коротких постов, которые показывают экспертность.</p></article>
+          <article class="feature-card reveal"><span>06</span><div class="feature-icon">◎</div><h3>AI-маркетинг</h3><p>AI ускоряет идеи, тексты и визуалы. Каждый результат проверяет человек.</p></article>
+        </div>
+      </section>
+
+      <section class="section stats-section">
+        <div class="container">
+          <p class="section-index reveal">05 / Рабочая система</p>
+          <div class="stats-grid reveal">
+            <div><strong data-count="6">6</strong><span>направлений<br>работы</span></div>
+            <div><strong data-count="5">5</strong><span>этапов<br>проекта</span></div>
+            <div><strong data-count="3" data-prefix="2–">2–3</strong><span>точки потери<br>в мини-аудите</span></div>
+            <div><strong data-count="1">1</strong><span>цельный путь<br>заказчика</span></div>
+          </div>
+          <p class="stats-note">Это структура работы, а не обещание конкретного количества заказов или заявок.</p>
+        </div>
+      </section>
+
+      <section class="section container" id="process">
+        <div class="section-heading reveal">
+          <div><p class="section-index">06 / Процесс</p><h2>От диагностики — к работающему пути заказчика</h2></div>
+          <p>Каждый этап заканчивается понятным результатом и согласованием следующего шага.</p>
+        </div>
+        <div class="stepper">
+          <article class="step reveal"><span>01</span><div><h3>Диагностика</h3><p>Смотрим на профиль глазами нового заказчика и находим места непонимания, недоверия и лишнего трения.</p></div></article>
+          <article class="step reveal"><span>02</span><div><h3>Стратегия</h3><p>Фиксируем главную задачу, позиционирование, приоритеты и критерии готовности.</p></div></article>
+          <article class="step reveal"><span>03</span><div><h3>Производство</h3><p>Создаём оффер, упаковку профиля и контент-систему в согласованном составе.</p></div></article>
+          <article class="step reveal"><span>04</span><div><h3>Проверка и запуск</h3><p>Проверяем факты, тексты, оформление, ссылки, CTA и путь заказчика.</p></div></article>
+          <article class="step reveal"><span>05</span><div><h3>Сопровождение</h3><p>Передаём систему, объясняем работу и при необходимости продолжаем улучшение.</p></div></article>
+        </div>
+      </section>
+
+      <section class="section container" id="why">
+        <div class="section-heading reveal">
+          <div><p class="section-index">07 / Почему Pozdnyakov Prod</p><h2>Один дизайнер. Два разных подхода.</h2></div>
+          <p>Двигайте ползунок: слева — обычное продвижение отдельными постами, справа — единая система Pozdnyakov Prod.</p>
+        </div>
+
+        <div class="why-stage">
+          <div class="dw-compare reveal" data-dw-compare style="--compare: 50%;">
+            <article class="dw-compare__scene dw-compare__scene--before" aria-label="Обычный подход">
+              <div class="dw-compare__texture" aria-hidden="true"></div>
+              <div class="dw-compare__copy">
+                <p class="dw-compare__kicker">Отдельные действия</p>
+                <h3>Красиво по частям.<br>Непонятно целиком.</h3>
+                <ul>
+                  <li>Посты без единой цели</li>
+                  <li>Портфолио, профиль и Threads живут отдельно</li>
+                  <li>Заказчик сам ищет следующий шаг</li>
+                </ul>
+              </div>
+              <div class="dw-compare__status">
+                <span>Путь до заказа</span>
+                <strong>Разорван</strong>
+                <i>Контент&nbsp;&nbsp;→&nbsp;&nbsp;?&nbsp;&nbsp;→&nbsp;&nbsp;заказ</i>
+              </div>
+            </article>
+
+            <article class="dw-compare__scene dw-compare__scene--after" aria-label="Подход Pozdnyakov Prod">
+              <div class="dw-compare__aurora" aria-hidden="true"></div>
+              <div class="dw-compare__monogram" aria-hidden="true">PP</div>
+              <div class="dw-compare__copy">
+                <p class="dw-compare__kicker">Content / AI system</p>
+                <h3>Каждый элемент ведёт<br>к следующему шагу.</h3>
+                <ul>
+                  <li>Начинаем с точки, где теряется заказчик</li>
+                  <li>Связываем позиционирование, профиль и контент</li>
+                  <li>Ведём заказчика до сообщения</li>
+                </ul>
+              </div>
+              <div class="dw-compare__status">
+                <span>Путь до заказа</span>
+                <strong>Единая система</strong>
+                <i>Увидел&nbsp;&nbsp;→&nbsp;&nbsp;понял&nbsp;&nbsp;→&nbsp;&nbsp;написал</i>
+              </div>
+            </article>
+
+            <div class="dw-compare__labels" aria-hidden="true">
+              <div class="dw-compare__side-label dw-compare__side-label--before"><span>Before</span><b>Обычный подход</b></div>
+              <div class="dw-compare__side-label dw-compare__side-label--after"><span>After</span><b>Pozdnyakov Prod</b></div>
+            </div>
+            <div class="dw-compare__divider" aria-hidden="true">
+              <span class="dw-compare__drag-label">Двигайте</span>
+              <span class="dw-compare__handle"><i>‹</i><i>›</i></span>
+            </div>
+            <input class="dw-compare__range" type="range" min="0" max="100" value="50" aria-label="Сравнить обычный подход и Pozdnyakov Prod" aria-valuetext="Поровну: обычный подход и Pozdnyakov Prod">
+          </div>
+
+          <aside class="system-chart reveal" data-system-chart aria-label="Условный индекс связности системы">
+            <div class="system-chart__head">
+              <div><p>System index</p><h3>Связность пути заказчика</h3></div>
+              <span>0–100</span>
+            </div>
+            <div class="system-chart__summary"><strong data-chart-summary>0</strong><span>/ 100</span><p>Pozdnyakov Prod</p></div>
+            <div class="system-chart__plot">
+              <div class="system-chart__scale" aria-hidden="true"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
+              <div class="system-chart__guides" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="system-chart__bars">
+                <div class="system-chart__column system-chart__column--usual" data-chart-value="8" style="--chart-target: 8%;">
+                  <span data-chart-number>0</span>
+                  <div class="system-chart__track"><i></i></div>
+                  <p>Обычный<br>подход</p>
+                </div>
+                <div class="system-chart__column system-chart__column--dw" data-chart-value="95" style="--chart-target: 95%;">
+                  <span data-chart-number>0</span>
+                  <div class="system-chart__track"><i></i></div>
+                  <p>Pozdnyakov<br>Prod</p>
+                </div>
+              </div>
+            </div>
+            <p class="system-chart__note">Условная визуальная модель системы, не статистика продаж.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section journey-section" id="journey">
+        <div class="container">
+          <div class="section-heading compact reveal"><div><p class="section-index">08 / Customer journey</p><h2>Один маршрут без провалов</h2></div></div>
+          <div class="journey-line reveal">
+            <article><span>01</span><h3>Увидел</h3><p>Пост или работа привлекли нужного человека.</p></article>
+            <article><span>02</span><h3>Заинтересовался</h3><p>Понял, какие задачи вы решаете и для кого.</p></article>
+            <article><span>03</span><h3>Доверился</h3><p>Увидел процесс, кейсы и ответы на вопросы.</p></article>
+            <article><span>04</span><h3>Написал</h3><p>Нашёл понятную кнопку и легко начал диалог.</p></article>
+            <article><span>05</span><h3>Заказал</h3><p>Получил следующий шаг и согласовал условия.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container cases-section" id="cases">
+        <div class="cases-layout">
+          <div class="cases-intro reveal">
+            <p class="section-index">09 / Кейсы</p>
+            <h2>Реальные разборы без выдуманных цифр</h2>
+            <p>Наведите курсор на вертикальную вкладку или нажмите на неё, чтобы раскрыть материал.</p>
+          </div>
+
+          <div class="case-accordion reveal" data-case-accordion>
+            <article class="case-accordion__item case-accordion__item--soon is-active" data-case-item>
+              <button class="case-accordion__tab" type="button" aria-expanded="true">
+                <span>Кейсы дизайнеров</span>
+              </button>
+              <div class="case-accordion__panel" aria-hidden="false">
+                <p class="case-accordion__meta">Скоро · Designers</p>
+                <h3>Кейсы дизайнеров появятся здесь</h3>
+                <p>Сейчас работаем с первыми проектами в нише. Публикуем только реальные разборы — без вымышленных результатов и неподтверждённых цифр.</p>
+                <div class="case-accordion__tags"><span>Позиционирование</span><span>Профиль</span><span>Контент</span></div>
+                <a class="button button-light case-accordion__link" href="#audit">Получить мини-аудит</a>
+              </div>
+            </article>
+
+            <article class="case-accordion__item case-accordion__item--archive" data-case-item>
+              <button class="case-accordion__tab" type="button" aria-expanded="false">
+                <span>Об основателе</span>
+              </button>
+              <div class="case-accordion__panel" aria-hidden="true" inert>
+                <p class="case-accordion__meta">Pozdnyakov Prod · Витрина</p>
+                <h3>Кто стоит за Pozdnyakov Prod</h3>
+                <p>Короткая страница об основателе: подход, принципы работы и проекты.</p>
+                <a class="button button-light case-accordion__link" href="me/">Открыть витрину</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container" id="pricing">
+        <div class="section-heading reveal">
+          <div><p class="section-index">10 / Услуга и цена</p><h2>Одна услуга вместо набора пакетов</h2></div>
+          <p>Состав уточняется после диагностики профиля. Ниже — что входит в работу и базовая цена.</p>
+        </div>
+        <div class="pricing-grid pricing-grid--single">
+          <article class="price-card featured reveal">
+            <div class="price-badge">Основная услуга</div>
+            <div><p class="price-label">Личный бренд дизайнера</p><h3>Заказчик понимает, почему вы</h3><p class="price-description">Позиционирование, упаковка профиля и контент-система, связанные одной логикой и следующим шагом.</p></div>
+            <p class="price">19 990 ₽</p>
+            <ul><li>Позиционирование и оффер</li><li>Упаковка профиля</li><li>Контент-система, включая Threads</li></ul>
+            <a class="button button-dark" href="packages.html#service">Подробнее</a>
+          </article>
+        </div>
+        <p class="pricing-note reveal">Точный состав, сроки и итоговая стоимость фиксируются после разбора задачи. Конкретное количество заказов или заявок не гарантируется.</p>
+      </section>
+
+      <section class="section container faq-section" id="faq">
+        <div class="faq-intro reveal"><p class="section-index">11 / FAQ</p><h2>Частые вопросы</h2><p>Не нашли ответ? Напишите в Telegram — разберём вашу задачу.</p><a href="https://t.me/vlpozd" target="_blank" rel="noreferrer">Задать вопрос</a></div>
+        <div class="faq-list reveal">
+          <details class="is-open" open><summary>С чего начинается работа?<span>+</span></summary><div class="faq-answer"><div><p>С короткой диагностики. Смотрим профиль, оффер, портфолио, контент и путь до сообщения, затем определяем главную точку потери.</p></div></div></details>
+          <details><summary>Можно начать только с одной проблемы?<span>+</span></summary><div class="faq-answer"><div><p>Да. Часто эффективнее сначала устранить один главный барьер: непонятный оффер, слабое доверие, хаотичный контент или неочевидный контакт.</p></div></div></details>
+          <details><summary>Что понадобится от меня?<span>+</span></summary><div class="faq-answer"><div><p>Ссылки на профиль и портфолио, описание услуг и заказчиков, реальные отзывы и результаты, а также единая обратная связь по согласованию.</p></div></div></details>
+          <details><summary>Вы гарантируете рост заявок?<span>+</span></summary><div class="faq-answer"><div><p>Нет. На заявки влияют спрос, цены, уровень работ, регулярность контента и то, как вы ведёте диалог. Мы уменьшаем потери: делаем ценность понятнее, усиливаем доверие и сокращаем путь до сообщения.</p></div></div></details>
+          <details><summary>Как формируется стоимость?<span>+</span></summary><div class="faq-answer"><div><p>Базовая цена указана выше. Итог зависит от исходного состояния профиля и объёма работы и фиксируется до начала.</p></div></div></details>
+          <details><summary>Что происходит после запуска?<span>+</span></summary><div class="faq-answer"><div><p>Мы проверяем систему, передаём материалы и объясняем, как ими пользоваться. Сопровождение можно согласовать отдельно.</p></div></div></details>
+        </div>
+      </section>
+
+      <section class="section container" id="audit">
+        <div class="cta-box reveal">
+          <div class="cta-grid" aria-hidden="true"></div>
+          <div><p class="section-index">12 / Следующий шаг</p><h2>Покажем 2–3 точки, где ваш профиль теряет заказчика</h2><p>Сначала разберём путь от первого просмотра до сообщения и предложим решение под главную проблему.</p></div>
+          <a class="button button-light" href="https://t.me/vlpozd?text=Здравствуйте.%20Хочу%20получить%20мини-аудит%20моего%20профиля%20дизайнера%20и%20понять,%20где%20теряются%20заказчики." target="_blank" rel="noreferrer">Получить мини-аудит</a>
+        </div>
+      </section>
+
+      <section class="section container contact-section" id="contact">
+        <div class="contact-copy reveal"><p class="section-index">13 / Контакты</p><h2>Начнём с вашей задачи</h2><p>Опишите, что сейчас не устраивает в профиле. Форма подготовит сообщение и откроет диалог с Pozdnyakov Prod в Telegram.</p><div class="contact-links"><a href="https://t.me/vlpozd" target="_blank" rel="noreferrer">Telegram</a><a href="mailto:ai.marketing.digital@mail.ru">E-mail</a></div></div>
+        <form class="contact-form reveal" id="contactForm">
+          <label><span>Ваше имя</span><input name="name" type="text" autocomplete="name" required placeholder="Как к вам обращаться"></label>
+          <label><span>Направление</span><select name="business" required><option value="" disabled selected>Выберите вариант</option><option>UI/UX-дизайнер</option><option>Веб-дизайнер</option><option>Графический / бренд-дизайнер</option><option>Моушн / 3D-дизайнер</option><option>Другое направление дизайна</option></select></label>
+          <label><span>Ссылка на профиль или портфолио <small>(если имеется)</small></span><input name="link" type="url" aria-required="false" placeholder="https://..."></label>
+          <label><span>Что хотите улучшить, добавить, доработать</span><textarea name="task" rows="4" required placeholder="Коротко опишите задачу"></textarea></label>
+          <button class="button button-light" type="submit">Подготовить сообщение</button>
+          <p class="form-note">После нажатия откроется Telegram с заполненным текстом. Данные не сохраняются на сайте.</p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer container">
+      <div class="footer-top"><a class="footer-brand" href="#top">Pozdnyakov<br>Prod</a><p>Content and AI marketing<br>for designers.</p></div>
+      <div class="footer-bottom"><span>© <span id="year">2026</span> Pozdnyakov Prod</span><div><a href="#services">Услуги</a><a href="#pricing">Цены</a><a href="me/">Об основателе</a><a href="https://t.me/vlpozd" target="_blank" rel="noreferrer">Telegram</a></div></div>
+    </footer>
+  </div>
+
+  <script src="script.js?v=50"></script>
 </body>
 </html>
