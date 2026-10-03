@@ -1,7 +1,7 @@
-import { ChatsCircle, Path, Stack, Tag } from "@phosphor-icons/react"
+import { Briefcase, CircleHelp, Route, Tag, User } from "lucide-react"
 
-import { NavBar, type NavItem } from "@/components/ui/tubelight-navbar"
-import { Hero } from "@/components/sections/hero"
+import { NavBar } from "@/components/ui/tubelight-navbar"
+import { LandingHero } from "@/components/sections/hero"
 import { Problem } from "@/components/sections/problem"
 import { Service } from "@/components/sections/service"
 import { BeforeAfter } from "@/components/sections/before-after"
@@ -9,13 +9,14 @@ import { Process } from "@/components/sections/process"
 import { About } from "@/components/sections/about"
 import { Pricing } from "@/components/sections/pricing"
 import { Faq } from "@/components/sections/faq"
-import { Footer } from "@/components/sections/footer"
+import { SiteFooter } from "@/components/sections/site-footer"
 
-const navItems: NavItem[] = [
-  { name: "Услуга", url: "#service", icon: Stack },
-  { name: "Процесс", url: "#process", icon: Path },
+const navItems = [
+  { name: "Услуга", url: "#service", icon: Briefcase },
+  { name: "Процесс", url: "#process", icon: Route },
+  { name: "Обо мне", url: "#about", icon: User },
   { name: "Цена", url: "#price", icon: Tag },
-  { name: "Вопросы", url: "#faq", icon: ChatsCircle },
+  { name: "Вопросы", url: "#faq", icon: CircleHelp },
 ]
 
 export default function App() {
@@ -23,7 +24,7 @@ export default function App() {
     <>
       <NavBar items={navItems} />
       <main id="top">
-        <Hero />
+        <LandingHero />
         <Problem />
         <Service />
         <BeforeAfter />
@@ -32,7 +33,7 @@ export default function App() {
         <Pricing />
         <Faq />
       </main>
-      <Footer />
+      <SiteFooter />
     </>
   )
 }

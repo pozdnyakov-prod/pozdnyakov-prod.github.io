@@ -1,58 +1,173 @@
-// Блок на основе Bento Grid, kokonutd (21st.dev).
-// Три плитки ровно под три части услуги; статусы, метрики и «Explore →» убраны.
-import type { Icon } from "@phosphor-icons/react"
-import { Crosshair, IdentificationCard, Notebook } from "@phosphor-icons/react"
+// Блок «Услуга» на основе bento-grid-01 (21st.dev). Сетка, цвета и анимации
+// плиток из промта; содержимое переписано под услугу.
+import { useEffect, useRef, useState } from "react"
+import { AnimatePresence, motion, useInView } from "motion/react"
+import {
+  Crosshair,
+  IdCard,
+  MessagesSquare,
+  Megaphone,
+  NotebookPen,
+  Package,
+} from "lucide-react"
 
-import { cn } from "@/lib/utils"
+// «Вы» пульсирует, как «Aa» в демо: про то, чем отличаетесь именно вы
+function TypeTester() {
+  const [scale, setScale] = useState(1)
 
-interface BentoItem {
-  title: string
-  description: string
-  icon: Icon
-  tags: string[]
-  className: string
-  tone: "ink" | "dots" | "soft"
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setScale((prev) => (prev === 1 ? 1.5 : 1))
+    }, 2000)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="flex items-center justify-center h-full">
+      <motion.span
+        className="font-serif text-6xl md:text-8xl text-white font-medium italic"
+        animate={{ scale }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      >
+        Вы
+      </motion.span>
+    </div>
+  )
 }
 
-const items: BentoItem[] = [
-  {
-    title: "Позиционирование и оффер",
-    description: "Чем вы отличаетесь и для кого работаете.",
-    icon: Crosshair,
-    tags: ["отличия", "аудитория"],
-    className: "md:col-span-2 md:min-h-[320px]",
-    tone: "ink",
-  },
-  {
-    title: "Упаковка профиля",
-    description: "Структура и тексты, которые объясняют ваш подход.",
-    icon: IdentificationCard,
-    tags: ["структура", "тексты"],
-    className: "md:min-h-[320px]",
-    tone: "dots",
-  },
-  {
-    title: "Контент-система",
-    description: "Схема, о чём и как писать, чтобы вести контент самостоятельно.",
-    icon: Notebook,
-    tags: ["о чём писать", "как писать"],
-    className: "md:col-span-3 md:flex-row md:items-end md:justify-between md:min-h-[240px]",
-    tone: "soft",
-  },
-]
+function LayoutAnimation() {
+  const [layout, setLayout] = useState(0)
 
-function Rings() {
-  // Простая геометрия для первой плитки: прицел из концентрических кругов.
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLayout((prev) => (prev + 1) % 3)
+    }, 2500)
+    return () => clearInterval(interval)
+  }, [])
+
+  const layouts = ["grid-cols-2", "grid-cols-3", "grid-cols-1"]
+
   return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute -right-16 -bottom-16 hidden h-72 w-72 sm:block"
-    >
-      {[100, 72, 44, 16].map((size) => (
-        <span
-          key={size}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-paper/20"
-          style={{ width: `${size}%`, height: `${size}%` }}
+    <div className="h-full flex items-center justify-center">
+      <motion.div
+        className={`grid ${layouts[layout]} gap-1.5 w-full max-w-[140px] h-full`}
+        layout
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      >
+        {[1, 2, 3].map((i) => (
+          <motion.div
+            key={i}
+            className="bg-white/20 rounded-md h-5 w-full"
+            layout
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          />
+        ))}
+      </motion.div>
+    </div>
+  )
+}
+
+function SpeedIndicator() {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.6 })
+  const [loading, setLoading] = useState(true)
+
+  // Загрузка стартует, когда плитка видна, иначе её никто не увидит
+  useEffect(() => {
+    if (!inView) return
+    const timeout = setTimeout(() => setLoading(false), 700)
+    return () => clearTimeout(timeout)
+  }, [inView])
+
+  return (
+    <div ref={ref} className="flex flex-col items-center justify-center h-full gap-4">
+      <div className="h-10 flex items-center justify-center overflow-hidden relative w-full">
+        <AnimatePresence mode="wait">
+          {loading ? (
+            <motion.div
+              key="loader"
+              className="h-8 w-24 bg-white/10 rounded"
+              initial={{ opacity: 0.5 }}
+              animate={{ opacity: [0.4, 0.7, 0.4] }}
+              exit={{ opacity: 0, y: -20, position: "absolute", transition: { duration: 0.2 } }}
+              transition={{ duration: 1, repeat: Infinity }}
+            />
+          ) : (
+            <motion.span
+              key="text"
+              initial={{ y: 20, opacity: 0, filter: "blur(5px)" }}
+              animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+              className="text-3xl md:text-4xl font-sans font-medium text-white"
+            >
+              3–5 дней
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </div>
+      <span className="text-sm text-gray-400">от брифа до передачи</span>
+      <div className="w-full max-w-[120px] h-1.5 bg-white/10 rounded-full overflow-hidden">
+        <motion.div
+          className="h-full bg-white rounded-full"
+          initial={{ width: 0 }}
+          animate={{ width: loading ? 0 : "100%" }}
+          transition={{ type: "spring", stiffness: 100, damping: 15, mass: 1 }}
+        />
+      </div>
+    </div>
+  )
+}
+
+// Три части услуги загораются по очереди, как замки в демо
+function SystemBadge() {
+  const parts = [Crosshair, IdCard, NotebookPen]
+  const [active, setActive] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActive((prev) => (prev + 1) % (parts.length + 1))
+    }, 800)
+    return () => clearInterval(interval)
+  }, [parts.length])
+
+  return (
+    <div className="flex items-center justify-center h-full gap-2">
+      {parts.map((Icon, i) => {
+        const on = i < active
+        return (
+          <motion.div
+            key={i}
+            className={`w-12 h-12 rounded-lg flex items-center justify-center ${
+              on ? "bg-white/20" : "bg-white/5"
+            }`}
+            animate={{ scale: on ? 1.1 : 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Icon className={`w-5 h-5 ${on ? "text-white" : "text-gray-600"}`} />
+          </motion.div>
+        )
+      })}
+    </div>
+  )
+}
+
+function ContentPulse() {
+  const [pulses] = useState([0, 1, 2, 3, 4])
+
+  return (
+    <div className="flex items-center justify-center h-full relative">
+      <Megaphone className="w-16 h-16 text-white/80 z-10" />
+      {pulses.map((pulse) => (
+        <motion.div
+          key={pulse}
+          className="absolute w-16 h-16 border-2 border-white/30 rounded-full"
+          initial={{ scale: 0.5, opacity: 1 }}
+          animate={{ scale: 3, opacity: 0 }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            delay: pulse * 0.8,
+            ease: "easeOut",
+          }}
         />
       ))}
     </div>
@@ -61,72 +176,149 @@ function Rings() {
 
 export function Service() {
   return (
-    <section id="service" className="border-t border-line px-4 py-20 sm:px-6 md:px-12 md:py-32">
-      <div className="mx-auto max-w-[1200px]">
-        <h2 className="max-w-[16ch] font-display text-[2.6rem] leading-[1.05] font-light tracking-[-0.015em] md:text-[4.2rem]">
+    <section
+      id="service"
+      className="bg-zinc-950 px-6 py-24 min-h-screen flex items-center justify-center"
+    >
+      <div className="max-w-7xl w-full mx-auto">
+        <motion.p
+          className="text-gray-400 text-sm uppercase tracking-widest mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          Услуга
+        </motion.p>
+        <motion.h2
+          className="font-serif text-4xl md:text-6xl text-white mb-10 md:mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.05 }}
+        >
           Три части одной системы
-        </h2>
+        </motion.h2>
 
-        <div className="mt-10 grid grid-cols-1 gap-3 md:mt-16 md:grid-cols-3">
-          {items.map((item) => {
-            const Icon = item.icon
-            const dark = item.tone === "ink"
-            return (
-              <article
-                key={item.title}
-                className={cn(
-                  "group relative flex flex-col justify-between gap-10 overflow-hidden border p-6 transition-transform duration-300 will-change-transform hover:-translate-y-0.5 md:p-9",
-                  dark ? "border-ink bg-ink text-paper" : "border-line",
-                  item.tone === "dots" && "bg-card",
-                  item.tone === "soft" && "bg-soft",
-                  item.className
-                )}
-              >
-                {item.tone === "dots" && (
-                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(10,10,10,0.09)_1px,transparent_1px)] bg-[length:6px_6px] opacity-60 transition-opacity duration-300 group-hover:opacity-100" />
-                )}
-                {dark && <Rings />}
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 auto-rows-[200px]">
+          {/* 1. Позиционирование, высокая 2x2 */}
+          <motion.div
+            className="md:col-span-2 md:row-span-2 row-span-2 bg-zinc-900 border border-zinc-800 rounded-xl p-8 flex flex-col hover:border-zinc-700 transition-colors cursor-pointer overflow-hidden"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.02, backgroundColor: "rgba(39, 39, 42, 1)" }}
+          >
+            <div className="flex-1">
+              <TypeTester />
+            </div>
+            <div className="mt-4">
+              <h3 className="font-serif text-2xl text-white font-medium">Позиционирование и оффер</h3>
+              <p className="text-gray-400 text-sm mt-1">Чем вы отличаетесь и для кого работаете.</p>
+            </div>
+          </motion.div>
 
-                <div
-                  className={cn(
-                    "relative flex h-10 w-10 items-center justify-center border",
-                    dark ? "border-paper/25" : "border-line bg-paper",
-                    item.tone === "soft" && "md:hidden"
-                  )}
-                >
-                  <Icon size={20} weight="light" aria-hidden="true" />
-                </div>
+          {/* 2. Упаковка профиля, 2x1 */}
+          <motion.div
+            className="md:col-span-2 bg-zinc-900 border border-zinc-800 rounded-xl p-8 flex flex-col hover:border-zinc-700 transition-colors cursor-pointer overflow-hidden"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            whileHover={{ scale: 0.98 }}
+          >
+            <div className="flex-1">
+              <LayoutAnimation />
+            </div>
+            <div className="mt-4">
+              <h3 className="font-serif text-2xl text-white font-medium">Упаковка профиля</h3>
+              <p className="text-gray-400 text-sm mt-1">Структура и тексты, которые объясняют ваш подход.</p>
+            </div>
+          </motion.div>
 
-                <div className="relative space-y-3 md:max-w-[44ch]">
-                  {item.tone === "soft" && (
-                    <div className="mb-10 hidden h-10 w-10 items-center justify-center border border-line bg-paper md:flex">
-                      <Icon size={20} weight="light" aria-hidden="true" />
-                    </div>
-                  )}
-                  <h3 className="font-display text-[1.9rem] leading-[1.1] font-light md:text-[2.3rem]">
-                    {item.title}
-                  </h3>
-                  <p className={cn("leading-relaxed", dark ? "text-paper/70" : "text-muted")}>
-                    {item.description}
-                  </p>
-                </div>
+          {/* 3. Контент-система, высокая 2x2 */}
+          <motion.div
+            className="md:col-span-2 md:row-span-2 row-span-2 bg-zinc-900 border border-zinc-800 rounded-xl p-6 flex flex-col hover:border-zinc-700 transition-colors cursor-pointer overflow-hidden"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            whileHover={{ scale: 1.02, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)" }}
+          >
+            <div className="flex-1 flex items-center justify-center">
+              <div className="relative">
+                <ContentPulse />
+              </div>
+            </div>
+            <div className="mt-auto relative z-20 bg-zinc-900/50 backdrop-blur-sm rounded-lg p-2">
+              <h3 className="font-serif text-2xl text-white flex items-center gap-2 font-medium">
+                <Megaphone className="w-5 h-5" />
+                Контент-система
+              </h3>
+              <p className="text-gray-400 text-sm mt-1">
+                Схема, о чём и как писать, чтобы вести контент самостоятельно.
+              </p>
+            </div>
+          </motion.div>
 
-                <ul className="relative flex flex-wrap gap-2 text-xs">
-                  {item.tags.map((tag) => (
-                    <li
-                      key={tag}
-                      className={cn(
-                        "px-2.5 py-1",
-                        dark ? "bg-paper/10 text-paper/80" : "bg-ink/5 text-muted"
-                      )}
-                    >
-                      {tag}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            )
-          })}
+          {/* 4. Срок, 2x1 */}
+          <motion.div
+            className="md:col-span-2 bg-zinc-900 border border-zinc-800 rounded-xl p-8 flex flex-col hover:border-zinc-700 transition-colors cursor-pointer overflow-hidden"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            whileHover={{ scale: 0.98 }}
+          >
+            <div className="flex-1">
+              <SpeedIndicator />
+            </div>
+            <div className="mt-4">
+              <h3 className="font-serif text-2xl text-white font-medium">Срок</h3>
+            </div>
+          </motion.div>
+
+          {/* 5. Фиксированный состав, 3x1 */}
+          <motion.div
+            className="md:col-span-3 bg-zinc-900 border border-zinc-800 rounded-xl p-8 flex flex-col hover:border-zinc-700 transition-colors cursor-pointer overflow-hidden"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            whileHover={{ scale: 0.98 }}
+          >
+            <div className="flex-1">
+              <SystemBadge />
+            </div>
+            <div className="mt-4">
+              <h3 className="font-serif text-2xl text-white flex items-center gap-2 font-medium">
+                <Package className="w-5 h-5" />
+                Фиксированный состав
+              </h3>
+              <p className="text-gray-400 text-sm mt-1">
+                Одна услуга: позиционирование, упаковка профиля и контент-система.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* 6. Менторство, 3x1 */}
+          <motion.div
+            className="md:col-span-3 bg-zinc-900 border border-zinc-800 rounded-xl p-8 flex flex-col hover:border-zinc-700 transition-colors cursor-pointer overflow-hidden"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+            whileHover={{ scale: 0.98 }}
+          >
+            <div className="flex-1 flex items-center justify-center">
+              <MessagesSquare className="w-16 h-16 text-white" />
+            </div>
+            <div className="mt-4">
+              <h3 className="font-serif text-2xl text-white font-medium">Две недели менторства</h3>
+              <p className="text-gray-400 text-sm mt-1">
+                Полное менторство в течение двух недель после того, как вы получите файл.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

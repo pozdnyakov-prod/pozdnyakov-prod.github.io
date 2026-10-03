@@ -1,16 +1,14 @@
-// Tubelight Navbar, ayushmxxn (21st.dev).
-// Изменено: якорные ссылки вместо next/link, иконки Phosphor,
-// активный пункт следует за прокруткой, прямые углы как на /me.
+// Tubelight Navbar, ayushmxxn (21st.dev). Код из промта; next/link заменён
+// на <a>, активный пункт дополнительно следует за прокруткой.
 import { useEffect, useState } from "react"
 import { motion } from "motion/react"
-import type { Icon } from "@phosphor-icons/react"
-
+import type { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-export interface NavItem {
+interface NavItem {
   name: string
   url: string
-  icon: Icon
+  icon: LucideIcon
 }
 
 interface NavBarProps {
@@ -26,7 +24,6 @@ export function NavBar({ items, className }: NavBarProps) {
       .map((item) => document.querySelector<HTMLElement>(item.url))
       .filter((el): el is HTMLElement => el !== null)
 
-    // Пункт подсвечивается, когда его блок пересекает середину экрана.
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -38,20 +35,18 @@ export function NavBar({ items, className }: NavBarProps) {
       },
       { rootMargin: "-50% 0px -50% 0px" }
     )
-
     sections.forEach((section) => observer.observe(section))
     return () => observer.disconnect()
   }, [items])
 
   return (
-    <nav
-      aria-label="Разделы"
+    <div
       className={cn(
-        "fixed bottom-0 left-1/2 z-40 mb-4 -translate-x-1/2 md:top-0 md:bottom-auto md:mb-0 md:pt-5",
-        className
+        "fixed bottom-0 sm:top-0 sm:bottom-auto left-1/2 -translate-x-1/2 z-50 mb-6 sm:mb-0 sm:pt-6",
+        className,
       )}
     >
-      <div className="flex items-center gap-1 border border-line bg-paper/90 p-1 backdrop-blur-lg">
+      <div className="flex items-center gap-3 bg-background/80 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
         {items.map((item) => {
           const Icon = item.icon
           const isActive = activeTab === item.name
@@ -61,22 +56,21 @@ export function NavBar({ items, className }: NavBarProps) {
               key={item.name}
               href={item.url}
               onClick={() => setActiveTab(item.name)}
-              aria-current={isActive ? "true" : undefined}
               aria-label={item.name}
               className={cn(
-                "relative cursor-pointer px-5 py-2.5 text-[0.8rem] tracking-[0.02em] transition-colors md:px-6 md:py-2",
-                "text-ink/70 hover:text-ink",
-                isActive && "text-ink"
+                "relative cursor-pointer text-sm font-semibold px-4 md:px-6 py-2 rounded-full transition-colors",
+                "text-foreground/80 hover:text-primary",
+                isActive && "bg-muted text-primary",
               )}
             >
               <span className="hidden md:inline">{item.name}</span>
               <span className="md:hidden">
-                <Icon size={20} weight={isActive ? "fill" : "regular"} />
+                <Icon size={18} strokeWidth={2.5} />
               </span>
               {isActive && (
                 <motion.div
                   layoutId="lamp"
-                  className="absolute inset-0 -z-10 w-full bg-soft"
+                  className="absolute inset-0 w-full bg-primary/5 rounded-full -z-10"
                   initial={false}
                   transition={{
                     type: "spring",
@@ -84,10 +78,10 @@ export function NavBar({ items, className }: NavBarProps) {
                     damping: 30,
                   }}
                 >
-                  <div className="absolute -top-1 left-1/2 h-0.5 w-8 -translate-x-1/2 bg-ink">
-                    <div className="absolute -top-2 -left-2 h-6 w-12 rounded-full bg-ink/15 blur-md" />
-                    <div className="absolute -top-1 h-6 w-8 rounded-full bg-ink/15 blur-md" />
-                    <div className="absolute top-0 left-2 h-4 w-4 rounded-full bg-ink/15 blur-sm" />
+                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-t-full">
+                    <div className="absolute w-12 h-6 bg-primary/20 rounded-full blur-md -top-2 -left-2" />
+                    <div className="absolute w-8 h-6 bg-primary/20 rounded-full blur-md -top-1" />
+                    <div className="absolute w-4 h-4 bg-primary/20 rounded-full blur-sm top-0 left-2" />
                   </div>
                 </motion.div>
               )}
@@ -95,6 +89,6 @@ export function NavBar({ items, className }: NavBarProps) {
           )
         })}
       </div>
-    </nav>
+    </div>
   )
 }

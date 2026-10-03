@@ -1,159 +1,94 @@
 @import "tailwindcss";
 
-@import "@fontsource/cormorant-garamond/cyrillic-300.css";
-@import "@fontsource/cormorant-garamond/latin-300.css";
-@import "@fontsource/cormorant-garamond/cyrillic-300-italic.css";
-@import "@fontsource/cormorant-garamond/latin-300-italic.css";
+@import "@fontsource/cormorant-garamond/cyrillic-400.css";
+@import "@fontsource/cormorant-garamond/latin-400.css";
 @import "@fontsource/cormorant-garamond/cyrillic-500.css";
 @import "@fontsource/cormorant-garamond/latin-500.css";
+@import "@fontsource/cormorant-garamond/cyrillic-400-italic.css";
+@import "@fontsource/cormorant-garamond/latin-400-italic.css";
 @import "@fontsource/inter/cyrillic-400.css";
 @import "@fontsource/inter/latin-400.css";
 @import "@fontsource/inter/cyrillic-500.css";
 @import "@fontsource/inter/latin-500.css";
-@import "@fontsource/lora/cyrillic-400-italic.css";
-@import "@fontsource/lora/latin-400-italic.css";
+@import "@fontsource/inter/cyrillic-600.css";
+@import "@fontsource/inter/latin-600.css";
+@import "@fontsource/inter/cyrillic-700.css";
+@import "@fontsource/inter/latin-700.css";
+@import "@fontsource/inter/cyrillic-800.css";
+@import "@fontsource/inter/latin-800.css";
 
-/*
-  Токены повторяют витрину /me: светлый фон #f3f3f3, почти чёрный текст,
-  серые линии, Cormorant Garamond для заголовков, Inter для текста,
-  курсив Lora для акцентов. Один акцентный цвет: кнопки и слово в Hero.
-*/
+/* Тёмная тема компонентов включается только классом .dark, а не настройкой ОС:
+   сайт светлый, как в исходных демо. */
+@custom-variant dark (&:is(.dark *));
+
+/* Стандартная светлая палитра shadcn/ui (neutral) */
 :root {
-  --paper: #f3f3f3;
-  --ink: #0a0a0a;
-  --line: #d9d9d9;
-  --soft: #e8e8e8;
-  --muted: #5c5c5c;
-  --card: #f9f9f9;
-  --accent: #2f45e0;
-  --accent-ink: #ffffff;
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  /* синий из демо text-rotate / landing-hero */
+  --brand: #0015ff;
 }
 
-/* Варианты акцента для сравнения: ?accent=cobalt | emerald | raspberry */
-:root[data-accent="cobalt"] { --accent: #2f45e0; }
-:root[data-accent="emerald"] { --accent: #127a56; }
-:root[data-accent="raspberry"] { --accent: #c42a58; }
-
 @theme inline {
-  --color-paper: var(--paper);
-  --color-ink: var(--ink);
-  --color-line: var(--line);
-  --color-soft: var(--soft);
-  --color-muted: var(--muted);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
   --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
-  --color-accent-ink: var(--accent-ink);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
 
-  /* имена, которые ждут компоненты shadcn */
-  --color-background: var(--paper);
-  --color-foreground: var(--ink);
-  --color-border: var(--line);
-  --color-muted-foreground: var(--muted);
-  --color-primary: var(--ink);
-  --color-primary-foreground: var(--paper);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 
-  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  /* В демо Calendas Plus и Overused Grotesk, у них нет кириллицы.
+     Ближайшие замены с кириллицей: Cormorant Garamond и Inter. */
+  --font-calendas: "Cormorant Garamond", Georgia, serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-overusedGrotesk: "Inter", system-ui, sans-serif;
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-accent: "Lora", "Cormorant Garamond", Georgia, serif;
-
-  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
+  * {
+    @apply border-border;
+  }
   html {
     scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
   }
   body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+    @apply bg-background text-foreground font-sans antialiased;
     overflow-x: hidden;
   }
   section[id] {
-    scroll-margin-top: 88px;
-  }
-  :focus-visible {
-    outline: 1px solid var(--ink);
-    outline-offset: 4px;
-  }
-  ::selection {
-    background: var(--ink);
-    color: var(--paper);
-  }
-}
-
-@layer components {
-  /* Кнопка в духе /me: прямоугольная, заливка выезжает слева */
-  .btn-accent {
-    position: relative;
-    isolation: isolate;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    padding: 0.95rem 1.9rem;
-    background: var(--accent);
-    color: var(--accent-ink);
-    font-size: 0.9rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
-    overflow: hidden;
-    transition: transform 0.2s var(--ease-out-soft);
-  }
-  .btn-accent::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--ink);
-    transform: translateX(-101%);
-    transition: transform 0.5s var(--ease-out-soft);
-  }
-  .btn-accent:hover::before {
-    transform: none;
-  }
-  .btn-accent:active {
-    transform: scale(0.98);
-  }
-
-  .link-line {
-    position: relative;
-    text-decoration: none;
-  }
-  .link-line::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -2px;
-    height: 1px;
-    background: currentColor;
-    transform-origin: left;
-    transition: transform 0.45s var(--ease-out-soft);
-  }
-  .link-line:hover::after {
-    transform: scaleX(0);
-    transform-origin: right;
-  }
-}
-
-/* На сенсорных экранах курсора нет: картинки в Hero медленно покачиваются */
-@keyframes hero-drift {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 -8px;
-  }
-}
-@media (hover: none) and (prefers-reduced-motion: no-preference) {
-  .hero-drift {
-    animation: hero-drift 7s ease-in-out infinite;
+    scroll-margin-top: 96px;
   }
 }
 

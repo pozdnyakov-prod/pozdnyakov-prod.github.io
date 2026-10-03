@@ -1,15 +1,18 @@
-"use client";
-
-import { mergeProps } from "@base-ui/react/merge-props";
-import { useRender } from "@base-ui/react/use-render";
-import { cn } from "@/lib/utils";
+// Compare Slider, diceui (21st.dev). Код из промта; Slot из @radix-ui/react-slot,
+// утилиты лежат в src/hooks и src/lib.
+import {
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronUpIcon,
+} from "lucide-react";
+import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
-
+import { useComposedRefs } from "@/lib/compose-refs";
+import { cn } from "@/lib/utils";
 import { useAsRef } from "@/hooks/use-as-ref";
 import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect";
 import { useLazyRef } from "@/hooks/use-lazy-ref";
-import { useComposedRefs } from "@/lib/compose-refs";
-import { CaretUpIcon, CaretDownIcon, CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 
 const ROOT_NAME = "CompareSlider";
 const BEFORE_NAME = "CompareSliderBefore";
@@ -22,6 +25,10 @@ const ARROW_KEYS = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
 
 type Interaction = "hover" | "drag";
 type Orientation = "horizontal" | "vertical";
+
+interface DivProps extends React.ComponentProps<"div"> {
+  asChild?: boolean;
+}
 
 type RootElement = React.ComponentRef<typeof CompareSlider>;
 
@@ -52,7 +59,7 @@ function useStore<T>(
   const store = ogStore ?? contextStore;
 
   if (!store) {
-    throw new Error(`\`useStore\` must be used within \`${ROOT_NAME}\``);
+    throw new Error(`useStore must be used within ${ROOT_NAME}`);
   }
 
   const getSnapshot = React.useCallback(
@@ -74,13 +81,12 @@ const CompareSliderContext =
 function useCompareSliderContext(consumerName: string) {
   const context = React.useContext(CompareSliderContext);
   if (!context) {
-    throw new Error(`\`${consumerName}\` must be used within \`${ROOT_NAME}\``);
+    throw new Error(`${consumerName} must be used within ${ROOT_NAME}`);
   }
   return context;
 }
 
-interface CompareSliderProps
-  extends React.ComponentProps<"div">, useRender.ComponentProps<"div"> {
+interface CompareSliderProps extends DivProps {
   value?: number;
   defaultValue?: number;
   onValueChange?: (value: number) => void;
@@ -99,12 +105,12 @@ function CompareSlider(props: CompareSliderProps) {
     orientation = "horizontal",
     className,
     children,
-    render,
     ref,
     onPointerMove: onPointerMoveProp,
     onPointerUp: onPointerUpProp,
     onPointerDown: onPointerDownProp,
     onKeyDown: onKeyDownProp,
+    asChild,
     ...rootProps
   } = props;
 
@@ -260,54 +266,46 @@ function CompareSlider(props: CompareSliderProps) {
     [interaction, orientation],
   );
 
-  const element = useRender({
-    defaultTagName: "div",
-    props: mergeProps<"div">(
-      {
-        role: "slider",
-        "aria-orientation": orientation,
-        "aria-valuemax": 100,
-        "aria-valuemin": 0,
-        "aria-valuenow": value,
-        tabIndex: 0,
-        className: cn(
-          "relative isolate touch-none overflow-hidden transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
-          orientation === "horizontal" ? "w-full" : "h-full",
-          className,
-        ),
-        onPointerDown,
-        onPointerMove,
-        onPointerUp,
-        onPointerCancel: onPointerUp,
-        onKeyDown,
-        ref: composedRef,
-        children,
-      },
-      rootProps,
-    ),
-    render,
-    state: {
-      slot: "compare-slider",
-      orientation,
-    },
-  });
+  const RootPrimitive = asChild ? Slot : "div";
 
   return (
     <StoreContext.Provider value={store}>
       <CompareSliderContext.Provider value={contextValue}>
-        {element}
+        <RootPrimitive
+          role="slider"
+          aria-orientation={orientation}
+          aria-valuemax={100}
+          aria-valuemin={0}
+          aria-valuenow={value}
+          data-slot="compare-slider"
+          data-orientation={orientation}
+          {...rootProps}
+          ref={composedRef}
+          tabIndex={0}
+          className={cn(
+            "relative isolate touch-none select-none overflow-hidden outline-none transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
+            orientation === "horizontal" ? "w-full" : "h-full",
+            className,
+          )}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerUp}
+          onKeyDown={onKeyDown}
+        >
+          {children}
+        </RootPrimitive>
       </CompareSliderContext.Provider>
     </StoreContext.Provider>
   );
 }
 
-interface CompareSliderBeforeProps
-  extends React.ComponentProps<"div">, useRender.ComponentProps<"div"> {
+interface CompareSliderBeforeProps extends DivProps {
   label?: string;
 }
 
 function CompareSliderBefore(props: CompareSliderBeforeProps) {
-  const { className, children, style, label, render, ref, ...beforeProps } =
+  const { className, children, style, label, asChild, ref, ...beforeProps } =
     props;
 
   const value = useStore((state) => state.value);
@@ -320,205 +318,158 @@ function CompareSliderBefore(props: CompareSliderBeforeProps) {
     ? `inset(${value}% 0 0 0)`
     : `inset(0 0 0 ${value}%)`;
 
-  return useRender({
-    defaultTagName: "div",
-    props: mergeProps<"div">(
-      {
-        role: "img",
-        "aria-labelledby": label ? labelId : undefined,
-        "aria-hidden": label ? undefined : "true",
-        className: cn("absolute inset-0 h-full w-full object-cover", className),
-        style: {
-          clipPath,
-          ...style,
-        },
-        ref,
-        children: (
-          <>
-            {children}
-            {label && (
-              <CompareSliderLabel id={labelId} side="before">
-                {label}
-              </CompareSliderLabel>
-            )}
-          </>
-        ),
-      },
-      beforeProps,
-    ),
-    render,
-    state: {
-      slot: "compare-slider-before",
-      orientation,
-    },
-  });
+  const BeforePrimitive = asChild ? Slot : "div";
+
+  return (
+    <BeforePrimitive
+      role="img"
+      aria-labelledby={label ? labelId : undefined}
+      aria-hidden={label ? undefined : "true"}
+      data-slot="compare-slider-before"
+      data-orientation={orientation}
+      {...beforeProps}
+      ref={ref}
+      className={cn("absolute inset-0 h-full w-full object-cover", className)}
+      style={{
+        clipPath,
+        ...style,
+      }}
+    >
+      {children}
+      {label && (
+        <CompareSliderLabel id={labelId} side="before">
+          {label}
+        </CompareSliderLabel>
+      )}
+    </BeforePrimitive>
+  );
 }
 
-interface CompareSliderAfterProps
-  extends React.ComponentProps<"div">, useRender.ComponentProps<"div"> {
+interface CompareSliderAfterProps extends DivProps {
   label?: string;
 }
 
 function CompareSliderAfter(props: CompareSliderAfterProps) {
-  const { className, children, style, label, render, ref, ...afterProps } =
+  const { className, children, style, label, asChild, ref, ...afterProps } =
     props;
-
   const value = useStore((state) => state.value);
   const { orientation } = useCompareSliderContext(AFTER_NAME);
-
   const labelId = React.useId();
-
   const isVertical = orientation === "vertical";
   const clipPath = isVertical
     ? `inset(0 0 ${100 - value}% 0)`
     : `inset(0 ${100 - value}% 0 0)`;
-
-  return useRender({
-    defaultTagName: "div",
-    props: mergeProps<"div">(
-      {
-        role: "img",
-        "aria-labelledby": label ? labelId : undefined,
-        "aria-hidden": label ? undefined : "true",
-        className: cn("absolute inset-0 h-full w-full object-cover", className),
-        style: {
-          clipPath,
-          ...style,
-        },
-        ref,
-        children: (
-          <>
-            {children}
-            {label && (
-              <CompareSliderLabel id={labelId} side="after">
-                {label}
-              </CompareSliderLabel>
-            )}
-          </>
-        ),
-      },
-      afterProps,
-    ),
-    render,
-    state: {
-      slot: "compare-slider-after",
-      orientation,
-    },
-  });
+  const AfterPrimitive = asChild ? Slot : "div";
+  return (
+    <AfterPrimitive
+      role="img"
+      aria-labelledby={label ? labelId : undefined}
+      aria-hidden={label ? undefined : "true"}
+      data-slot="compare-slider-after"
+      data-orientation={orientation}
+      {...afterProps}
+      ref={ref}
+      className={cn("absolute inset-0 h-full w-full object-cover", className)}
+      style={{
+        clipPath,
+        ...style,
+      }}
+    >
+      {children}
+      {label && (
+        <CompareSliderLabel id={labelId} side="after">
+          {label}
+        </CompareSliderLabel>
+      )}
+    </AfterPrimitive>
+  );
 }
-
-interface CompareSliderHandleProps
-  extends React.ComponentProps<"div">, useRender.ComponentProps<"div"> {}
-
-function CompareSliderHandle(props: CompareSliderHandleProps) {
-  const { className, children, style, render, ref, ...handleProps } = props;
-
+function CompareSliderHandle(props: DivProps) {
+  const { className, children, style, asChild, ref, ...handleProps } = props;
   const value = useStore((state) => state.value);
   const { interaction, orientation } = useCompareSliderContext(HANDLE_NAME);
-
   const isVertical = orientation === "vertical";
-
-  return useRender({
-    defaultTagName: "div",
-    props: mergeProps<"div">(
-      {
-        role: "presentation",
-        "aria-hidden": "true",
-        className: cn(
-          "absolute z-50 flex items-center justify-center",
-          isVertical
-            ? "left-0 h-10 w-full -translate-y-1/2"
-            : "top-0 h-full w-10 -translate-x-1/2",
-          interaction === "drag" && "cursor-grab active:cursor-grabbing",
-          className,
-        ),
-        style: {
-          [isVertical ? "top" : "left"]: `${value}%`,
-          ...style,
-        },
-        ref,
-        children:
-          children ??
-          (() => (
-            <>
-              <div
-                className={cn(
-                  "absolute bg-background",
-                  isVertical
-                    ? "top-1/2 h-1 w-full -translate-y-1/2"
-                    : "left-1/2 h-full w-1 -translate-x-1/2",
-                )}
-              />
-              {interaction === "drag" && (
-                <div className="z-50 flex aspect-square size-11 shrink-0 items-center justify-center rounded-full bg-background p-2 [&_svg]:size-4 [&_svg]:stroke-3 [&_svg]:text-muted-foreground [&_svg]:select-none">
-                  {isVertical ? (
-                    <div className="flex flex-col items-center">
-                      <CaretUpIcon
-                      />
-                      <CaretDownIcon
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex items-center">
-                      <CaretLeftIcon
-                      />
-                      <CaretRightIcon
-                      />
-                    </div>
-                  )}
+  const HandlePrimitive = asChild ? Slot : "div";
+  return (
+    <HandlePrimitive
+      role="presentation"
+      aria-hidden="true"
+      data-slot="compare-slider-handle"
+      data-orientation={orientation}
+      {...handleProps}
+      ref={ref}
+      className={cn(
+        "absolute z-50 flex items-center justify-center",
+        isVertical
+          ? "left-0 h-10 w-full -translate-y-1/2"
+          : "top-0 h-full w-10 -translate-x-1/2",
+        interaction === "drag" && "cursor-grab active:cursor-grabbing",
+        className,
+      )}
+      style={{
+        [isVertical ? "top" : "left"]: `${value}%`,
+        ...style,
+      }}
+    >
+      {children ?? (
+        <>
+          <div
+            className={cn(
+              "absolute bg-background",
+              isVertical
+                ? "top-1/2 h-1 w-full -translate-y-1/2"
+                : "left-1/2 h-full w-1 -translate-x-1/2",
+            )}
+          />
+          {interaction === "drag" && (
+            <div className="z-50 flex aspect-square size-11 shrink-0 items-center justify-center rounded-full bg-background p-2 [&_svg]:size-4 [&_svg]:select-none [&_svg]:stroke-3 [&_svg]:text-muted-foreground">
+              {isVertical ? (
+                <div className="flex flex-col items-center">
+                  <ChevronUpIcon />
+                  <ChevronDownIcon />
+                </div>
+              ) : (
+                <div className="flex items-center">
+                  <ChevronLeftIcon />
+                  <ChevronRightIcon />
                 </div>
               )}
-            </>
-          ))(),
-      },
-      handleProps,
-    ),
-    render,
-    state: {
-      slot: "compare-slider-handle",
-      orientation,
-    },
-  });
+            </div>
+          )}
+        </>
+      )}
+    </HandlePrimitive>
+  );
 }
-
-interface CompareSliderLabelProps
-  extends React.ComponentProps<"div">, useRender.ComponentProps<"div"> {
+interface CompareSliderLabelProps extends DivProps {
   side?: "before" | "after";
 }
-
 function CompareSliderLabel(props: CompareSliderLabelProps) {
-  const { className, children, side, render, ref, ...labelProps } = props;
-
+  const { className, children, side, asChild, ref, ...labelProps } = props;
   const { orientation } = useCompareSliderContext(LABEL_NAME);
   const isVertical = orientation === "vertical";
-
-  return useRender({
-    defaultTagName: "div",
-    props: mergeProps<"div">(
-      {
-        className: cn(
-          "absolute z-20 rounded-md border border-border bg-background/80 px-3 py-1.5 text-sm font-medium backdrop-blur-sm",
-          isVertical
-            ? side === "before"
-              ? "top-2 left-2"
-              : "bottom-2 left-2"
-            : side === "before"
-              ? "top-2 left-2"
-              : "top-2 right-2",
-          className,
-        ),
-        ref,
-        children,
-      },
-      labelProps,
-    ),
-    render,
-    state: {
-      slot: "compare-slider-label",
-    },
-  });
+  const LabelPrimitive = asChild ? Slot : "div";
+  return (
+    <LabelPrimitive
+      ref={ref}
+      data-slot="compare-slider-label"
+      className={cn(
+        "absolute z-20 rounded-md border border-border bg-background/80 px-3 py-1.5 font-medium text-sm backdrop-blur-sm",
+        isVertical
+          ? side === "before"
+            ? "top-2 left-2"
+            : "bottom-2 left-2"
+          : side === "before"
+            ? "top-2 left-2"
+            : "top-2 right-2",
+        className,
+      )}
+      {...labelProps}
+    >
+      {children}
+    </LabelPrimitive>
+  );
 }
-
 export {
   CompareSlider,
   CompareSliderAfter,
@@ -527,3 +478,4 @@ export {
   CompareSliderLabel,
   type CompareSliderProps,
 };
+export default CompareSlider;
