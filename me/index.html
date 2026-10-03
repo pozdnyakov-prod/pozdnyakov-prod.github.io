@@ -120,7 +120,7 @@ nav.sc{padding:16px 52px;background:rgba(243,243,243,.92);backdrop-filter:blur(2
 .ab-cols{display:grid;grid-template-columns:1fr 1fr;column-gap:88px;margin-top:64px}
 .abh{font-family:var(--fd);font-size:1.9rem;font-weight:300;font-style:italic;margin-bottom:24px;line-height:1.1}
 .abp{font-family:var(--fd);font-size:clamp(1.32rem,1.7vw,1.55rem);line-height:1.62;font-weight:400;letter-spacing:.002em;max-width:600px}
-.abp .hl{font-style:italic;color:#5a5a5a}
+.hl{font-style:italic;color:#5a5a5a}
 .abst{display:grid;grid-template-columns:repeat(4,1fr);margin-top:92px;border-top:1px solid var(--b)}
 .stc{padding:30px 0 0 32px;border-left:1px solid var(--line)}
 .stc:first-child{padding-left:0;border-left:none}
@@ -148,7 +148,7 @@ nav.sc{padding:16px 52px;background:rgba(243,243,243,.92);backdrop-filter:blur(2
 .pc:hover .pcin{transform:translateX(-14px)}
 .pcst{font-size:.7rem;letter-spacing:.12em;margin-bottom:52px;font-weight:400}
 .pcname{font-family:var(--fd);font-size:clamp(1.9rem,2.7vw,2.7rem);font-weight:300;letter-spacing:-.015em;margin-bottom:14px;line-height:1.1}
-.pcdesc{font-size:.92rem;line-height:1.75;font-weight:400;max-width:420px}
+.pcdesc{font-family:var(--fd);font-size:clamp(1.3rem,1.6vw,1.5rem);line-height:1.5;font-weight:400;max-width:460px}
 .pcarr{display:inline-flex;width:42px;height:42px;border:1px solid var(--b);align-items:center;justify-content:center;margin-top:36px;font-size:1.1rem;transition:transform .5s var(--ease)}
 .pc:hover .pcarr{transform:rotate(-45deg)}
 
@@ -163,17 +163,17 @@ nav.sc{padding:16px 52px;background:rgba(243,243,243,.92);backdrop-filter:blur(2
 .ovtitle em{font-style:italic}
 .ovgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px;padding-top:50px;border-top:1px solid var(--b)}
 .ovlbl{font-size:.7rem;letter-spacing:.14em;font-weight:500;margin-bottom:18px;display:block}
-.ovtxt{font-size:.97rem;line-height:1.85;font-weight:400}
+.ovtxt{font-family:var(--fd);font-size:clamp(1.3rem,1.6vw,1.5rem);line-height:1.58;font-weight:400}
 .ovres{display:flex;align-items:baseline;gap:24px;flex-wrap:wrap}
 .ovresnum{font-family:var(--fd);font-size:clamp(3.2rem,6vw,5.5rem);font-weight:300;letter-spacing:-.03em;line-height:1}
-.ovresdesc{font-size:.95rem;font-weight:400;max-width:300px;line-height:1.65}
+.ovresdesc{font-family:var(--fd);font-size:clamp(1.25rem,1.5vw,1.42rem);font-weight:400;max-width:340px;line-height:1.5}
 .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:56px 64px;padding-top:50px;border-top:1px solid var(--b)}
 .pfull{grid-column:1/-1;padding-top:44px;border-top:1px solid var(--line)}
 .pcl{list-style:none}
-.pcl li{display:flex;justify-content:space-between;gap:20px;padding:14px 0;border-top:1px solid var(--line);font-size:.97rem}
+.pcl li{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:14px 0;border-top:1px solid var(--line);font-family:var(--fd);font-size:1.25rem}
 .pcl li:last-child{border-bottom:1px solid var(--line)}
 .pcl b{font-family:var(--fd);font-size:1.3rem;font-weight:400}
-.pcl span{text-align:right}
+.pcl span{text-align:right;font-style:italic;color:#5a5a5a}
 .pbtns{display:flex;gap:14px;margin-top:60px;flex-wrap:wrap}
 @keyframes ovIn{from{opacity:0;transform:translateY(28px);filter:blur(12px)}to{opacity:1;transform:none;filter:blur(0)}}
 @keyframes ovLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
@@ -362,7 +362,7 @@ footer span{font-size:.72rem;font-weight:400}
         <div class="pcin">
           <div class="pcst" data-t="p1s">Активно</div>
           <div class="pcname">Digital Wave</div>
-          <div class="pcdesc" data-t="p1d">AI-агентство цифровой упаковки и систем позиционирования для дизайнеров</div>
+          <div class="pcdesc" data-t="p1d">AI-агентство цифровой упаковки и <span class="hl">систем позиционирования</span> для дизайнеров</div>
           <div class="pcarr">↗</div>
         </div>
       </div>
@@ -370,7 +370,7 @@ footer span{font-size:.72rem;font-weight:400}
         <div class="pcin">
           <div class="pcst" data-t="p2s">В разработке</div>
           <div class="pcname">LeadPilot AI</div>
-          <div class="pcdesc" data-t="p2d">Telegram-бот автоматического поиска и квалификации лидов через SerpAPI и GPT</div>
+          <div class="pcdesc" data-t="p2d">Telegram-бот <span class="hl">автоматического поиска</span> и квалификации лидов через SerpAPI и GPT</div>
           <div class="pcarr">↗</div>
         </div>
       </div>
@@ -418,63 +418,63 @@ const TG='https://t.me/vlpozd';
 const casesRU=[
   {nick:'UI / UX Design',
    title:'С 3 до 15 заявок —<br><em>дизайнер без имени в рынке</em>',
-   task:'Артём — UI/UX дизайнер, 5 лет опыта, портфолио без изъянов. Но клиенты находили его только по рекомендациям: ни позиционирования, ни онлайн-присутствия. Три случайные заявки в месяц — и то повезло.',
-   work:'Разработали позиционирование «дизайнер продуктов для B2B SaaS». Переупаковали Behance и LinkedIn под целевую аудиторию. Создали личный лендинг. Запустили входящий трафик через контент-стратегию.',
-   result:'×5',rdesc:'рост входящих заявок за 60 дней. Средний чек вырос в 2.3 раза — за счёт правильного позиционирования.'},
+   task:'Артём — UI/UX дизайнер, 5 лет опыта, <span class="hl">портфолио без изъянов</span>. Но клиенты находили его только по рекомендациям: ни позиционирования, ни онлайн-присутствия. Три случайные заявки в месяц — <span class="hl">и то повезло</span>.',
+   work:'Разработали позиционирование <span class="hl">«дизайнер продуктов для B2B SaaS»</span>. Переупаковали Behance и LinkedIn под целевую аудиторию. Создали личный лендинг. Запустили входящий трафик через контент-стратегию.',
+   result:'×5',rdesc:'рост входящих заявок за 60 дней. Средний чек вырос в 2.3 раза — <span class="hl">за счёт правильного позиционирования</span>.'},
   {nick:'Brand Design',
    title:'Первые 5 прямых клиентов —<br><em>за 45 дней</em>',
-   task:'Катя делала брендинг для студий — качественно, но за студийный чек. Хотела прямых клиентов на своих условиях. Проблема: никто не знал, что она существует как самостоятельный специалист.',
-   work:'Сформировали позиционирование «бренд-дизайнер для premium малого бизнеса». Упаковали Telegram-канал. Перестроили портфолио под прямые продажи. Выстроили воронку через личный контент.',
-   result:'5 клиентов',rdesc:'первых прямых проектов за 45 дней. Доход вырос в 2 раза — без студийных посредников.'},
+   task:'Катя делала брендинг для студий — качественно, но за студийный чек. Хотела прямых клиентов на своих условиях. Проблема: <span class="hl">никто не знал, что она существует</span> как самостоятельный специалист.',
+   work:'Сформировали позиционирование <span class="hl">«бренд-дизайнер для premium малого бизнеса»</span>. Упаковали Telegram-канал. Перестроили портфолио под прямые продажи. Выстроили воронку через личный контент.',
+   result:'5 клиентов',rdesc:'первых прямых проектов за 45 дней. Доход вырос в 2 раза — <span class="hl">без студийных посредников</span>.'},
   {nick:'Motion Design',
    title:'Очередь на 3 месяца —<br><em>рост чека ×1.8</em>',
-   task:'Никита делал крутые моушн-ролики и продавал их дёшево — никто не понимал ценности. Полная невидимость в рынке, работа через биржи, постоянный демпинг.',
-   work:'Создали личный бренд с нуля: концепция, стиль, позиционирование как «motion-специалист для digital-продуктов». Запустили Telegram-канал с разбором работ. Вышли на прямые переговоры с продуктовыми командами.',
-   result:'3 месяца',rdesc:'очередь из клиентов. Чек вырос в 1.8 раза. Больше ни одной биржи.'}
+   task:'Никита делал крутые моушн-ролики и продавал их дёшево — <span class="hl">никто не понимал ценности</span>. Полная невидимость в рынке, работа через биржи, постоянный демпинг.',
+   work:'Создали личный бренд с нуля: концепция, стиль, позиционирование как <span class="hl">«motion-специалист для digital-продуктов»</span>. Запустили Telegram-канал с разбором работ. Вышли на прямые переговоры с продуктовыми командами.',
+   result:'3 месяца',rdesc:'очередь из клиентов. Чек вырос в 1.8 раза. <span class="hl">Больше ни одной биржи</span>.'}
 ];
 const casesEN=[
   {nick:'UI / UX Design',title:'From 3 to 15 leads —<br><em>a designer nobody knew</em>',
-   task:'Artem is a UI/UX designer with 5 years of experience and a flawless portfolio. But clients found him only through referrals: no positioning, no online presence. Three random leads a month — and that was a lucky month.',
-   work:'We built the positioning “product designer for B2B SaaS”, repackaged Behance and LinkedIn for the target audience, created a personal landing page and launched inbound traffic through a content strategy.',
-   result:'×5',rdesc:'more inbound leads in 60 days. The average rate grew 2.3× thanks to the right positioning.'},
+   task:'Artem is a UI/UX designer with 5 years of experience and <span class="hl">a flawless portfolio</span>. But clients found him only through referrals: no positioning, no online presence. Three random leads a month — <span class="hl">and that was a lucky month</span>.',
+   work:'We built the positioning <span class="hl">“product designer for B2B SaaS”</span>, repackaged Behance and LinkedIn for the target audience, created a personal landing page and launched inbound traffic through a content strategy.',
+   result:'×5',rdesc:'more inbound leads in 60 days. The average rate grew 2.3× <span class="hl">thanks to the right positioning</span>.'},
   {nick:'Brand Design',title:'First 5 direct clients —<br><em>in 45 days</em>',
-   task:'Katya did branding for studios — high quality, but at a studio rate. She wanted direct clients on her own terms. The problem: nobody knew she existed as an independent specialist.',
-   work:'We built the positioning “brand designer for premium small business”, packaged her Telegram channel, rebuilt the portfolio for direct sales and set up a funnel through personal content.',
-   result:'5 clients',rdesc:'first direct projects in 45 days. Income doubled — with no studio in between.'},
+   task:'Katya did branding for studios — high quality, but at a studio rate. She wanted direct clients on her own terms. The problem: <span class="hl">nobody knew she existed</span> as an independent specialist.',
+   work:'We built the positioning <span class="hl">“brand designer for premium small business”</span>, packaged her Telegram channel, rebuilt the portfolio for direct sales and set up a funnel through personal content.',
+   result:'5 clients',rdesc:'first direct projects in 45 days. Income doubled — <span class="hl">with no studio in between</span>.'},
   {nick:'Motion Design',title:'A 3-month waiting list —<br><em>rate up 1.8×</em>',
-   task:'Nikita made great motion videos and sold them cheap — nobody understood their value. Completely invisible in the market, working through freelance exchanges, constant price dumping.',
-   work:'We built a personal brand from scratch: concept, style, positioning as a “motion specialist for digital products”. Launched a Telegram channel with work breakdowns and moved to direct talks with product teams.',
-   result:'3 months',rdesc:'of clients in the queue. Rate up 1.8×. No more freelance exchanges.'}
+   task:'Nikita made great motion videos and sold them cheap — <span class="hl">nobody understood their value</span>. Completely invisible in the market, working through freelance exchanges, constant price dumping.',
+   work:'We built a personal brand from scratch: concept, style, positioning as a <span class="hl">“motion specialist for digital products”</span>. Launched a Telegram channel with work breakdowns and moved to direct talks with product teams.',
+   result:'3 months',rdesc:'of clients in the queue. Rate up 1.8×. <span class="hl">No more freelance exchanges</span>.'}
 ];
 
 const PROJ={
  ru:[
   {name:'Digital Wave',
-   who:'CEO & Founder. Сам веду каждый проект и отвечаю за результат.',
-   offer:'Превращаю сильное портфолио дизайнера в позиционирование и личный бренд — чтобы клиенты выбирали тебя, а не просто лайкали работы. Цель фиксируем на старте и гарантируем результат.',
+   who:'CEO & Founder. Сам веду каждый проект и <span class="hl">отвечаю за результат</span>.',
+   offer:'Превращаю сильное портфолио дизайнера в позиционирование и личный бренд — <span class="hl">чтобы клиенты выбирали тебя, а не просто лайкали работы</span>. Цель фиксируем на старте и гарантируем результат.',
    cases:[['Артём','UI/UX дизайн'],['Катя','Бренд-дизайн'],['Никита','Моушн-дизайн']],
-   about:'Digital Wave — AI-агентство цифровой упаковки и позиционирования. Работаем с дизайнерами, у которых сильные работы, но нет личного бренда и понятного оффера. Формулируем позиционирование, упаковываем профиль и лендинг, выстраиваем систему входящих заявок с помощью AI.',
-   about_cases:'В кейсах — дизайнеры из UI/UX, брендинга и моушна. У всех были сильные работы и не было позиционирования. После упаковки выросли входящие заявки и средний чек.',url:URLS.dw},
+   about:'Digital Wave — AI-агентство цифровой упаковки и позиционирования. Работаем с дизайнерами, у которых <span class="hl">сильные работы, но нет личного бренда</span> и понятного оффера. Формулируем позиционирование, упаковываем профиль и лендинг, выстраиваем систему входящих заявок с помощью AI.',
+   about_cases:'В кейсах — дизайнеры из UI/UX, брендинга и моушна. У всех были сильные работы и <span class="hl">не было позиционирования</span>. После упаковки выросли входящие заявки и средний чек.',url:URLS.dw},
   {name:'LeadPilot AI',
-   who:'CEO & Founder. Веду продукт от идеи до запуска.',
-   offer:'Telegram-бот, который сам находит потенциальных клиентов и отбирает подходящих — меньше ручного поиска, больше целевых заявок.',
+   who:'CEO & Founder. Веду продукт <span class="hl">от идеи до запуска</span>.',
+   offer:'Telegram-бот, который сам находит потенциальных клиентов и отбирает подходящих — <span class="hl">меньше ручного поиска, больше целевых заявок</span>.',
    cases:[],
-   about:'LeadPilot AI — Telegram-бот для генерации лидов. Ищет компании и специалистов через SerpAPI, отсеивает неподходящих с помощью GPT и отдаёт готовый список. Для тех, кто продаёт услуги и хочет сократить ручной поиск клиентов.',
-   about_cases:'Продукт в разработке. Первые кейсы появятся после запуска.',url:URLS.lp}
+   about:'LeadPilot AI — Telegram-бот для генерации лидов. Ищет компании и специалистов через SerpAPI, отсеивает неподходящих с помощью GPT и <span class="hl">отдаёт готовый список</span>. Для тех, кто продаёт услуги и хочет сократить ручной поиск клиентов.',
+   about_cases:'Продукт в разработке. <span class="hl">Первые кейсы появятся после запуска</span>.',url:URLS.lp}
  ],
  en:[
   {name:'Digital Wave',
-   who:'CEO & Founder. I run every project myself and own the result.',
-   offer:'I turn a designer’s strong portfolio into positioning and a personal brand — so clients choose you instead of just liking your work. We fix the goal at the start and I guarantee the result.',
+   who:'CEO & Founder. I run every project myself and <span class="hl">own the result</span>.',
+   offer:'I turn a designer’s strong portfolio into positioning and a personal brand — <span class="hl">so clients choose you instead of just liking your work</span>. We fix the goal at the start and I guarantee the result.',
    cases:[['Artem','UI/UX design'],['Katya','Brand design'],['Nikita','Motion design']],
-   about:'Digital Wave is an AI agency for digital packaging and positioning. We work with designers who have strong work but no personal brand or clear offer. We define the positioning, package the profile and landing page, and build an AI-powered system for inbound leads.',
-   about_cases:'The cases are designers from UI/UX, branding and motion. All of them had strong work and no positioning. After packaging, their inbound leads and average rate grew.',url:URLS.dw},
+   about:'Digital Wave is an AI agency for digital packaging and positioning. We work with designers who have <span class="hl">strong work but no personal brand</span> or clear offer. We define the positioning, package the profile and landing page, and build an AI-powered system for inbound leads.',
+   about_cases:'The cases are designers from UI/UX, branding and motion. All of them had strong work and <span class="hl">no positioning</span>. After packaging, their inbound leads and average rate grew.',url:URLS.dw},
   {name:'LeadPilot AI',
-   who:'CEO & Founder. I take the product from idea to launch.',
-   offer:'A Telegram bot that finds potential clients on its own and picks the right ones — less manual searching, more targeted leads.',
+   who:'CEO & Founder. I take the product <span class="hl">from idea to launch</span>.',
+   offer:'A Telegram bot that finds potential clients on its own and picks the right ones — <span class="hl">less manual searching, more targeted leads</span>.',
    cases:[],
-   about:'LeadPilot AI is a Telegram bot for lead generation. It searches for companies and specialists via SerpAPI, filters out poor fits with GPT and returns a ready list. For people who sell services and want to cut manual client search.',
-   about_cases:'The product is in development. The first cases will appear after launch.',url:URLS.lp}
+   about:'LeadPilot AI is a Telegram bot for lead generation. It searches for companies and specialists via SerpAPI, filters out poor fits with GPT and <span class="hl">returns a ready list</span>. For people who sell services and want to cut manual client search.',
+   about_cases:'The product is in development. <span class="hl">The first cases will appear after launch</span>.',url:URLS.lp}
  ]
 };
 const LBL={
@@ -500,8 +500,8 @@ const EN={
  close:'— Close ✕',
  p_n:'03 — Products',p_h:'Building <em>my own</em>',
  p1s:'Active',p2s:'In development',
- p1d:'AI agency for digital packaging and positioning systems for designers',
- p2d:'Telegram bot that finds and qualifies leads automatically via SerpAPI and GPT',
+ p1d:'AI agency for digital packaging and <span class="hl">positioning systems</span> for designers',
+ p2d:'Telegram bot that <span class="hl">finds and qualifies leads automatically</span> via SerpAPI and GPT',
  ct_n:'04 — Contact',ct1:'Let’s discuss',ct2:'<em>a project?</em>',ct_btn:'Message on Telegram',
  foot:'Made with attention to detail'
 };
