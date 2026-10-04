@@ -4,6 +4,7 @@ import type { ReactNode } from "react"
 import { motion } from "motion/react"
 
 import { MODELS } from "@/lib/models"
+import { BrushStroke, Checks, MarkerArrow, Sparkle } from "@/components/doodles"
 
 function Card({
   title,
@@ -36,16 +37,18 @@ function Card({
 
 /* Картинка из public/services: все в одинаковом квадрате, поэтому
    при одной высоте они одного визуального размера */
-function ServiceImage({ src, alt }: { src: string; alt: string }) {
+function ServiceImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
   return (
     <img
       src={src}
       alt={alt}
       draggable={false}
-      className="relative mx-auto block h-full w-auto object-contain drop-shadow-[0_18px_22px_rgba(0,0,0,0.14)] select-none"
+      className={`relative z-10 mx-auto block h-full w-auto object-contain drop-shadow-[0_18px_22px_rgba(0,0,0,0.14)] select-none ${className ?? ""}`}
     />
   )
 }
+
+const center = "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
 
 function Dashes({ items }: { items: string[] }) {
   return (
@@ -59,32 +62,6 @@ function Dashes({ items }: { items: string[] }) {
     </ul>
   )
 }
-
-/* Полароид с подписью от руки */
-function Polaroid({
-  children,
-  caption,
-  className,
-}: {
-  children: ReactNode
-  caption?: string
-  className?: string
-}) {
-  return (
-    <div
-      className={`absolute bg-white p-3 pb-9 shadow-[0_18px_40px_rgba(0,0,0,0.12)] ${className}`}
-    >
-      <div className="flex h-full items-center justify-center bg-[#f4f4f4]">{children}</div>
-      {caption && (
-        <span className="absolute bottom-2 left-4 font-hand text-[1.05rem] tracking-tight">
-          {caption}
-        </span>
-      )}
-    </div>
-  )
-}
-
-const modelImg = "object-contain drop-shadow-[0_16px_18px_rgba(0,0,0,0.16)]"
 
 export function Service() {
   return (
@@ -105,8 +82,11 @@ export function Service() {
           title="Pozdnyakov-prod: личный бренд для дизайнеров"
           visual={
             <>
-              <div className="absolute top-1/2 left-1/2 h-[92%] w-[46%] -translate-x-1/2 -translate-y-1/2 -rotate-[24deg] rounded-[45%] bg-[#ededed]" />
-              <ServiceImage src="/services/profile.png" alt="Телефон с профилем" />
+              <BrushStroke color="var(--red)" className={`${center} w-[92%] max-w-[420px] -rotate-[14deg] opacity-90`} />
+              <Sparkle className="top-[6%] left-[18%] h-6 w-6 md:left-[24%]" />
+              <Sparkle className="right-[20%] bottom-[10%] h-4 w-4 md:right-[26%]" />
+              {/* худи без запаса по краям, поэтому чуть ниже остальных */}
+              <ServiceImage src={MODELS.hoodie.src} alt={MODELS.hoodie.alt} className="top-[5%] h-[90%]" />
             </>
           }
         >
@@ -119,8 +99,13 @@ export function Service() {
           title="Позиционирование и оффер"
           visual={
             <>
-              <div className="absolute top-1/2 left-1/2 aspect-square h-[92%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#eef1f6]" />
+              <BrushStroke
+                color="#8fb8ff"
+                d="M40 150 C 120 108, 250 160, 360 104"
+                className={`${center} mt-[12%] w-[92%] max-w-[420px]`}
+              />
               <ServiceImage src="/services/positioning.png" alt="Кубики, один выделен цветом" />
+              <MarkerArrow label="это вы" className="top-[2%] right-[2%] z-20 h-[34%] w-[34%] md:right-[8%]" />
             </>
           }
         >
@@ -131,14 +116,17 @@ export function Service() {
           index={2}
           title="Упаковка профиля"
           visual={
-            <div className="relative mx-auto h-full w-[300px] max-w-full">
-              <Polaroid className="top-[4%] left-[2%] h-[78%] w-[56%] -rotate-6">
-                <img src={MODELS.letter.src} alt="" className={`h-[70%] w-[70%] -rotate-6 ${modelImg}`} />
-              </Polaroid>
-              <Polaroid caption="профиль" className="right-[2%] bottom-[2%] h-[80%] w-[56%] rotate-[7deg]">
-                <img src={MODELS.skeleton.src} alt="" className={`h-[78%] w-[78%] ${modelImg}`} />
-              </Polaroid>
-            </div>
+            <>
+              <BrushStroke
+                color="#ffd23f"
+                d="M60 170 C 140 120, 230 70, 340 30"
+                width={78}
+                className={`${center} w-[80%] max-w-[380px]`}
+              />
+              <Sparkle className="top-[10%] right-[22%] h-6 w-6 md:right-[30%]" />
+              <Sparkle className="bottom-[14%] left-[22%] h-4 w-4 md:left-[30%]" />
+              <ServiceImage src="/services/profile.png" alt="Телефон с профилем" />
+            </>
           }
         >
           <Dashes items={["Структура профиля", "Тексты, которые объясняют ваш подход"]} />
@@ -147,7 +135,17 @@ export function Service() {
         <Card
           index={3}
           title="Контент-система"
-          visual={<ServiceImage src="/services/calendar.png" alt="Календарь с отмеченными днями" />}
+          visual={
+            <>
+              <BrushStroke
+                color="#8fb8ff"
+                d="M30 70 C 130 40, 260 160, 372 120"
+                className={`${center} w-[92%] max-w-[420px]`}
+              />
+              <ServiceImage src="/services/calendar.png" alt="Календарь с отмеченными днями" />
+              <Checks className="bottom-[6%] left-[8%] z-20 h-10 w-24 -rotate-6 md:left-[16%]" />
+            </>
+          }
         >
           <Dashes items={["О чём писать", "Как писать", "Чтобы вести контент самостоятельно"]} />
         </Card>

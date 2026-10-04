@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "@fontsource-variable/onest";
+@import "@fontsource-variable/caveat";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -46,6 +47,7 @@
 
   --font-sans: "Onest Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-hand: "Comic Sans MS", "Chalkboard SE", "Segoe Print", cursive;
+  --font-script: "Caveat Variable", "Segoe Print", cursive;
 
   --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
