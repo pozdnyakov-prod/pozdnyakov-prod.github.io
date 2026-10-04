@@ -195,28 +195,6 @@ export function Model({
   )
 }
 
-/* Стрелка, нарисованная от руки */
-export function HandArrow({
-  className,
-  d = "M5 40 C 40 10, 90 8, 130 30",
-  viewBox = "0 0 140 60",
-}: {
-  className?: string
-  d?: string
-  viewBox?: string
-}) {
-  return (
-    <svg viewBox={viewBox} aria-hidden="true" className={cn("pointer-events-none absolute", className)}>
-      <defs>
-        <marker id="hand-arrow-head" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-          <path d="M1 1 L8 5 L1 9" fill="none" stroke="var(--ink)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-        </marker>
-      </defs>
-      <path d={d} fill="none" stroke="var(--ink)" strokeWidth="2.6" strokeLinecap="round" markerEnd="url(#hand-arrow-head)" />
-    </svg>
-  )
-}
-
 /* Подпись секции в квадратных скобках: [ КОНТАКТЫ ] */
 export function Bracket({ children, className }: { children: ReactNode; className?: string }) {
   return (

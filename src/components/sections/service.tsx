@@ -28,24 +28,64 @@ function Card({
     >
       <div className="relative z-10 flex flex-col gap-4">
         <h3 className="caps text-[1.55rem] sm:text-[1.6rem] xl:text-[clamp(1.35rem,1.75vw,2.1rem)]">{title}</h3>
-        <div className="text-[1rem] leading-[1.2] tracking-[-0.035em] xl:text-[clamp(1rem,1.15vw,1.3rem)]">{children}</div>
+        <div className="text-[1.1rem] leading-[1.2] tracking-[-0.035em] xl:text-[clamp(1.05rem,1.36vw,1.6rem)]">{children}</div>
       </div>
       {visual}
     </motion.article>
   )
 }
 
-function Dashes({ items }: { items: string[] }) {
+/* Список пунктов: тонкие линии между пунктами, тире в начале */
+function Dashes({ items }: { items: ReactNode[] }) {
   return (
-    <ul className="space-y-2.5">
-      {items.map((item) => (
-        <li key={item} className="flex gap-3">
-          <span aria-hidden="true">—</span>
+    <ul className="border-b border-line">
+      {items.map((item, i) => (
+        <li key={i} className="flex gap-3 border-t border-line py-[0.55em]">
+          <span aria-hidden="true" className="text-subtle">—</span>
           <span>{item}</span>
         </li>
       ))}
     </ul>
   )
+}
+
+/* Слово, выделенное маркером */
+function Mark({ children, color = "#ffe45c" }: { children: ReactNode; color?: string }) {
+  return (
+    <span
+      className="box-decoration-clone px-[0.15em] font-medium"
+      style={{
+        backgroundImage: `linear-gradient(104deg, transparent 0.4em, ${color} 0.5em, ${color} 96%, transparent 100%)`,
+        backgroundSize: "100% 62%",
+        backgroundPosition: "0 78%",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {children}
+    </span>
+  )
+}
+
+/* Слово, подчёркнутое от руки красным */
+function Under({ children }: { children: ReactNode }) {
+  return (
+    <span className="relative inline-block font-medium whitespace-nowrap">
+      {children}
+      <svg
+        viewBox="0 0 120 12"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-[0.32em] left-0 h-[0.42em] w-full"
+      >
+        <path d="M2 8 C 30 3, 70 2, 118 6" fill="none" stroke="var(--red)" strokeWidth="2.6" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      </svg>
+    </span>
+  )
+}
+
+/* Курсив для акцента внутри строки */
+function Em({ children }: { children: ReactNode }) {
+  return <em className="font-medium italic">{children}</em>
 }
 
 /* Правая колонка с картинкой. Внутри квадрат по меньшей стороне колонки,
@@ -155,8 +195,11 @@ export function Service() {
         )}
       >
         <Card index={0} title="Pozdnyakov-prod: digital-агентство для дизайнеров" visual={<BadgeVisual />}>
-          <p>Мы делаем личный бренд, упаковку и позиционирование для дизайнеров.</p>
-          <p className="mt-3 text-subtle">
+          <p className="text-[1.08em] leading-[1.18]">
+            Мы делаем <Mark>личный бренд</Mark>, упаковку и позиционирование{" "}
+            <Em>для дизайнеров</Em>.
+          </p>
+          <p className="mt-[0.9em] border-t border-line pt-[0.9em] text-[0.88em] text-subtle">
             Одна услуга с фиксированным составом: от брифа до системы, которую вы
             ведёте сами.
           </p>
@@ -177,7 +220,13 @@ export function Service() {
             </Visual>
           }
         >
-          <Dashes items={["Чем вы отличаетесь", "Для кого вы работаете", "Оффер, который это объясняет"]} />
+          <Dashes
+            items={[
+              <>Чем вы <Under>отличаетесь</Under></>,
+              <>Для кого вы <Em>работаете</Em></>,
+              <>Оффер, который это <Mark>объясняет</Mark></>,
+            ]}
+          />
         </Card>
 
         <Card
@@ -197,7 +246,12 @@ export function Service() {
             </Visual>
           }
         >
-          <Dashes items={["Структура профиля", "Тексты, которые объясняют ваш подход"]} />
+          <Dashes
+            items={[
+              <><Mark>Структура</Mark> профиля</>,
+              <>Тексты, которые объясняют <Under>ваш подход</Under></>,
+            ]}
+          />
         </Card>
 
         <Card
@@ -214,7 +268,13 @@ export function Service() {
             </Visual>
           }
         >
-          <Dashes items={["О чём писать", "Как писать", "Чтобы вести контент самостоятельно"]} />
+          <Dashes
+            items={[
+              <>О чём <Em>писать</Em></>,
+              <>Как <Mark>писать</Mark></>,
+              <>Чтобы вести контент <Under>самостоятельно</Under></>,
+            ]}
+          />
         </Card>
       </div>
       </div>
