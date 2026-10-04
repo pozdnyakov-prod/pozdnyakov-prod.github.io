@@ -1,5 +1,5 @@
-// «Услуга»: четыре белые карточки 2×2 с заголовком капсом, списком
-// через тире и предметом справа, как блок «Чем мы занимаемся?» у референса.
+// «Услуга»: четыре белые карточки 2×2. В каждой картинка по центру,
+// под ней заголовок капсом и список через тире.
 import type { ReactNode } from "react"
 import { motion } from "motion/react"
 
@@ -18,18 +18,32 @@ function Card({
 }) {
   return (
     <motion.article
-      className="group relative grid min-h-[360px] overflow-hidden bg-card p-7 md:min-h-[400px] md:grid-cols-[1.05fr_1fr] md:p-8"
+      className="relative flex flex-col overflow-hidden bg-card p-7 md:p-8"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.7, delay: (index % 2) * 0.1, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="relative z-10 flex flex-col justify-between gap-8">
+      {/* Картинка по центру, текст под ней */}
+      <div className="relative h-[220px] md:h-[270px]">{visual}</div>
+      <div className="relative z-10 mt-6 flex flex-col gap-5 md:mt-8">
         <h3 className="caps text-[1.55rem] sm:text-[1.9rem] md:text-[2.15rem]">{title}</h3>
         <div className="text-[1.05rem] leading-[1.1] tracking-[-0.035em]">{children}</div>
       </div>
-      <div className="relative mt-6 min-h-[220px] md:mt-0">{visual}</div>
     </motion.article>
+  )
+}
+
+/* Картинка из public/services: все в одинаковом квадрате, поэтому
+   при одной высоте они одного визуального размера */
+function ServiceImage({ src, alt }: { src: string; alt: string }) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      draggable={false}
+      className="relative mx-auto block h-full w-auto object-contain drop-shadow-[0_18px_22px_rgba(0,0,0,0.14)] select-none"
+    />
   )
 }
 
@@ -91,13 +105,8 @@ export function Service() {
           title="Pozdnyakov-prod: личный бренд для дизайнеров"
           visual={
             <>
-              <div className="absolute top-1/2 left-1/2 h-[85%] w-[70%] -translate-x-1/2 -translate-y-1/2 -rotate-[24deg] rounded-[45%] bg-[#ededed]" />
-              <img
-                src={MODELS.hoodie.src}
-                alt={MODELS.hoodie.alt}
-                draggable={false}
-                className={`absolute inset-0 m-auto h-[92%] w-[92%] ${modelImg}`}
-              />
+              <div className="absolute top-1/2 left-1/2 h-[92%] w-[46%] -translate-x-1/2 -translate-y-1/2 -rotate-[24deg] rounded-[45%] bg-[#ededed]" />
+              <ServiceImage src="/services/profile.png" alt="Телефон с профилем" />
             </>
           }
         >
@@ -110,13 +119,8 @@ export function Service() {
           title="Позиционирование и оффер"
           visual={
             <>
-              <div className="absolute top-1/2 left-1/2 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#eef1f6]" />
-              <img
-                src={MODELS.letter.src}
-                alt={MODELS.letter.alt}
-                draggable={false}
-                className={`absolute inset-0 m-auto h-[78%] w-[78%] rotate-6 ${modelImg}`}
-              />
+              <div className="absolute top-1/2 left-1/2 aspect-square h-[92%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#eef1f6]" />
+              <ServiceImage src="/services/positioning.png" alt="Кубики, один выделен цветом" />
             </>
           }
         >
@@ -127,14 +131,14 @@ export function Service() {
           index={2}
           title="Упаковка профиля"
           visual={
-            <>
-              <Polaroid className="top-[6%] left-[2%] h-[70%] w-[58%] -rotate-6">
+            <div className="relative mx-auto h-full w-[300px] max-w-full">
+              <Polaroid className="top-[4%] left-[2%] h-[78%] w-[56%] -rotate-6">
                 <img src={MODELS.letter.src} alt="" className={`h-[70%] w-[70%] -rotate-6 ${modelImg}`} />
               </Polaroid>
-              <Polaroid caption="профиль" className="right-[0%] bottom-[2%] h-[72%] w-[58%] rotate-[7deg]">
+              <Polaroid caption="профиль" className="right-[2%] bottom-[2%] h-[80%] w-[56%] rotate-[7deg]">
                 <img src={MODELS.skeleton.src} alt="" className={`h-[78%] w-[78%] ${modelImg}`} />
               </Polaroid>
-            </>
+            </div>
           }
         >
           <Dashes items={["Структура профиля", "Тексты, которые объясняют ваш подход"]} />
@@ -143,21 +147,7 @@ export function Service() {
         <Card
           index={3}
           title="Контент-система"
-          visual={
-            <>
-              <Polaroid caption="схема" className="inset-x-[8%] top-[10%] bottom-[2%] rotate-3">
-                <div className="relative h-full w-full">
-                  <img src={MODELS.pencil.src} alt="" className={`absolute top-[8%] left-[14%] h-[78%] w-[36%] -rotate-12 ${modelImg}`} />
-                  <img src={MODELS.brush.src} alt="" className={`absolute right-[8%] bottom-[6%] h-[64%] w-[50%] ${modelImg}`} />
-                </div>
-              </Polaroid>
-              <img
-                src={MODELS.pin.src}
-                alt=""
-                className={`absolute top-[2%] left-[12%] h-14 w-14 -rotate-12 ${modelImg}`}
-              />
-            </>
-          }
+          visual={<ServiceImage src="/services/calendar.png" alt="Календарь с отмеченными днями" />}
         >
           <Dashes items={["О чём писать", "Как писать", "Чтобы вести контент самостоятельно"]} />
         </Card>
