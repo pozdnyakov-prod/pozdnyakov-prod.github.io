@@ -1,5 +1,7 @@
-// Tubelight Navbar, ayushmxxn (21st.dev). Код из промта; next/link заменён
-// на <a>, активный пункт дополнительно следует за прокруткой.
+// Tubelight Navbar, ayushmxxn (21st.dev). Код из промта 1 в 1, кроме:
+// next/link → <a>, framer-motion → motion/react (та же библиотека),
+// sm:bottom-auto — иначе на десктопе блок растягивается на всю высоту
+// экрана и перекрывает клики по странице.
 import { useEffect, useState } from "react"
 import { motion } from "motion/react"
 import type { LucideIcon } from "lucide-react"
@@ -17,36 +19,27 @@ interface NavBarProps {
 }
 
 export function NavBar({ items, className }: NavBarProps) {
-  const [activeTab, setActiveTab] = useState<string | null>(null)
+  const [activeTab, setActiveTab] = useState(items[0].name)
+  const [, setIsMobile] = useState(false)
 
   useEffect(() => {
-    const sections = items
-      .map((item) => document.querySelector<HTMLElement>(item.url))
-      .filter((el): el is HTMLElement => el !== null)
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const item = items.find((i) => i.url === `#${entry.target.id}`)
-          if (!item) return
-          if (entry.isIntersecting) setActiveTab(item.name)
-          else setActiveTab((current) => (current === item.name ? null : current))
-        })
-      },
-      { rootMargin: "-50% 0px -50% 0px" }
-    )
-    sections.forEach((section) => observer.observe(section))
-    return () => observer.disconnect()
-  }, [items])
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
   return (
     <div
       className={cn(
-        "fixed bottom-0 sm:top-0 sm:bottom-auto left-1/2 -translate-x-1/2 z-50 mb-6 sm:mb-0 sm:pt-6",
+        "fixed bottom-0 sm:top-0 sm:bottom-auto left-1/2 -translate-x-1/2 z-50 mb-6 sm:pt-6",
         className,
       )}
     >
-      <div className="flex items-center gap-3 bg-background/80 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
+      <div className="flex items-center gap-3 bg-background/5 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
         {items.map((item) => {
           const Icon = item.icon
           const isActive = activeTab === item.name
@@ -56,9 +49,8 @@ export function NavBar({ items, className }: NavBarProps) {
               key={item.name}
               href={item.url}
               onClick={() => setActiveTab(item.name)}
-              aria-label={item.name}
               className={cn(
-                "relative cursor-pointer text-sm font-semibold px-4 md:px-6 py-2 rounded-full transition-colors",
+                "relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors",
                 "text-foreground/80 hover:text-primary",
                 isActive && "bg-muted text-primary",
               )}

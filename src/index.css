@@ -1,94 +1,98 @@
 @import "tailwindcss";
+@import "@fontsource-variable/onest";
 
-@import "@fontsource/cormorant-garamond/cyrillic-400.css";
-@import "@fontsource/cormorant-garamond/latin-400.css";
-@import "@fontsource/cormorant-garamond/cyrillic-500.css";
-@import "@fontsource/cormorant-garamond/latin-500.css";
-@import "@fontsource/cormorant-garamond/cyrillic-400-italic.css";
-@import "@fontsource/cormorant-garamond/latin-400-italic.css";
-@import "@fontsource/inter/cyrillic-400.css";
-@import "@fontsource/inter/latin-400.css";
-@import "@fontsource/inter/cyrillic-500.css";
-@import "@fontsource/inter/latin-500.css";
-@import "@fontsource/inter/cyrillic-600.css";
-@import "@fontsource/inter/latin-600.css";
-@import "@fontsource/inter/cyrillic-700.css";
-@import "@fontsource/inter/latin-700.css";
-@import "@fontsource/inter/cyrillic-800.css";
-@import "@fontsource/inter/latin-800.css";
-
-/* Тёмная тема компонентов включается только классом .dark, а не настройкой ОС:
-   сайт светлый, как в исходных демо. */
 @custom-variant dark (&:is(.dark *));
 
-/* Стандартная светлая палитра shadcn/ui (neutral) */
+/*
+  Визуальный язык: светло-серый фон, белые карточки, плотный гротеск
+  с отрицательным трекингом, красные пузыри-сообщения и синяя рамка
+  выделения, как в редакторе дизайна.
+*/
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  /* синий из демо text-rotate / landing-hero */
-  --brand: #0015ff;
+  --paper: #f2f2f2;
+  --card: #ffffff;
+  --ink: #0b0b0b;
+  --subtle: #6b6b6b;
+  --line: #d6d6d6;
+  --red: #e2061b;
+  --select: #3d8bfd;
+
+  /* имена shadcn для компонентов из промтов (меню, compare-slider) */
+  --background: var(--card);
+  --foreground: var(--ink);
+  --primary: var(--ink);
+  --muted: #e6e6e6;
+  --border: var(--line);
+  --ring: var(--select);
+  --muted-foreground: var(--subtle);
 }
 
 @theme inline {
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-subtle: var(--subtle);
+  --color-line: var(--line);
+  --color-red: var(--red);
+  --color-select: var(--select);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
   --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
   --color-border: var(--border);
-  --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-brand: var(--brand);
+  --color-muted-foreground: var(--muted-foreground);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: "Onest Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-hand: "Comic Sans MS", "Chalkboard SE", "Segoe Print", cursive;
 
-  /* В демо Calendas Plus и Overused Grotesk, у них нет кириллицы.
-     Ближайшие замены с кириллицей: Cormorant Garamond и Inter. */
-  --font-calendas: "Cormorant Garamond", Georgia, serif;
-  --font-serif: "Cormorant Garamond", Georgia, serif;
-  --font-overusedGrotesk: "Inter", system-ui, sans-serif;
-  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-line;
   }
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-paper text-ink font-sans antialiased;
     overflow-x: hidden;
   }
   section[id] {
-    scroll-margin-top: 96px;
+    scroll-margin-top: 24px;
+  }
+  :focus-visible {
+    outline: 2px solid var(--select);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: var(--select);
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* Плотные заголовки, как у референса: жирно, тесно, с минусовым трекингом */
+  .display {
+    font-weight: 600;
+    letter-spacing: -0.065em;
+    line-height: 0.92;
+  }
+  .caps {
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
   }
 }
 

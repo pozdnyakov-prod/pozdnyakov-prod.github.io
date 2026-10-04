@@ -1,170 +1,138 @@
-// Landing Hero из демо text-rotate, danielpetho (21st.dev).
-// Фото из демо заменены 3D-моделями без фона.
-import { LayoutGroup, motion } from "motion/react"
+// Первый экран: в центре оффер, выделенный рамкой как слой в редакторе,
+// 3D-модели вокруг медленно ходят к центру и обратно, внизу название.
+import { motion } from "motion/react"
 
-import { TELEGRAM_URL } from "@/lib/links"
+import { MODELS } from "@/lib/models"
 import { TextRotate } from "@/components/ui/text-rotate"
-import Floating, { FloatingElement } from "@/components/ui/parallax-floating"
+import { Cursor, Model, SelectionFrame } from "@/components/decor"
+import { Header } from "@/components/sections/header"
 
-const models = {
-  pencil: { url: "/models/pencil.webp", title: "Карандаш" },
-  shapes: { url: "/models/shapes.webp", title: "Фигуры" },
-  brush: { url: "/models/brush.webp", title: "Кисть" },
-  letter: { url: "/models/letter-t.webp", title: "Буква T" },
-  hoodie: { url: "/models/hoodie.webp", title: "Худи" },
-}
+const facts = ["фиксированный состав", "2 недели менторства", "11 990 ₽"]
 
-const imageClass =
-  "object-contain hover:scale-105 duration-200 cursor-pointer transition-transform drop-shadow-[0_25px_30px_rgba(0,0,0,0.18)]"
+const rise = (delay: number) => ({
+  initial: { opacity: 0, y: 18 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] as const },
+})
 
-function LandingHero() {
+function Models() {
   return (
-    <section className="w-full min-h-[100dvh] overflow-hidden flex flex-col items-center justify-center relative">
-      <Floating className="h-full">
-        <FloatingElement
-          drift={[22, 14]}
-          duration={7}
-          className="top-[9%] left-[42%] md:top-[25%] md:left-[5%]"
-        >
-          <motion.img
-            src={models.pencil.url}
-            alt={models.pencil.title}
-            className={`w-16 h-16 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 -rotate-[3deg] ${imageClass}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          />
-        </FloatingElement>
-
-        <FloatingElement
-          drift={[26, 24]}
-          duration={8}
-          delay={0.6}
-          className="top-[2%] left-[6%] md:top-[6%] md:left-[11%]"
-        >
-          <motion.img
-            src={models.shapes.url}
-            alt={models.shapes.title}
-            className={`w-24 h-28 sm:w-36 sm:h-40 md:w-44 md:h-48 lg:w-48 lg:h-52 -rotate-12 ${imageClass}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
-          />
-        </FloatingElement>
-
-        <FloatingElement
-          drift={[26, -24]}
-          duration={7.5}
-          delay={1.2}
-          className="top-[80%] left-[4%] md:top-[72%] md:left-[8%]"
-        >
-          <motion.img
-            src={models.brush.url}
-            alt={models.brush.title}
-            className={`w-28 h-28 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 -rotate-[4deg] ${imageClass}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.9 }}
-          />
-        </FloatingElement>
-
-        <FloatingElement
-          drift={[-26, 22]}
-          duration={8.5}
-          delay={0.3}
-          className="top-[2%] left-[72%] md:top-[4%] md:left-[80%]"
-        >
-          <motion.img
-            src={models.letter.url}
-            alt={models.letter.title}
-            className={`w-24 h-28 sm:w-36 sm:h-40 md:w-44 md:h-48 lg:w-52 lg:h-56 rotate-[6deg] ${imageClass}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.1 }}
-          />
-        </FloatingElement>
-
-        <FloatingElement
-          drift={[-28, -22]}
-          duration={7}
-          delay={0.9}
-          className="top-[74%] left-[66%] md:top-[60%] md:left-[78%]"
-        >
-          <motion.img
-            src={models.hoodie.url}
-            alt={models.hoodie.title}
-            className={`w-32 h-32 sm:w-48 sm:h-48 md:w-60 md:h-60 lg:w-72 lg:h-72 rotate-[8deg] ${imageClass}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.3 }}
-          />
-        </FloatingElement>
-      </Floating>
-
-      <div className="flex flex-col justify-center items-center w-[300px] sm:w-[420px] md:w-[560px] lg:w-[760px] z-50 pointer-events-auto">
-        <motion.h1
-          className="text-[2.6rem] sm:text-6xl md:text-7xl lg:text-8xl text-center w-full justify-center items-center flex-col flex whitespace-pre leading-tight font-calendas tracking-tight space-y-1 md:space-y-2"
-          animate={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.2, ease: "easeOut", delay: 0.3 }}
-        >
-          <span>Личный бренд</span>
-          <LayoutGroup>
-            <motion.span layout className="flex flex-col items-center whitespace-pre">
-              <motion.span
-                layout
-                className="flex whitespace-pre"
-                transition={{ type: "spring", damping: 30, stiffness: 400 }}
-              >
-                для дизайнеров
-              </motion.span>
-              <TextRotate
-                texts={["интерфейсов", "логотипов", "интерьеров", "одежды"]}
-                mainClassName="overflow-hidden text-brand italic py-0 pb-2 md:pb-4 rounded-xl"
-                staggerDuration={0.03}
-                staggerFrom="last"
-                rotationInterval={3000}
-                transition={{ type: "spring", damping: 30, stiffness: 400 }}
-              />
-            </motion.span>
-          </LayoutGroup>
-        </motion.h1>
-
-        <motion.p
-          className="text-sm sm:text-lg md:text-xl lg:text-2xl text-center font-overusedGrotesk pt-4 sm:pt-8 md:pt-10 lg:pt-12 max-w-[30ch] sm:max-w-none"
-          animate={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.2, ease: "easeOut", delay: 0.5 }}
-        >
-          Позиционирование, упаковка профиля и контент-система. Одна услуга
-          с фиксированным составом.
-        </motion.p>
-
-        <div className="flex flex-row justify-center space-x-4 items-center mt-10 sm:mt-16 md:mt-20 lg:mt-20 text-xs">
-          <motion.a
-            href={TELEGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-base md:text-lg lg:text-xl font-semibold tracking-tight text-white bg-brand px-6 py-3 lg:px-8 lg:py-3 rounded-full z-20 shadow-2xl"
-            animate={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 20 }}
-            transition={{
-              duration: 0.2,
-              ease: "easeOut",
-              delay: 0.7,
-              scale: { duration: 0.2 },
-            }}
-            whileHover={{
-              scale: 1.05,
-              transition: { type: "spring", damping: 30, stiffness: 400 },
-            }}
-          >
-            Написать в Telegram <span className="font-serif ml-1">→</span>
-          </motion.a>
-        </div>
-      </div>
-    </section>
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+      {/* Слева */}
+      <Model
+        {...MODELS.letter}
+        className="absolute top-[0%] left-[2%] h-20 w-20 md:top-[2%] md:left-[11%] md:h-40 md:w-36"
+        drift={[12, 10]}
+        duration={8}
+        rotate={-10}
+      />
+      <Model
+        {...MODELS.skeleton}
+        className="absolute top-[1%] left-[38%] h-24 w-20 md:top-[28%] md:left-[2%] md:h-72 md:w-56"
+        drift={[16, 0]}
+        duration={7.5}
+        delay={0.1}
+        rotate={-4}
+      />
+      <Model
+        {...MODELS.pencil}
+        className="absolute bottom-[1%] left-[4%] h-20 w-14 md:bottom-[4%] md:left-[12%] md:h-36 md:w-24"
+        drift={[12, -10]}
+        duration={7}
+        delay={0.2}
+        rotate={28}
+      />
+      {/* Справа */}
+      <Model
+        {...MODELS.pin}
+        className="absolute top-[2%] right-[5%] h-14 w-14 md:top-[3%] md:right-[15%] md:h-24 md:w-24"
+        drift={[-10, 10]}
+        duration={6.5}
+        delay={0.15}
+        rotate={14}
+      />
+      <Model
+        {...MODELS.hoodie}
+        className="absolute right-[2%] bottom-[0%] h-24 w-24 md:top-[24%] md:right-[2%] md:bottom-auto md:h-72 md:w-64"
+        drift={[-16, 0]}
+        duration={8.5}
+        delay={0.25}
+        rotate={8}
+      />
+      <Model
+        {...MODELS.brush}
+        className="absolute bottom-[1%] left-[38%] h-20 w-20 md:right-[12%] md:bottom-[2%] md:left-auto md:h-40 md:w-40"
+        drift={[-12, -10]}
+        duration={7.5}
+        delay={0.3}
+        rotate={-12}
+      />
+    </div>
   )
 }
 
-export { LandingHero }
+export function Hero() {
+  return (
+    <section className="relative flex min-h-[100dvh] flex-col overflow-hidden">
+      <Header />
+
+      <div className="relative flex flex-1 items-center justify-center px-4 py-32 md:min-h-[560px] md:px-12 md:py-16">
+        <Models />
+
+        <motion.div {...rise(0.15)} className="relative z-10 w-full max-w-[860px] text-center">
+          {/* Рамка выделения вокруг оффера, как выбранный слой */}
+          <SelectionFrame className="-inset-x-2 -inset-y-5 md:-inset-x-8 md:-inset-y-8">
+            <span className="absolute -top-7 left-0 rounded-sm bg-select px-1.5 py-0.5 text-[0.7rem] font-medium tracking-normal text-white md:-top-8 md:text-xs">
+              оффер
+            </span>
+          </SelectionFrame>
+          <Cursor className="-right-5 -bottom-12 md:-right-14 md:-bottom-16" />
+
+          <h1 className="display text-[2.5rem] sm:text-[3.4rem] md:text-[4.6rem] lg:text-[5.2rem]">
+            Личный бренд для дизайнеров
+            <br />
+            <TextRotate
+              texts={["интерфейсов", "логотипов", "интерьеров", "одежды"]}
+              mainClassName="inline-flex justify-center overflow-hidden pb-[0.08em] text-red"
+              staggerDuration={0.025}
+              staggerFrom="last"
+              rotationInterval={2800}
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+            />
+          </h1>
+
+          <motion.p
+            {...rise(0.35)}
+            className="mx-auto mt-5 max-w-[40ch] text-[1.1rem] leading-[1.2] tracking-[-0.035em] text-subtle md:mt-7 md:text-[1.35rem]"
+          >
+            Помогу объяснить клиентам, почему выбирать стоит именно вас.
+            Позиционирование, упаковка профиля и контент-система за 3–5 дней.
+          </motion.p>
+
+          <motion.ul {...rise(0.5)} className="mt-6 flex flex-wrap justify-center gap-2 md:mt-8">
+            {facts.map((f) => (
+              <li
+                key={f}
+                className="rounded-full border border-[#cfcfcf] bg-card px-4 py-2 text-[0.95rem] tracking-[-0.03em] md:text-[1.05rem]"
+              >
+                {f}
+              </li>
+            ))}
+          </motion.ul>
+        </motion.div>
+      </div>
+
+      <motion.p
+        aria-hidden="true"
+        className="display px-3 pb-24 text-center text-[13.8vw] leading-[0.86] whitespace-normal md:pb-0 md:text-[9.6vw] md:whitespace-nowrap"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      >
+        POZDNYAKOV-
+        <br className="md:hidden" />
+        PROD
+      </motion.p>
+    </section>
+  )
+}

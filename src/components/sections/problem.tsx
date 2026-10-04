@@ -1,93 +1,77 @@
-// Блок «Проблема» на основе Card Stack (21st.dev), как в демо:
-// веер карточек, автопрокрутка, точки снизу. Фото в карточках нет,
-// поэтому карточка рисуется через renderCard.
-import { useEffect, useRef, useState } from "react"
+// «Проблема»: сетка карточек с крупными подписями капсом,
+// по композиции как блок кейсов у референса.
 import { motion } from "motion/react"
 
-import { CardStack, type CardStackItem } from "@/components/ui/card-stack"
+import { MODELS } from "@/lib/models"
+import { cn } from "@/lib/utils"
 
-const items: CardStackItem[] = [
+const problems = [
   {
-    id: 1,
-    title: "Портфолио есть, а внятного ответа «почему именно вы» нет",
+    title: "Почему вы?",
+    text: "Портфолио есть, а внятного ответа «почему именно вы» нет",
+    model: MODELS.shapes,
+    bg: "bg-[#e6e9f3]",
+    rotate: -8,
   },
   {
-    id: 2,
-    title: "Профиль показывает работы, но не объясняет ваш подход",
+    title: "Подход",
+    text: "Профиль показывает работы, но не объясняет ваш подход",
+    model: MODELS.pencil,
+    bg: "bg-[#f1e6e4]",
+    rotate: 14,
   },
   {
-    id: 3,
-    title: "Клиент сравнивает вас с другими по цене, потому что больше не по чему",
+    title: "Цена",
+    text: "Клиент сравнивает вас с другими по цене, потому что больше не по чему",
+    model: MODELS.pin,
+    bg: "bg-[#e7ece6]",
+    rotate: -6,
   },
 ]
-
-const backgrounds = [
-  "bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-700",
-  "bg-gradient-to-br from-[#0015ff] via-[#2a3bff] to-[#5b67ff]",
-  "bg-gradient-to-br from-neutral-200 via-neutral-100 to-white",
-]
-
-function ProblemCard({ item }: { item: CardStackItem }) {
-  const index = Number(item.id) - 1
-  const light = index === 2
-  return (
-    <div className={`relative flex h-full w-full flex-col justify-end p-6 sm:p-8 ${backgrounds[index]}`}>
-      <p
-        className={`font-calendas text-[1.6rem] leading-[1.15] sm:text-[2.1rem] ${
-          light ? "text-neutral-900" : "text-white"
-        }`}
-      >
-        {item.title}
-      </p>
-    </div>
-  )
-}
 
 export function Problem() {
-  const wrapRef = useRef<HTMLDivElement>(null)
-  const [width, setWidth] = useState(520)
-
-  // Карточки в демо шириной 520px; на телефоне ужимаем под экран.
-  useEffect(() => {
-    const el = wrapRef.current
-    if (!el) return
-    const observer = new ResizeObserver(([entry]) => {
-      setWidth(Math.min(520, Math.round(entry.contentRect.width - 24)))
-    })
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
-  const compact = width < 480
-
   return (
-    <section id="problem" className="w-full overflow-hidden py-24 md:py-32">
-      <div className="mx-auto w-full max-w-5xl px-4 md:px-8">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto max-w-3xl text-center font-calendas text-4xl leading-tight tracking-tight sm:text-5xl md:text-6xl"
-        >
-          Хорошие работы не продают себя сами
-        </motion.h2>
+    <section id="problem" className="px-4 pt-20 pb-10 md:px-14 md:pt-28">
+      <motion.h2
+        className="display max-w-[11ch] text-[3.2rem] md:max-w-[19ch] md:text-[5.4rem]"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      >
+        Хорошие работы не продают себя сами
+      </motion.h2>
 
-        <div ref={wrapRef} className="mt-12 md:mt-16">
-          <CardStack
-            items={items}
-            initialIndex={0}
-            autoAdvance
-            intervalMs={3200}
-            pauseOnHover
-            showDots
-            cardWidth={width}
-            cardHeight={compact ? 300 : 320}
-            overlap={compact ? 0.72 : 0.48}
-            spreadDeg={compact ? 28 : 48}
-            renderCard={(item) => <ProblemCard item={item} />}
-          />
-        </div>
+      <div className="mt-10 grid gap-8 md:mt-14 md:grid-cols-3 md:gap-6">
+        {problems.map((item, i) => (
+          <motion.article
+            key={item.title}
+            className="group"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div
+              className={cn(
+                "relative flex aspect-square items-center justify-center overflow-hidden rounded-[10px]",
+                item.bg
+              )}
+            >
+              <img
+                src={item.model.src}
+                alt={item.model.alt}
+                draggable={false}
+                className="h-[62%] w-[62%] object-contain drop-shadow-[0_24px_28px_rgba(0,0,0,0.18)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
+                style={{ rotate: `${item.rotate}deg` }}
+              />
+            </div>
+            <h3 className="caps mt-4 text-[2.6rem] md:text-[3.1rem]">{item.title}</h3>
+            <p className="mt-2 max-w-[32ch] text-[1.15rem] leading-[1.1] tracking-[-0.035em] text-subtle">
+              {item.text}
+            </p>
+          </motion.article>
+        ))}
       </div>
     </section>
   )
