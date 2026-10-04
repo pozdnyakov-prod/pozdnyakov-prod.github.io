@@ -9,7 +9,7 @@ import { Model } from "@/components/decor"
 import { Header } from "@/components/sections/header"
 import { cn } from "@/lib/utils"
 
-const WORDS = ["интерфейсов", "логотипов", "интерьеров", "одежды"]
+const WORDS = ["интерфейсов", "логотипов", "интерьеров", "одежды", "сайтов", "инфографики"]
 
 // Цикл одной смены слова, мс: курсор отъехал → подъехал → слово сменилось
 const PERIOD = 3200
