@@ -28,7 +28,6 @@ const steps: Step[] = [
     title: "Передача",
     description: "Вы получаете систему и ведёте её сами.",
     colorTheme: "orange",
-    prop: { src: MODELS.hoodie.src, rotate: 8 },
   },
 ]
 
