@@ -9,7 +9,6 @@ const row = [
   { ...MODELS.hoodie, rotate: -6 },
   { ...MODELS.letter, rotate: 6 },
   { ...MODELS.skeleton, rotate: -4 },
-  { ...MODELS.shapes, rotate: 8 },
   { ...MODELS.brush, rotate: -14 },
   { ...MODELS.pencil, rotate: 16 },
   { ...MODELS.pin, rotate: -8 },

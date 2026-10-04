@@ -129,7 +129,7 @@ export function Service() {
           visual={
             <>
               <Polaroid className="top-[6%] left-[2%] h-[70%] w-[58%] -rotate-6 group-hover:-rotate-9">
-                <img src={MODELS.shapes.src} alt="" className={`h-[70%] w-[70%] ${modelImg}`} />
+                <img src={MODELS.letter.src} alt="" className={`h-[70%] w-[70%] -rotate-6 ${modelImg}`} />
               </Polaroid>
               <Polaroid caption="профиль" className="right-[0%] bottom-[2%] h-[72%] w-[58%] rotate-[7deg] group-hover:rotate-[10deg]">
                 <img src={MODELS.skeleton.src} alt="" className={`h-[78%] w-[78%] ${modelImg}`} />

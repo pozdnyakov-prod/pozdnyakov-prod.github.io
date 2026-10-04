@@ -2,30 +2,26 @@
 // по композиции как блок кейсов у референса.
 import { motion } from "motion/react"
 
-import { MODELS } from "@/lib/models"
 import { cn } from "@/lib/utils"
 
 const problems = [
   {
     title: "Почему вы?",
     text: "Портфолио есть, а внятного ответа «почему именно вы» нет",
-    model: MODELS.shapes,
+    image: { src: "/problem/question.png", alt: "Вопросительный знак" },
     bg: "bg-[#e6e9f3]",
-    rotate: -8,
   },
   {
     title: "Подход",
     text: "Профиль показывает работы, но не объясняет ваш подход",
-    model: MODELS.pencil,
+    image: { src: "/problem/frame.png", alt: "Картина и пузырь речи" },
     bg: "bg-[#f1e6e4]",
-    rotate: 14,
   },
   {
     title: "Цена",
     text: "Клиент сравнивает вас с другими по цене, потому что больше не по чему",
-    model: MODELS.pin,
+    image: { src: "/problem/price.png", alt: "Ценник с рублём" },
     bg: "bg-[#e7ece6]",
-    rotate: -6,
   },
 ]
 
@@ -59,11 +55,10 @@ export function Problem() {
               )}
             >
               <img
-                src={item.model.src}
-                alt={item.model.alt}
+                src={item.image.src}
+                alt={item.image.alt}
                 draggable={false}
-                className="h-[62%] w-[62%] object-contain drop-shadow-[0_24px_28px_rgba(0,0,0,0.18)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
-                style={{ rotate: `${item.rotate}deg` }}
+                className="h-[78%] w-[78%] object-contain drop-shadow-[0_24px_28px_rgba(0,0,0,0.14)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
               />
             </div>
             <h3 className="caps mt-4 text-[2.6rem] md:text-[3.1rem]">{item.title}</h3>

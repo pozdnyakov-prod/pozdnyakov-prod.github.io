@@ -42,8 +42,8 @@ export function Contacts() {
           <p className="mt-2 text-[1rem] tracking-[-0.03em] text-subtle">@vlpozd · @vl_content</p>
 
           <Model
-            {...MODELS.shapes}
-            className="absolute top-1/2 left-0 hidden h-72 w-60 -translate-y-1/2 md:block"
+            {...MODELS.letter}
+            className="absolute top-1/2 left-0 hidden h-64 w-56 -translate-y-1/2 md:block"
             drift={[14, 0]}
             duration={8}
             rotate={-8}
@@ -58,7 +58,7 @@ export function Contacts() {
         </div>
 
         <div className="mt-10 flex justify-center gap-10 md:hidden">
-          <img src={MODELS.shapes.src} alt="" className="h-36 w-32 -rotate-6 object-contain drop-shadow-[0_16px_18px_rgba(0,0,0,0.16)]" />
+          <img src={MODELS.letter.src} alt="" className="h-32 w-28 -rotate-6 object-contain drop-shadow-[0_16px_18px_rgba(0,0,0,0.16)]" />
           <img src={MODELS.hoodie.src} alt="" className="h-36 w-36 rotate-6 object-contain drop-shadow-[0_16px_18px_rgba(0,0,0,0.16)]" />
         </div>
       </div>
