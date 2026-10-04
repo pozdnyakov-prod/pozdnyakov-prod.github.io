@@ -22,6 +22,12 @@
   --background: var(--card);
   --foreground: var(--ink);
   --primary: var(--ink);
+  --primary-foreground: #ffffff;
+  --secondary: #eeeeee;
+  --secondary-foreground: var(--ink);
+  --accent: #eeeeee;
+  --accent-foreground: var(--ink);
+  --input: var(--line);
   --muted: #e6e6e6;
   --border: var(--line);
   --ring: var(--select);
@@ -40,6 +46,12 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-input: var(--input);
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-ring: var(--ring);
