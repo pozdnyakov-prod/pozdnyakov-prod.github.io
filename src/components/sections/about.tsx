@@ -1,5 +1,5 @@
-// «Обо мне»: фото в полароиде на кнопке (рамка в пропорциях снимка,
-// фото целиком), к нему справа снизу прилеплен
+// «Обо мне»: фото в полароиде 4:5 на кнопке (кадр с башней и человеком),
+// к нему справа снизу прилеплен
 // скелет-художник; справа имя капсом, текст и ссылка на канал.
 import { motion } from "motion/react"
 import { ArrowUpRight } from "lucide-react"
@@ -12,7 +12,7 @@ export function About() {
     <section id="about" className="overflow-x-clip px-4 pt-24 md:px-14 md:pt-32">
       <div className="grid items-center gap-16 bg-card px-6 py-14 md:grid-cols-[0.9fr_1.1fr] md:gap-10 md:px-14 md:py-16">
         <motion.div
-          className="relative mx-auto w-[64%] max-w-[270px] md:w-[270px] lg:w-[290px] lg:max-w-[290px]"
+          className="relative mx-auto w-[78%] max-w-[340px] md:w-full"
           initial={{ opacity: 0, rotate: -8, y: 30 }}
           whileInView={{ opacity: 1, rotate: -3, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
@@ -25,7 +25,7 @@ export function About() {
               width={595}
               height={1280}
               loading="lazy"
-              className="block aspect-[595/1280] w-full object-cover"
+              className="block aspect-[4/5] w-full object-cover object-[50%_62%]"
             />
             <span className="absolute bottom-4 left-6 font-hand text-[1.3rem]">это я</span>
           </div>
@@ -39,7 +39,7 @@ export function About() {
             src={MODELS.skeleton.src}
             alt={MODELS.skeleton.alt}
             draggable={false}
-            className="absolute -right-16 -bottom-8 h-36 w-28 rotate-6 object-contain drop-shadow-[0_20px_24px_rgba(0,0,0,0.22)] md:-right-32 md:-bottom-12 md:h-52 md:w-40"
+            className="absolute -right-12 -bottom-12 h-44 w-36 rotate-6 object-contain drop-shadow-[0_20px_24px_rgba(0,0,0,0.22)] md:-right-16 md:-bottom-14 md:h-56 md:w-44"
           />
         </motion.div>
 
@@ -60,7 +60,7 @@ export function About() {
           <p className="mt-6 max-w-[30ch] text-[1.35rem] leading-[1.12] tracking-[-0.04em] md:text-[1.6rem]">
             Занимаюсь AI и контент-маркетингом для дизайнеров{" "}
             <span aria-hidden="true" className="text-subtle">|</span> позиционирование,
-            личный бренд для дизайнеров
+            личный бренд и упаковка
           </p>
           <a
             href={CHANNEL_URL}
