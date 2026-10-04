@@ -636,56 +636,57 @@ document.querySelectorAll('#lang button').forEach(b=>b.addEventListener('click',
 /* ═══ PRELOADER + INTRO MUSIC + HERO NAME ═══
    me/intro.mp3 — отрезок трека с 11,80 с. Слово «Okay» звучит на T_OKAY секунде клипа:
    счётчик доходит до 100% ровно к нему, и сайт начинает появляться.
-   Затухание записано в самом файле (с 3,1 с), поэтому громкость из кода не трогаем. */
+   Затухание записано в самом файле (с 3,1 с), поэтому громкость из кода не трогаем.
+   Играем через обычный <audio>, а не Web Audio: на iPhone Web Audio молчит в беззвучном режиме. */
 (function(){
   const CLIP='intro.mp3',T_OKAY=1.10;
   const pl=$('pl'),pn=$('pl-num'),pf=$('pl-fill');
-  const AC=window.AudioContext||window.webkitAudioContext;
-  let ctx=null,started=false,bufP=null;
-  try{if(AC)ctx=new AC()}catch(e){ctx=null}
-  if(ctx){
-    bufP=fetch(CLIP).then(r=>{if(!r.ok)throw 0;return r.arrayBuffer()})
-      .then(ab=>new Promise((ok,no)=>ctx.decodeAudioData(ab,ok,no))).catch(()=>null);
-  }
+  let started=false,revealed=false;
+  const au=new Audio();au.preload='auto';au.setAttribute('playsinline','');
+  try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}
+  // Скачиваем клип заранее, чтобы после нажатия он заиграл без паузы на загрузку
+  const ready=fetch(CLIP).then(r=>{if(!r.ok)throw 0;return r.blob()})
+    .then(bl=>{au.src=URL.createObjectURL(bl);return true})
+    .catch(()=>{au.src=CLIP;return true});
+  function show(p){const r=Math.floor(Math.max(0,Math.min(p,1))*100);pn.textContent=r+'%';pf.style.width=r+'%'}
   function reveal(){
-    pn.textContent='100%';pf.style.width='100%';
+    if(revealed)return;revealed=true;show(1);
     pl.classList.remove('gate');pl.classList.add('done');
     document.body.classList.remove('lock');document.body.classList.add('go');
     animName(NAME[lang]);
   }
-  function run(delayMs){
-    const t0=performance.now()+delayMs,dur=T_OKAY*1000;
-    (function tick(now){
-      const p=Math.max(0,Math.min((now-t0)/dur,1)),r=Math.floor(p*100);
-      pn.textContent=r+'%';pf.style.width=r+'%';
-      if(p<1)requestAnimationFrame(tick);else reveal();
-    })(performance.now());
+  function runSilent(){
+    const t0=performance.now(),dur=T_OKAY*1000;
+    (function tick(now){const p=(now-t0)/dur;show(p);if(p<1)requestAnimationFrame(tick);else reveal()})(t0);
   }
-  async function start(sound){
+  function runWithAudio(){
+    // счётчик идёт по часам самого звука — так «Okay» и 100% совпадают
+    const began=performance.now();let lastT=0,lastAt=began;
+    (function tick(now){
+      const t=au.currentTime;
+      if(t!==lastT){lastT=t;lastAt=now}
+      const est=au.paused?t:t+(now-lastAt)/1000;      // сглаживаем редкие обновления currentTime
+      if(t===0&&now-began>1800){runSilent();return}     // звук так и не пошёл — входим без него
+      show(est/T_OKAY);
+      if(est>=T_OKAY)reveal();else requestAnimationFrame(tick);
+    })(began);
+  }
+  function start(sound){
     if(started)return;started=true;pl.classList.remove('gate');
-    let lead=0;
-    if(sound&&ctx&&bufP){
-      try{
-        const res=ctx.resume();                      // внутри нажатия — это разблокирует звук
-        const buf=await bufP;
-        await Promise.race([res,new Promise(r=>setTimeout(r,400))]);
-        if(buf&&ctx.state==='running'){
-          const src=ctx.createBufferSource();src.buffer=buf;src.connect(ctx.destination);
-          src.start(ctx.currentTime+.06);
-          lead=60+((ctx.outputLatency||0)+(ctx.baseLatency||0))*1000; // звук доходит до ушей с задержкой
-        }
-      }catch(e){}
-    }
-    run(lead);
+    if(!sound){runSilent();return}
+    let pr;
+    try{au.currentTime=0;pr=au.play()}catch(e){runSilent();return}
+    if(pr&&pr.then)pr.then(runWithAudio,()=>runSilent());else runWithAudio();
   }
   $('pl-mute').addEventListener('click',e=>{e.stopPropagation();start(false)});
   pl.addEventListener('click',()=>{if(pl.classList.contains('gate'))start(true)});
   document.addEventListener('keydown',e=>{if(!started&&pl.classList.contains('gate')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();start(true)}});
-  // Браузер разрешает звук без нажатия — запускаем сразу. Иначе ждём нажатия.
-  if(!ctx||!bufP){start(false);return}
-  bufP.then(buf=>{
-    if(!buf){start(false);return}
-    if(ctx.state==='running')start(true);else pl.classList.add('gate');
+  // Если браузер разрешает звук без нажатия — запускаем сразу. Иначе ждём нажатия.
+  ready.then(()=>{
+    let pr;
+    try{pr=au.play()}catch(e){pl.classList.add('gate');return}
+    if(!pr||!pr.then){started=true;runWithAudio();return}
+    pr.then(()=>{started=true;runWithAudio()},()=>{pl.classList.add('gate')});
   });
 })();
 function animName(t){
