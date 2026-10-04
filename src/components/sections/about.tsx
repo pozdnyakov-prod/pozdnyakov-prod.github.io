@@ -1,4 +1,5 @@
-// «Обо мне»: фото в полароиде на кнопке, к нему справа снизу прилеплен
+// «Обо мне»: фото в полароиде на кнопке (рамка в пропорциях снимка,
+// фото целиком), к нему справа снизу прилеплен
 // скелет-художник; справа имя капсом, текст и ссылка на канал.
 import { motion } from "motion/react"
 import { ArrowUpRight } from "lucide-react"
@@ -8,19 +9,24 @@ import { MODELS } from "@/lib/models"
 
 export function About() {
   return (
-    <section id="about" className="px-4 pt-24 md:px-14 md:pt-32">
+    <section id="about" className="overflow-x-clip px-4 pt-24 md:px-14 md:pt-32">
       <div className="grid items-center gap-16 bg-card px-6 py-14 md:grid-cols-[0.9fr_1.1fr] md:gap-10 md:px-14 md:py-16">
         <motion.div
-          className="relative mx-auto w-[78%] max-w-[340px] md:w-full"
+          className="relative mx-auto w-[64%] max-w-[270px] md:w-[270px] lg:w-[290px] lg:max-w-[290px]"
           initial={{ opacity: 0, rotate: -8, y: 30 }}
           whileInView={{ opacity: 1, rotate: -3, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="bg-white p-4 pb-14 shadow-[0_24px_50px_rgba(0,0,0,0.14)]">
-            <div className="flex aspect-[4/5] items-center justify-center bg-[#e8e8e8]">
-              <span className="text-sm text-subtle">Здесь будет фото</span>
-            </div>
+            <img
+              src="/about/me.webp"
+              alt="Владимир Поздняков"
+              width={595}
+              height={1280}
+              loading="lazy"
+              className="block aspect-[595/1280] w-full object-cover"
+            />
             <span className="absolute bottom-4 left-6 font-hand text-[1.3rem]">это я</span>
           </div>
           <img
@@ -33,7 +39,7 @@ export function About() {
             src={MODELS.skeleton.src}
             alt={MODELS.skeleton.alt}
             draggable={false}
-            className="absolute -right-12 -bottom-12 h-44 w-36 rotate-6 object-contain drop-shadow-[0_20px_24px_rgba(0,0,0,0.22)] md:-right-16 md:-bottom-14 md:h-56 md:w-44"
+            className="absolute -right-16 -bottom-8 h-36 w-28 rotate-6 object-contain drop-shadow-[0_20px_24px_rgba(0,0,0,0.22)] md:-right-32 md:-bottom-12 md:h-52 md:w-40"
           />
         </motion.div>
 
@@ -52,17 +58,27 @@ export function About() {
             Поздняков
           </h2>
           <p className="mt-6 max-w-[30ch] text-[1.35rem] leading-[1.12] tracking-[-0.04em] md:text-[1.6rem]">
-            Занимаюсь позиционированием и контентом для дизайнеров, в работе
-            использую AI.
+            Занимаюсь AI и контент-маркетингом для дизайнеров{" "}
+            <span aria-hidden="true" className="text-subtle">|</span> позиционирование,
+            личный бренд для дизайнеров
           </p>
           <a
             href={CHANNEL_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="group mt-10 inline-flex items-start gap-2 text-[1.1rem] tracking-[-0.035em]"
+            className="group mt-10 flex items-start gap-2 text-[1.1rem] tracking-[-0.035em]"
           >
             <span className="underline decoration-1 underline-offset-[6px] transition-colors group-hover:decoration-transparent">
               Как я думаю и работаю — в канале @vl_content
+            </span>
+            <ArrowUpRight className="mt-0.5 h-5 w-5 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+          <a
+            href="/me/"
+            className="group mt-4 flex items-start gap-2 text-[1.1rem] tracking-[-0.035em]"
+          >
+            <span className="underline decoration-1 underline-offset-[6px] transition-colors group-hover:decoration-transparent">
+              Обо мне подробнее — витрина
             </span>
             <ArrowUpRight className="mt-0.5 h-5 w-5 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
