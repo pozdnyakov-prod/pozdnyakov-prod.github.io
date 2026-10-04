@@ -20,15 +20,15 @@ function Card({
 }) {
   return (
     <motion.article
-      className="relative grid overflow-hidden bg-card p-6 sm:grid-cols-[1.1fr_1fr] sm:items-center sm:gap-4 lg:p-8 xl:h-full"
+      className="relative grid overflow-hidden bg-card p-6 sm:grid-cols-2 sm:items-center sm:gap-4 lg:p-8 xl:h-full"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.7, delay: (index % 2) * 0.1, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="relative z-10 flex flex-col gap-4">
-        <h3 className="caps text-[1.55rem] sm:text-[1.6rem] xl:text-[1.5rem]">{title}</h3>
-        <div className="text-[1rem] leading-[1.2] tracking-[-0.035em] xl:text-[1.02rem]">{children}</div>
+        <h3 className="caps text-[1.55rem] sm:text-[1.6rem] xl:text-[clamp(1.35rem,1.75vw,2.1rem)]">{title}</h3>
+        <div className="text-[1rem] leading-[1.2] tracking-[-0.035em] xl:text-[clamp(1rem,1.15vw,1.3rem)]">{children}</div>
       </div>
       {visual}
     </motion.article>
@@ -53,7 +53,7 @@ function Dashes({ items }: { items: string[] }) {
 function Visual({ children }: { children: ReactNode }) {
   return (
     <div className="relative mt-4 flex h-[240px] items-center justify-center [container-type:size] sm:mt-0 sm:h-[280px] xl:h-full">
-      <div className="relative aspect-square w-[min(100cqw,100cqh)]">{children}</div>
+      <div className="relative aspect-square w-[min(100cqw,100cqh)] shrink-0 xl:w-[min(118cqw,100cqh)]">{children}</div>
     </div>
   )
 }
@@ -80,9 +80,9 @@ function YouArrow() {
             <path d="M1 1 L10 6 L1 11" fill="none" stroke="var(--ink)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </marker>
         </defs>
-        <path d="M95 4 C 82 4, 66 9, 54 20.5" fill="none" stroke="var(--ink)" strokeWidth="1.1" strokeLinecap="round" markerEnd="url(#you-arrow-head)" />
+        <path d="M86 5 C 76 5, 63 10, 54 20.5" fill="none" stroke="var(--ink)" strokeWidth="1.1" strokeLinecap="round" markerEnd="url(#you-arrow-head)" />
       </svg>
-      <span className="absolute -top-[7%] right-[-6%] rotate-[-6deg] font-script text-[1.6rem] leading-none whitespace-nowrap xl:text-[1.9rem]">
+      <span className="absolute -top-[6%] right-[0%] rotate-[-6deg] font-script text-[1.6rem] leading-none whitespace-nowrap xl:text-[1.9rem]">
         это вы
       </span>
     </div>
@@ -135,8 +135,8 @@ function BadgeVisual() {
 
 export function Service() {
   return (
-    <section id="service" className="px-4 pt-20 md:px-14 lg:pt-16">
-      <div className="mx-auto max-w-[1180px]">
+    <section id="service" className="px-4 pt-20 md:px-14 lg:pt-16 xl:px-[3.9vw]">
+      <div>
       <motion.h2
         className="display text-[3.2rem] md:text-[4.4rem]"
         initial={{ opacity: 0, y: 24 }}
@@ -147,11 +147,11 @@ export function Service() {
         Кто мы
       </motion.h2>
 
-      {/* С 1280 px квадрат 2×2 высотой в экран минус заголовок; уже — по одной карточке в ряд */}
+      {/* С 1280 px квадрат 2×2, размеры карточек как у референса (пропорционально ширине экрана); уже — по одной карточке в ряд */}
       <div
         className={cn(
           "mt-6 grid gap-3",
-          "xl:h-[clamp(620px,calc(100dvh-180px),760px)] xl:grid-cols-2 xl:grid-rows-2"
+          "xl:grid-cols-2 xl:grid-rows-[repeat(2,27.15vw)] xl:gap-x-[0.97vw] xl:gap-y-[0.56vw]"
         )}
       >
         <Card index={0} title="Pozdnyakov-prod: digital-агентство для дизайнеров" visual={<BadgeVisual />}>
@@ -170,7 +170,7 @@ export function Service() {
               <BrushStroke
                 color="#8fb8ff"
                 d="M40 150 C 120 108, 250 160, 360 104"
-                className="top-[52%] left-1/2 w-[112%] -translate-x-1/2"
+                className="top-[52%] left-1/2 w-[96%] -translate-x-1/2"
               />
               <Picture src="/services/positioning.png" alt="Кубики, один выделен оранжевым" />
               <YouArrow />
@@ -189,7 +189,7 @@ export function Service() {
                 color="#ffd23f"
                 d="M60 170 C 140 120, 230 70, 340 30"
                 width={78}
-                className="top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
+                className="top-1/2 left-1/2 w-[92%] -translate-x-1/2 -translate-y-1/2"
               />
               <Sparkle className="top-[8%] right-[18%] z-20 h-6 w-6" />
               <Sparkle className="bottom-[12%] left-[18%] z-20 h-4 w-4" />
@@ -208,7 +208,7 @@ export function Service() {
               <BrushStroke
                 color="#8fb8ff"
                 d="M30 70 C 130 40, 260 160, 372 120"
-                className="top-1/2 left-1/2 w-[112%] -translate-x-1/2 -translate-y-1/2"
+                className="top-1/2 left-1/2 w-[96%] -translate-x-1/2 -translate-y-1/2"
               />
               <Picture src="/services/calendar.png" alt="Календарь с отмеченными днями" />
             </Visual>
