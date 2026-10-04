@@ -20,15 +20,15 @@ function Card({
 }) {
   return (
     <motion.article
-      className="relative grid overflow-hidden bg-card p-6 sm:grid-cols-2 sm:items-center sm:gap-4 lg:p-8 xl:h-full"
+      className="relative grid overflow-hidden bg-card p-6 sm:grid-cols-[1.1fr_1fr] sm:items-center sm:gap-4 lg:p-8 xl:h-full"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.7, delay: (index % 2) * 0.1, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="relative z-10 flex flex-col gap-4">
-        <h3 className="caps text-[1.55rem] sm:text-[1.6rem] xl:text-[1.75rem] 2xl:text-[1.95rem]">{title}</h3>
-        <div className="text-[1rem] leading-[1.2] tracking-[-0.035em] xl:text-[1.08rem]">{children}</div>
+        <h3 className="caps text-[1.55rem] sm:text-[1.6rem] xl:text-[1.5rem]">{title}</h3>
+        <div className="text-[1rem] leading-[1.2] tracking-[-0.035em] xl:text-[1.02rem]">{children}</div>
       </div>
       {visual}
     </motion.article>
@@ -64,7 +64,7 @@ function Picture({ src, alt }: { src: string; alt: string }) {
       src={src}
       alt={alt}
       draggable={false}
-      className="absolute inset-0 z-10 m-auto h-auto max-h-full w-auto max-w-full object-contain drop-shadow-[0_18px_22px_rgba(0,0,0,0.14)] select-none"
+      className="absolute inset-0 z-10 h-full w-full object-contain drop-shadow-[0_18px_22px_rgba(0,0,0,0.14)] select-none"
     />
   )
 }
@@ -80,7 +80,7 @@ function YouArrow() {
             <path d="M1 1 L10 6 L1 11" fill="none" stroke="var(--ink)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </marker>
         </defs>
-        <path d="M95 4 C 88 6, 76 9, 67.5 18.5" fill="none" stroke="var(--ink)" strokeWidth="1.1" strokeLinecap="round" markerEnd="url(#you-arrow-head)" />
+        <path d="M95 4 C 82 4, 66 9, 54 20.5" fill="none" stroke="var(--ink)" strokeWidth="1.1" strokeLinecap="round" markerEnd="url(#you-arrow-head)" />
       </svg>
       <span className="absolute -top-[7%] right-[-6%] rotate-[-6deg] font-script text-[1.6rem] leading-none whitespace-nowrap xl:text-[1.9rem]">
         это вы
@@ -108,16 +108,16 @@ const WAVY = wavyPath()
 function BadgeVisual() {
   const reduce = useReducedMotion()
   return (
-    <div className="relative mt-4 h-[300px] overflow-hidden rounded-[18px] bg-paper sm:mt-0 sm:-my-6 sm:h-auto sm:min-h-[300px] sm:self-stretch sm:overflow-visible sm:rounded-none sm:bg-transparent lg:-my-8">
+    <div className="relative mt-4 h-[300px] overflow-hidden [container-type:size] rounded-[18px] bg-paper sm:mt-0 sm:-my-6 sm:h-auto sm:min-h-[300px] sm:self-stretch sm:overflow-visible sm:rounded-none sm:bg-transparent lg:-my-8">
       <svg
         viewBox="0 0 400 400"
         aria-hidden="true"
-        className="pointer-events-none absolute top-[34%] left-1/2 aspect-square h-[58%] -translate-x-1/2 -rotate-[8deg]"
+        className="badge-blob pointer-events-none absolute top-[34%] left-1/2 aspect-square h-[58%] -translate-x-1/2 -rotate-[8deg]"
       >
         <path d={WAVY} className="fill-[#e6e6e6] sm:fill-[#efefef]" />
       </svg>
       <motion.div
-        className="absolute -top-7 left-1/2 h-[92%] -translate-x-1/2"
+        className="badge-hang absolute -top-7 left-1/2 h-[92%] -translate-x-1/2"
         style={{ transformOrigin: "50% 0%" }}
         animate={reduce ? undefined : { rotate: [-2.5, 2.5, -2.5] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -136,6 +136,7 @@ function BadgeVisual() {
 export function Service() {
   return (
     <section id="service" className="px-4 pt-20 md:px-14 lg:pt-16">
+      <div className="mx-auto max-w-[1180px]">
       <motion.h2
         className="display text-[3.2rem] md:text-[4.4rem]"
         initial={{ opacity: 0, y: 24 }}
@@ -150,7 +151,7 @@ export function Service() {
       <div
         className={cn(
           "mt-6 grid gap-3",
-          "xl:h-[clamp(640px,calc(100dvh-180px),820px)] xl:grid-cols-2 xl:grid-rows-2"
+          "xl:h-[clamp(620px,calc(100dvh-180px),760px)] xl:grid-cols-2 xl:grid-rows-2"
         )}
       >
         <Card index={0} title="Pozdnyakov-prod: digital-агентство для дизайнеров" visual={<BadgeVisual />}>
@@ -215,6 +216,7 @@ export function Service() {
         >
           <Dashes items={["О чём писать", "Как писать", "Чтобы вести контент самостоятельно"]} />
         </Card>
+      </div>
       </div>
     </section>
   )
