@@ -1,72 +1,52 @@
-// «Кто мы»: слева заголовок и текст, справа бейдж на ленте. Бейдж прижат
-// к верхнему краю блока, срез ленты спрятан за краем, за бейджем крупная
-// светло-серая фигура. Бейдж медленно покачивается на 2–3 градуса.
-import { motion, useReducedMotion } from "motion/react"
+// «Обо мне»: фото в полароиде на кнопке, к нему справа снизу прилеплен
+// скелет-художник; справа имя капсом, текст и ссылка на канал.
+import { motion } from "motion/react"
 import { ArrowUpRight } from "lucide-react"
 
 import { CHANNEL_URL } from "@/lib/links"
-import { cn } from "@/lib/utils"
-
-/* Абстрактная фигура-подложка: мягкий волнистый контур из семи «лепестков».
-   Путь строится по формуле, поэтому края гладкие без ручной отрисовки */
-function wavyPath(lobes = 7, depth = 0.09, points = 140) {
-  const cx = 200, cy = 200, r = 168
-  let d = ""
-  for (let i = 0; i <= points; i++) {
-    const t = (i / points) * Math.PI * 2
-    const rr = r * (1 + depth * Math.sin(lobes * t))
-    const x = (cx + rr * Math.cos(t)).toFixed(1)
-    const y = (cy + rr * Math.sin(t)).toFixed(1)
-    d += (i === 0 ? "M" : "L") + x + " " + y + " "
-  }
-  return d + "Z"
-}
-const WAVY = wavyPath()
-
-function Blob({ className, color }: { className?: string; color: string }) {
-  return (
-    <svg viewBox="0 0 400 400" aria-hidden="true" className={cn("pointer-events-none absolute aspect-square", className)}>
-      <path d={WAVY} fill={color} />
-    </svg>
-  )
-}
-
-/* Бейдж на ленте. Картинка начинается выше контейнера, у которого
-   overflow-hidden, поэтому ровный срез ленты не виден */
-function HangingBadge({ className }: { className?: string }) {
-  const reduce = useReducedMotion()
-  return (
-    <motion.div
-      className={cn("absolute left-1/2 -translate-x-1/2", className)}
-      style={{ transformOrigin: "50% 0%" }}
-      animate={reduce ? undefined : { rotate: [-2.5, 2.5, -2.5] }}
-      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-    >
-      <img
-        src="/about/badge.webp"
-        alt="Бейдж на оранжевой ленте"
-        draggable={false}
-        className="h-full w-auto max-w-none drop-shadow-[0_24px_30px_rgba(0,0,0,0.16)] select-none"
-      />
-    </motion.div>
-  )
-}
+import { MODELS } from "@/lib/models"
 
 export function About() {
   return (
     <section id="about" className="px-4 pt-24 md:px-14 md:pt-32">
-      <div className="relative grid overflow-hidden bg-card md:min-h-[620px] md:grid-cols-2">
+      <div className="grid items-center gap-16 bg-card px-6 py-14 md:grid-cols-[0.9fr_1.1fr] md:gap-10 md:px-14 md:py-16">
         <motion.div
-          className="relative z-10 flex flex-col justify-center px-6 pt-14 pb-10 md:px-14 md:py-20"
+          className="relative mx-auto w-[78%] max-w-[340px] md:w-full"
+          initial={{ opacity: 0, rotate: -8, y: 30 }}
+          whileInView={{ opacity: 1, rotate: -3, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="bg-white p-4 pb-14 shadow-[0_24px_50px_rgba(0,0,0,0.14)]">
+            <div className="flex aspect-[4/5] items-center justify-center bg-[#e8e8e8]">
+              <span className="text-sm text-subtle">Здесь будет фото</span>
+            </div>
+            <span className="absolute bottom-4 left-6 font-hand text-[1.3rem]">это я</span>
+          </div>
+          <img
+            src={MODELS.pin.src}
+            alt=""
+            aria-hidden="true"
+            className="absolute -top-8 left-1/2 h-16 w-16 -translate-x-1/2 rotate-12 object-contain drop-shadow-[0_10px_12px_rgba(0,0,0,0.2)]"
+          />
+          <img
+            src={MODELS.skeleton.src}
+            alt={MODELS.skeleton.alt}
+            draggable={false}
+            className="absolute -right-12 -bottom-12 h-44 w-36 rotate-6 object-contain drop-shadow-[0_20px_24px_rgba(0,0,0,0.22)] md:-right-16 md:-bottom-14 md:h-56 md:w-44"
+          />
+        </motion.div>
+
+        <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >
           <p className="text-[1.3rem] font-medium tracking-[-0.05em] uppercase">
-            <span className="font-light">[</span> кто мы <span className="font-light">]</span>
+            <span className="font-light">[</span> обо мне <span className="font-light">]</span>
           </p>
-          <h2 className="caps mt-5 text-[3rem] md:text-[4.2rem] lg:text-[4.6rem]">
+          <h2 className="caps mt-5 text-[3rem] md:text-[4.6rem]">
             Владимир
             <br />
             Поздняков
@@ -79,26 +59,14 @@ export function About() {
             href={CHANNEL_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="group mt-10 inline-flex items-start gap-2 self-start text-[1.1rem] tracking-[-0.035em]"
+            className="group mt-10 inline-flex items-start gap-2 text-[1.1rem] tracking-[-0.035em]"
           >
             <span className="underline decoration-1 underline-offset-[6px] transition-colors group-hover:decoration-transparent">
               Как я думаю и работаю — в канале @vl_content
             </span>
-            <ArrowUpRight className="mt-0.5 h-5 w-5 shrink-0" />
+            <ArrowUpRight className="mt-0.5 h-5 w-5 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </motion.div>
-
-        {/* Десктоп: бейдж свисает с верхнего края всего блока */}
-        <div className="relative hidden md:block">
-          <Blob color="#ececec" className="top-[30%] left-1/2 h-[64%] -translate-x-1/2 rotate-[-8deg]" />
-          <HangingBadge className="-top-12 h-[540px] lg:h-[580px]" />
-        </div>
-
-        {/* Телефон: бейдж под текстом, свисает с верхнего края своего контейнера */}
-        <div className="relative mx-4 mb-4 h-[380px] overflow-hidden rounded-[18px] bg-paper md:hidden">
-          <Blob color="#e4e4e4" className="top-[26%] left-1/2 h-[68%] -translate-x-1/2 rotate-[-8deg]" />
-          <HangingBadge className="-top-8 h-[360px]" />
-        </div>
       </div>
     </section>
   )
