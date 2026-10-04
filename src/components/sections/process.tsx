@@ -1,29 +1,17 @@
 // «Процесс»: заголовок по центру и четыре карточки-стикера из промта
-// How It Works, по горизонтали слева направо. Рядом с карточками
-// неподвижные 3D-предметы.
+// How It Works, по горизонтали слева направо. Предметы шагов стоят
+// внутри цветных плашек и не двигаются.
 import { motion } from "motion/react"
 
 import { MODELS } from "@/lib/models"
 import HowItWorks, { type Step } from "@/components/ui/how-it-works"
-
-function Prop({ src, className }: { src: string; className: string }) {
-  return (
-    <img
-      src={src}
-      alt=""
-      aria-hidden="true"
-      draggable={false}
-      className={`pointer-events-none absolute z-20 object-contain drop-shadow-[0_10px_12px_rgba(0,0,0,0.18)] select-none ${className}`}
-    />
-  )
-}
 
 const steps: Step[] = [
   {
     title: "Бриф",
     description: "Разбираю работы, клиентов и текущий профиль.",
     colorTheme: "orange",
-    decoration: <Prop src={MODELS.pencil.src} className="-top-6 -left-7 h-24 w-14 -rotate-[24deg]" />,
+    prop: { src: MODELS.pencil.src, rotate: 35 },
   },
   {
     title: "Анализ",
@@ -34,13 +22,13 @@ const steps: Step[] = [
     title: "Упаковка",
     description: "Собираю позиционирование, оффер и профиль.",
     colorTheme: "purple",
-    decoration: <Prop src={MODELS.brush.src} className="-right-9 -bottom-8 h-20 w-20 rotate-[18deg] max-xl:hidden" />,
+    prop: { src: MODELS.brush.src, rotate: -10 },
   },
   {
     title: "Передача",
     description: "Вы получаете систему и ведёте её сами.",
     colorTheme: "orange",
-    decoration: <Prop src={MODELS.hoodie.src} className="-top-7 -right-8 h-20 w-20 rotate-[10deg] max-xl:hidden" />,
+    prop: { src: MODELS.hoodie.src, rotate: 8 },
   },
 ]
 

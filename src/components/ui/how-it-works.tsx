@@ -1,7 +1,8 @@
-// How It Works (21st.dev). Карточки, кнопка-булавка, цвета, линованный фон
-// и бегущий пунктир из промта. Изменено: раскладка по горизонтали
-// (слева направо зигзагом), а не сверху вниз; на узких экранах карточки
-// идут стопкой, как в мобильной версии промта.
+// How It Works (21st.dev). Карточки, цвета, линованный фон и бегущий
+// пунктир из промта. Изменено: раскладка по горизонтали (слева направо
+// зигзагом), вместо нарисованной булавки 3D-кнопка в левом верхнем углу,
+// предмет шага внутри цветной плашки, без увеличения при наведении.
+// На узких экранах карточки идут стопкой, как в мобильной версии промта.
 import React from "react";
 import { LazyMotion, domAnimation, m } from "motion/react";
 
@@ -12,21 +13,18 @@ interface CardProps {
   colorTheme?: "orange" | "blue" | "purple";
   className?: string;
   rotate?: string;
-  decoration?: React.ReactNode;
+  prop?: StepProp;
 }
 
-const Pin = ({ className }: { className?: string }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    className={className}
-  >
-    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-    <path d="M16 3a1 1 0 0 1 .117 1.993l-.117 .007v4.764l1.894 3.789a1 1 0 0 1 .1 .331l.006 .116v2a1 1 0 0 1 -.883 .993l-.117 .007h-4v4a1 1 0 0 1 -1.993 .117l-.007 -.117v-4h-4a1 1 0 0 1 -.993 -.883l-.007 -.117v-2a1 1 0 0 1 .06 -.34l.046 -.107l1.894 -3.791v-4.762a1 1 0 0 1 -.117 -1.993l.117 -.007h8z" />
-  </svg>
+/* 3D-кнопка, которой карточка приколота: всегда в левом верхнем углу */
+const Pin = () => (
+  <img
+    src="/models/pin.webp"
+    alt=""
+    aria-hidden="true"
+    draggable={false}
+    className="pointer-events-none absolute -top-5 -left-4 z-30 h-14 w-14 -rotate-12 object-contain drop-shadow-[0_8px_8px_rgba(0,0,0,0.25)] select-none"
+  />
 );
 
 const Card = ({
@@ -36,7 +34,7 @@ const Card = ({
   colorTheme = "blue",
   className,
   rotate,
-  decoration,
+  prop,
 }: CardProps) => {
   const bgColors = {
     orange: "bg-orange-50",
@@ -56,14 +54,23 @@ const Card = ({
 
   return (
     <div
-      className={`relative w-full sm:w-[280px] transition-transform duration-300 hover:z-30 hover:scale-105 ${rotate} ${className}`}
+      className={`relative w-full sm:w-[280px] ${rotate} ${className}`}
     >
-      {decoration}
-      <div className="bg-white p-2 rounded-[25px] shadow-[0px_10px_20px_0px_#D3D3D3] border border-neutral-100">
-        <Pin className={`w-8 h-8 ${textColors[colorTheme]} z-20 mb-6 mx-auto`} />
+      <Pin />
+      <div className="bg-white p-2 pt-10 rounded-[25px] shadow-[0px_10px_20px_0px_#D3D3D3] border border-neutral-100">
         <div
           className={`${bgColors[colorTheme]} border ${borderColors[colorTheme]} rounded-[15px] p-[15px] h-full flex flex-col relative overflow-hidden`}
         >
+          {prop && (
+            <img
+              src={prop.src}
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+              className="pointer-events-none absolute top-2 right-2 h-[72px] w-[72px] object-contain drop-shadow-[0_8px_10px_rgba(0,0,0,0.18)] select-none"
+              style={{ rotate: `${prop.rotate}deg` }}
+            />
+          )}
           <span
             className={`${textColors[colorTheme]} text-4xl mb-5`}
             style={{ fontFamily: '"Comic Sans MS", "Chalkboard SE", sans-serif' }}
@@ -80,11 +87,16 @@ const Card = ({
   );
 };
 
+export interface StepProp {
+  src: string;
+  rotate: number;
+}
+
 export interface Step {
   title: string;
   description: string;
   colorTheme?: "orange" | "blue" | "purple";
-  decoration?: React.ReactNode;
+  prop?: StepProp;
 }
 
 // Горизонтальный зигзаг: доли ширины контейнера и отступ сверху в px
@@ -153,7 +165,7 @@ export default function HowItWorks({ features }: { features: Step[] }) {
                     description={step.description}
                     colorTheme={step.colorTheme || "blue"}
                     rotate={pos.rotate}
-                    decoration={step.decoration}
+                    prop={step.prop}
                   />
                 </div>
               );
