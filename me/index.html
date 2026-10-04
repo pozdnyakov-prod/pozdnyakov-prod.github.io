@@ -636,11 +636,11 @@ document.querySelectorAll('#lang button').forEach(b=>b.addEventListener('click',
 /* ═══ PRELOADER + INTRO MUSIC + HERO NAME ═══
    me/intro.mp3 — отрезок трека с 11,80 с. Слово «Okay» звучит на T_OKAY секунде клипа:
    счётчик доходит до 100% ровно к нему, и сайт начинает появляться.
-   Затухание записано в самом файле (с 3,1 с), поэтому громкость из кода не трогаем.
+   Затухание записано в самом файле (с 2,2 с: «Okay» + 1,1 с, затем 2,2 с плавного спада), поэтому громкость из кода не трогаем.
    Сначала пробуем обычный <audio> (на iPhone играет и в беззвучном режиме).
    Если встроенный браузер его не запускает (так бывает внутри Telegram) — играем через Web Audio. */
 (function(){
-  const CLIP='intro.mp3?v=3',T_OKAY=1.10;
+  const CLIP='intro.mp3?v=4',T_OKAY=1.10;
   const pl=$('pl'),pn=$('pl-num'),pf=$('pl-fill');
   let started=false,revealed=false,fellBack=false;
   const au=new Audio();au.preload='auto';au.setAttribute('playsinline','');au.src=CLIP;
