@@ -81,7 +81,7 @@ export function Faq() {
                         src={item.sticker.src}
                         alt=""
                         aria-hidden="true"
-                        className="absolute -top-9 -right-6 h-14 w-14 object-contain drop-shadow-[0_8px_10px_rgba(0,0,0,0.2)] transition-transform duration-300 group-hover:scale-110"
+                        className="absolute -top-9 -right-6 h-14 w-14 object-contain drop-shadow-[0_8px_10px_rgba(0,0,0,0.2)]"
                         style={{ rotate: `${item.sticker.rotate}deg` }}
                       />
                     )}

@@ -1,14 +1,12 @@
 // «Обо мне»: фото в полароиде на кнопке, к нему справа снизу прилеплен
 // скелет-художник; справа имя капсом, текст и ссылка на канал.
-import { motion, useReducedMotion } from "motion/react"
+import { motion } from "motion/react"
 import { ArrowUpRight } from "lucide-react"
 
 import { CHANNEL_URL } from "@/lib/links"
 import { MODELS } from "@/lib/models"
 
 export function About() {
-  const reduce = useReducedMotion()
-
   return (
     <section id="about" className="px-4 pt-24 md:px-14 md:pt-32">
       <div className="grid items-center gap-16 bg-card px-6 py-14 md:grid-cols-[0.9fr_1.1fr] md:gap-10 md:px-14 md:py-16">
@@ -31,13 +29,11 @@ export function About() {
             aria-hidden="true"
             className="absolute -top-8 left-1/2 h-16 w-16 -translate-x-1/2 rotate-12 object-contain drop-shadow-[0_10px_12px_rgba(0,0,0,0.2)]"
           />
-          <motion.img
+          <img
             src={MODELS.skeleton.src}
             alt={MODELS.skeleton.alt}
             draggable={false}
             className="absolute -right-12 -bottom-12 h-44 w-36 rotate-6 object-contain drop-shadow-[0_20px_24px_rgba(0,0,0,0.22)] md:-right-16 md:-bottom-14 md:h-56 md:w-44"
-            animate={reduce ? undefined : { y: [0, -8, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           />
         </motion.div>
 

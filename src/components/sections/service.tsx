@@ -58,7 +58,7 @@ function Polaroid({
 }) {
   return (
     <div
-      className={`absolute bg-white p-3 pb-9 shadow-[0_18px_40px_rgba(0,0,0,0.12)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${className}`}
+      className={`absolute bg-white p-3 pb-9 shadow-[0_18px_40px_rgba(0,0,0,0.12)] ${className}`}
     >
       <div className="flex h-full items-center justify-center bg-[#f4f4f4]">{children}</div>
       {caption && (
@@ -96,7 +96,7 @@ export function Service() {
                 src={MODELS.hoodie.src}
                 alt={MODELS.hoodie.alt}
                 draggable={false}
-                className={`absolute inset-0 m-auto h-[92%] w-[92%] transition-transform duration-500 group-hover:-rotate-3 group-hover:scale-105 ${modelImg}`}
+                className={`absolute inset-0 m-auto h-[92%] w-[92%] ${modelImg}`}
               />
             </>
           }
@@ -115,7 +115,7 @@ export function Service() {
                 src={MODELS.letter.src}
                 alt={MODELS.letter.alt}
                 draggable={false}
-                className={`absolute inset-0 m-auto h-[78%] w-[78%] rotate-6 transition-transform duration-500 group-hover:rotate-0 group-hover:scale-105 ${modelImg}`}
+                className={`absolute inset-0 m-auto h-[78%] w-[78%] rotate-6 ${modelImg}`}
               />
             </>
           }
@@ -128,10 +128,10 @@ export function Service() {
           title="Упаковка профиля"
           visual={
             <>
-              <Polaroid className="top-[6%] left-[2%] h-[70%] w-[58%] -rotate-6 group-hover:-rotate-9">
+              <Polaroid className="top-[6%] left-[2%] h-[70%] w-[58%] -rotate-6">
                 <img src={MODELS.letter.src} alt="" className={`h-[70%] w-[70%] -rotate-6 ${modelImg}`} />
               </Polaroid>
-              <Polaroid caption="профиль" className="right-[0%] bottom-[2%] h-[72%] w-[58%] rotate-[7deg] group-hover:rotate-[10deg]">
+              <Polaroid caption="профиль" className="right-[0%] bottom-[2%] h-[72%] w-[58%] rotate-[7deg]">
                 <img src={MODELS.skeleton.src} alt="" className={`h-[78%] w-[78%] ${modelImg}`} />
               </Polaroid>
             </>
@@ -145,7 +145,7 @@ export function Service() {
           title="Контент-система"
           visual={
             <>
-              <Polaroid caption="схема" className="inset-x-[8%] top-[10%] bottom-[2%] rotate-3 group-hover:rotate-0">
+              <Polaroid caption="схема" className="inset-x-[8%] top-[10%] bottom-[2%] rotate-3">
                 <div className="relative h-full w-full">
                   <img src={MODELS.pencil.src} alt="" className={`absolute top-[8%] left-[14%] h-[78%] w-[36%] -rotate-12 ${modelImg}`} />
                   <img src={MODELS.brush.src} alt="" className={`absolute right-[8%] bottom-[6%] h-[64%] w-[50%] ${modelImg}`} />

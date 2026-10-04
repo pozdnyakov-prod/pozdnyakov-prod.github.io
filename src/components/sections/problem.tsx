@@ -58,7 +58,7 @@ export function Problem() {
                 src={item.image.src}
                 alt={item.image.alt}
                 draggable={false}
-                className="h-[78%] w-[78%] object-contain drop-shadow-[0_24px_28px_rgba(0,0,0,0.14)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                className="h-[78%] w-[78%] object-contain drop-shadow-[0_24px_28px_rgba(0,0,0,0.14)]"
               />
             </div>
             <h3 className="caps mt-4 text-[2.6rem] md:text-[3.1rem]">{item.title}</h3>

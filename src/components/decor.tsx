@@ -147,8 +147,8 @@ export function Folder({
   )
 }
 
-/* 3D-модель: появляется, медленно ходит в сторону drift и обратно,
-   при наведении чуть подрастает и поворачивается */
+/* 3D-модель: появляется и, если задан drift, очень медленно ходит
+   в его сторону и обратно. На курсор не реагирует. */
 export function Model({
   src,
   alt,
@@ -170,7 +170,7 @@ export function Model({
   const moving = !reduce && (drift[0] !== 0 || drift[1] !== 0)
   return (
     <motion.div
-      className={cn("pointer-events-auto", className)}
+      className={cn("pointer-events-none", className)}
       initial={reduce ? false : { opacity: 0, scale: 0.9 }}
       animate={
         moving
@@ -184,14 +184,12 @@ export function Model({
         y: { duration, repeat: Infinity, ease: "easeInOut", delay: delay + 0.6 },
       }}
     >
-      <motion.img
+      <img
         src={src}
         alt={alt}
         draggable={false}
         className="h-full w-full object-contain drop-shadow-[0_18px_22px_rgba(0,0,0,0.16)] select-none"
-        style={{ rotate }}
-        whileHover={reduce ? undefined : { scale: 1.08, rotate: rotate + 6 }}
-        transition={{ type: "spring", stiffness: 260, damping: 18 }}
+        style={{ rotate: `${rotate}deg` }}
       />
     </motion.div>
   )

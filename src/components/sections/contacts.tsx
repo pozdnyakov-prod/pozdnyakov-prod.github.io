@@ -44,15 +44,11 @@ export function Contacts() {
           <Model
             {...MODELS.letter}
             className="absolute top-1/2 left-0 hidden h-64 w-56 -translate-y-1/2 md:block"
-            drift={[14, 0]}
-            duration={8}
             rotate={-8}
           />
           <Model
             {...MODELS.hoodie}
             className="absolute top-1/2 right-0 hidden h-72 w-72 -translate-y-1/2 md:block"
-            drift={[-14, 0]}
-            duration={8.5}
             rotate={8}
           />
         </div>

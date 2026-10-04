@@ -173,39 +173,39 @@ function Objects() {
       <Model
         {...MODELS.letter}
         className="absolute top-[2%] left-[3%] h-24 w-20 md:top-[6%] md:left-[4%] md:h-48 md:w-40"
-        drift={[12, 8]}
-        duration={8}
+        drift={[4, 3]}
+        duration={10}
         rotate={-10}
       />
       <Model
         {...MODELS.skeleton}
         className="absolute bottom-[6%] left-[6%] hidden md:block md:h-64 md:w-48"
-        drift={[14, -6]}
-        duration={7.5}
+        drift={[5, -2]}
+        duration={11}
         delay={0.1}
         rotate={-4}
       />
       <Model
         {...MODELS.pin}
         className="absolute top-[3%] right-[5%] h-16 w-16 md:top-[8%] md:right-[9%] md:h-28 md:w-28"
-        drift={[-10, 10]}
-        duration={6.5}
+        drift={[-3, 4]}
+        duration={9}
         delay={0.15}
         rotate={14}
       />
       <Model
         {...MODELS.hoodie}
         className="absolute right-[3%] bottom-[14%] h-28 w-28 md:top-[36%] md:right-[1.5%] md:bottom-auto md:h-60 md:w-56"
-        drift={[-14, 0]}
-        duration={8.5}
+        drift={[-5, 0]}
+        duration={11.5}
         delay={0.25}
         rotate={8}
       />
       <Model
         {...MODELS.brush}
         className="absolute right-[15%] bottom-[2%] hidden md:block md:h-44 md:w-44"
-        drift={[-12, -10]}
-        duration={7.5}
+        drift={[-4, -3]}
+        duration={10.5}
         delay={0.3}
         rotate={-12}
       />
