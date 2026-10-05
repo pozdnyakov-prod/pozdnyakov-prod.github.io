@@ -1,5 +1,5 @@
-// Кнопка-призыв в стиле графического редактора: графитово-серая таблетка с
-// оранжевым кругом. При наведении стрелка улетает и прилетает новая,
+// Кнопка-призыв в стиле графического редактора: синяя таблетка (цвет
+// выделения, как рамка и курсор на первом экране) с белым кругом. При наведении стрелка улетает и прилетает новая,
 // а вокруг появляется синяя рамка выделения с маркерами и подписью слоя.
 import { ArrowUpRight } from "lucide-react"
 
@@ -23,7 +23,7 @@ export function DesignCta({
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "group relative inline-flex items-center gap-4 rounded-full bg-[#5f6b7a] py-2 pr-2 pl-7 text-[1.05rem] font-semibold tracking-[-0.03em] text-white transition-transform duration-300 active:scale-[0.98] md:text-[1.2rem]",
+        "group relative inline-flex items-center gap-4 rounded-full bg-[#2563eb] py-2 pr-2 pl-7 text-[1.05rem] font-semibold tracking-[-0.03em] text-white transition-transform duration-300 active:scale-[0.98] md:text-[1.2rem]",
         className
       )}
     >
@@ -44,7 +44,7 @@ export function DesignCta({
       <span className="relative">{children}</span>
 
       {/* Круг со стрелкой: при наведении одна стрелка улетает, другая прилетает */}
-      <span className="relative grid size-11 shrink-0 place-items-center overflow-hidden rounded-full bg-orange md:size-12">
+      <span className="relative grid size-11 shrink-0 place-items-center overflow-hidden rounded-full bg-white text-[#2563eb] md:size-12">
         <ArrowUpRight
           aria-hidden="true"
           className="size-5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-6 group-hover:-translate-y-6"

@@ -350,9 +350,20 @@ export function BeforeAfter() {
         <CompareSliderHandle />
       </CompareSlider>
 
-      <div className="mt-12 flex justify-center md:mt-14">
-        <DesignCta layer="кнопка / хочу так же">Хочу такой же профиль</DesignCta>
-      </div>
+      {/* Призыв под слайдером — в той же строке-плашке, что и в «Кто мы» */}
+      <motion.div
+        className="mt-3 flex flex-col items-start gap-6 rounded-[10px] bg-card px-7 py-7 md:flex-row md:items-center md:justify-between md:px-10"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <p className="max-w-[40ch] text-[1.2rem] leading-[1.2] tracking-[-0.035em] md:text-[1.45rem]">
+          <span className="font-semibold">Хотите так же?</span>{" "}
+          <span className="text-subtle">Соберу ваш профиль с той же логикой: подход, оффер, рубрики.</span>
+        </p>
+        <DesignCta layer="кнопка / хочу так же" className="mt-4 md:mt-0">Хочу такой же профиль</DesignCta>
+      </motion.div>
     </section>
   )
 }
