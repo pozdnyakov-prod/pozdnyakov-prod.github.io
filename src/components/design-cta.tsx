@@ -1,4 +1,4 @@
-// Кнопка-призыв в стиле графического редактора: тёмная таблетка с
+// Кнопка-призыв в стиле графического редактора: графитово-серая таблетка с
 // оранжевым кругом. При наведении стрелка улетает и прилетает новая,
 // а вокруг появляется синяя рамка выделения с маркерами и подписью слоя.
 import { ArrowUpRight } from "lucide-react"
@@ -23,7 +23,7 @@ export function DesignCta({
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "group relative inline-flex items-center gap-4 rounded-full bg-ink py-2 pr-2 pl-7 text-[1.05rem] font-semibold tracking-[-0.03em] text-white transition-transform duration-300 active:scale-[0.98] md:text-[1.2rem]",
+        "group relative inline-flex items-center gap-4 rounded-full bg-[#5f6b7a] py-2 pr-2 pl-7 text-[1.05rem] font-semibold tracking-[-0.03em] text-white transition-transform duration-300 active:scale-[0.98] md:text-[1.2rem]",
         className
       )}
     >

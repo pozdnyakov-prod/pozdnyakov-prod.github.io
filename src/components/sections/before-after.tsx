@@ -243,7 +243,9 @@ function Profile({ variant }: { variant: Variant }) {
           ))}
         </div>
 
-        {after && <Note className="-top-8 right-[2%]">позиционирование ↓</Note>}
+        {after && <Note className="-top-8 right-[2%]">
+            <span className="mr-1 inline-block rotate-[40deg]">↓</span>позиционирование
+          </Note>}
       </div>
 
       {/* Лента публикаций: те же работы, другая подача */}
