@@ -94,14 +94,3 @@ export function Model({
     </motion.div>
   )
 }
-
-/* Подпись секции в квадратных скобках: [ КОНТАКТЫ ] */
-export function Bracket({ children, className }: { children: ReactNode; className?: string }) {
-  return (
-    <p className={cn("flex items-center justify-center gap-4 text-[1.6rem] font-medium tracking-[-0.05em] uppercase md:text-[2rem]", className)}>
-      <span className="font-light">[</span>
-      {children}
-      <span className="font-light">]</span>
-    </p>
-  )
-}
