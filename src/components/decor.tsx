@@ -47,38 +47,6 @@ export function Cursor({ className }: { className?: string }) {
   )
 }
 
-/* Пузырь-сообщение с хвостиком справа снизу */
-export function Bubble({
-  children,
-  className,
-  tone = "red",
-  tail = "right",
-}: {
-  children: ReactNode
-  className?: string
-  tone?: "red" | "white"
-  tail?: "right" | "left"
-}) {
-  const colors =
-    tone === "red" ? "bg-red text-white" : "bg-card text-ink border border-line"
-  return (
-    <div className={cn("relative rounded-[26px] px-6 py-4", colors, className)}>
-      {children}
-      <svg
-        viewBox="0 0 20 20"
-        aria-hidden="true"
-        className={cn(
-          "absolute -bottom-[7px] h-5 w-5",
-          tail === "right" ? "-right-[3px]" : "-left-[3px] -scale-x-100",
-          tone === "red" ? "fill-red" : "fill-card"
-        )}
-      >
-        <path d="M0 0 C 6 6, 12 12, 20 20 C 12 18, 6 16, 2 14 Z" />
-      </svg>
-    </div>
-  )
-}
-
 /* 3D-модель: появляется и, если задан drift, очень медленно ходит
    в его сторону и обратно. На курсор не реагирует. */
 export function Model({
