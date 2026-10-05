@@ -5,6 +5,7 @@ import type { ReactNode } from "react"
 import { motion, useReducedMotion } from "motion/react"
 
 import { BrushStroke, Sparkle } from "@/components/doodles"
+import { DesignCta } from "@/components/design-cta"
 import { cn } from "@/lib/utils"
 
 function Card({
@@ -277,6 +278,21 @@ export function Service() {
           />
         </Card>
       </div>
+
+      {/* Призыв под карточками */}
+      <motion.div
+        className="mt-8 flex flex-col items-start gap-6 rounded-[10px] bg-card px-7 py-7 md:mt-3 md:flex-row md:items-center md:justify-between md:px-10"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <p className="max-w-[40ch] text-[1.2rem] leading-[1.2] tracking-[-0.035em] md:text-[1.45rem]">
+          <span className="font-semibold">Не знаете, с чего начать?</span>{" "}
+          <span className="text-subtle">Посмотрю ваш профиль и скажу, что бы изменил.</span>
+        </p>
+        <DesignCta className="mt-4 md:mt-0">Обсудить мой профиль</DesignCta>
+      </motion.div>
       </div>
     </section>
   )

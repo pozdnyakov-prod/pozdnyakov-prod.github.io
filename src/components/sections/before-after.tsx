@@ -25,6 +25,7 @@ import {
   CompareSliderHandle,
 } from "@/components/ui/compare-slider"
 import { cn } from "@/lib/utils"
+import { DesignCta } from "@/components/design-cta"
 
 type Variant = "before" | "after"
 
@@ -346,6 +347,10 @@ export function BeforeAfter() {
         </CompareSliderAfter>
         <CompareSliderHandle />
       </CompareSlider>
+
+      <div className="mt-12 flex justify-center md:mt-14">
+        <DesignCta layer="кнопка / хочу так же">Хочу такой же профиль</DesignCta>
+      </div>
     </section>
   )
 }
