@@ -190,7 +190,8 @@ body.go .hscroll{animation:fi .8s ease 1.4s forwards}
 .pcl li:last-child{border-bottom:1px solid var(--line)}
 .pcl b{font-weight:500}
 .pcl span{text-align:right;font-family:var(--fa);font-style:italic;font-weight:500;font-size:1.2em;line-height:1;letter-spacing:0;color:var(--b)}
-.pbtns{display:flex;gap:14px;margin-top:60px;flex-wrap:wrap}
+.pbtns{display:flex;gap:14px;margin-top:60px;flex-wrap:wrap;align-items:center}
+.btn-pill{border-radius:999px;padding:14px 34px}
 @keyframes ovIn{from{opacity:0;transform:translateY(28px);filter:blur(12px)}to{opacity:1;transform:none;filter:blur(0)}}
 @keyframes ovLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .an{animation:ovIn .7s var(--ease) both;animation-delay:calc(var(--i,0)*55ms)}
@@ -381,7 +382,7 @@ footer span{font-size:.72rem;font-weight:400}
       <div class="pc rv" onclick="openProject(0)" role="button" tabindex="0">
         <div class="pcin">
           <div class="pcst" data-t="p1s">Активно</div>
-          <div class="pcname">Digital Wave</div>
+          <div class="pcname">Pozdnyakov Prod</div>
           <div class="pcdesc" data-t="p1d">AI-агентство цифровой упаковки и <span class="hl">систем позиционирования</span> для дизайнеров</div>
           <div class="pcarr">↗</div>
         </div>
@@ -432,7 +433,7 @@ footer span{font-size:.72rem;font-weight:400}
 
 <script>
 /* ═══ DATA ═══ */
-const URLS={dw:'',lp:''}; /* ссылки на сайты проектов: вставь адрес — кнопка «Перейти на сайт» появится в окне проекта */
+const URLS={dw:'https://pozdnyakov-prod.github.io/',lp:''}; /* ссылки на сайты проектов: вставь адрес — кнопка «Перейти на сайт» появится в окне проекта */
 const TG='https://t.me/vlpozd';
 
 const casesRU=[
@@ -469,11 +470,11 @@ const casesEN=[
 
 const PROJ={
  ru:[
-  {name:'Digital Wave',
+  {name:'Pozdnyakov Prod',
    who:'CEO & Founder. Сам веду каждый проект и <span class="hl">отвечаю за результат</span>.',
    offer:'Превращаю сильное портфолио дизайнера в позиционирование и личный бренд — <span class="hl">чтобы клиенты выбирали тебя, а не просто лайкали работы</span>. Цель фиксируем на старте и гарантируем результат.',
    cases:[['Артём','UI/UX дизайн'],['Катя','Бренд-дизайн'],['Никита','Моушн-дизайн']],
-   about:'Digital Wave — AI-агентство цифровой упаковки и позиционирования. Работаем с дизайнерами, у которых <span class="hl">сильные работы, но нет личного бренда</span> и понятного оффера. Формулируем позиционирование, упаковываем профиль и лендинг, выстраиваем систему входящих заявок с помощью AI.',
+   about:'Pozdnyakov Prod — AI-агентство цифровой упаковки и позиционирования. Работаем с дизайнерами, у которых <span class="hl">сильные работы, но нет личного бренда</span> и понятного оффера. Формулируем позиционирование, упаковываем профиль и лендинг, выстраиваем систему входящих заявок с помощью AI.',
    about_cases:'В кейсах — дизайнеры из UI/UX, брендинга и моушна. У всех были сильные работы и <span class="hl">не было позиционирования</span>. После упаковки выросли входящие заявки и средний чек.',url:URLS.dw},
   {name:'LeadPilot AI',
    who:'CEO & Founder. Веду продукт <span class="hl">от идеи до запуска</span>.',
@@ -483,11 +484,11 @@ const PROJ={
    about_cases:'Продукт в разработке. <span class="hl">Первые кейсы появятся после запуска</span>.',url:URLS.lp}
  ],
  en:[
-  {name:'Digital Wave',
+  {name:'Pozdnyakov Prod',
    who:'CEO & Founder. I run every project myself and <span class="hl">own the result</span>.',
    offer:'I turn a designer’s strong portfolio into positioning and a personal brand — <span class="hl">so clients choose you instead of just liking your work</span>. We fix the goal at the start and I guarantee the result.',
    cases:[['Artem','UI/UX design'],['Katya','Brand design'],['Nikita','Motion design']],
-   about:'Digital Wave is an AI agency for digital packaging and positioning. We work with designers who have <span class="hl">strong work but no personal brand</span> or clear offer. We define the positioning, package the profile and landing page, and build an AI-powered system for inbound leads.',
+   about:'Pozdnyakov Prod is an AI agency for digital packaging and positioning. We work with designers who have <span class="hl">strong work but no personal brand</span> or clear offer. We define the positioning, package the profile and landing page, and build an AI-powered system for inbound leads.',
    about_cases:'The cases are designers from UI/UX, branding and motion. All of them had strong work and <span class="hl">no positioning</span>. After packaging, their inbound leads and average rate grew.',url:URLS.dw},
   {name:'LeadPilot AI',
    who:'CEO & Founder. I take the product <span class="hl">from idea to launch</span>.',
@@ -498,8 +499,8 @@ const PROJ={
  ]
 };
 const LBL={
- ru:{task:'Задача',work:'Что сделали',res:'Результат',who:'Кто я',srv:'Услуги',cs:'Кейсы',ab:'О проекте',ac:'Про кейсы',tg:'Написать в Telegram',site:'Перейти на сайт'},
- en:{task:'Task',work:'What we did',res:'Result',who:'Who I am',srv:'Services',cs:'Cases',ab:'About the project',ac:'About the cases',tg:'Message on Telegram',site:'Visit the site'}
+ ru:{task:'Задача',work:'Что сделали',res:'Результат',who:'Кто я',srv:'Услуги',cs:'Кейсы',ab:'О проекте',ac:'Про кейсы',tg:'Написать в Telegram',site:'Открыть'},
+ en:{task:'Task',work:'What we did',res:'Result',who:'Who I am',srv:'Services',cs:'Cases',ab:'About the project',ac:'About the cases',tg:'Message on Telegram',site:'Open'}
 };
 const EN={
  n_about:'About',n_cases:'Cases',n_projects:'Projects',n_contact:'Contact',
@@ -562,7 +563,7 @@ function renderOverlay(){
     const p=PROJ[lang][cur.i];
     $('ov-nick').textContent=p.name;
     const list=p.cases.length?`<div class="an" style="--i:3"><span class="ovlbl">${L.cs}</span><ul class="pcl">${p.cases.map(c=>`<li><b>${c[0]}</b><span>${c[1]}</span></li>`).join('')}</ul></div>`:'';
-    const site=p.url?`<a class="btn btn-b" href="${p.url}" target="_blank" rel="noopener"><span>${L.site} ↗</span></a>`:'';
+    const site=p.url?`<a class="btn btn-pill" href="${p.url}" target="_blank" rel="noopener"><span>${L.site} ${p.name} ↗</span></a>`:'';
     body.innerHTML=`
       <h2 class="ovtitle an" style="--i:0">${p.name}</h2>
       <div class="pgrid">
