@@ -1,6 +1,5 @@
 // Подвал по промту Modem Animated Footer (21st.dev): название, призыв,
 // соцсети, разделы, копирайт, логотип на линии и прозрачное название на фоне.
-// В самом низу — огромное POZDNYAKOV-PROD.
 import { Megaphone, Send, UserRound } from "lucide-react"
 
 import { Footer } from "@/components/ui/modem-animated-footer"
@@ -37,16 +36,6 @@ export function Contacts() {
           />
         }
       />
-
-      {/* Огромное название в самом низу */}
-      <p
-        aria-hidden="true"
-        className="bg-background px-2 pt-4 pb-6 text-center text-[14.2vw] leading-[0.86] font-normal tracking-[-0.06em] select-none md:text-[10.6vw] md:whitespace-nowrap"
-      >
-        POZDNYAKOV-
-        <br className="md:hidden" />
-        PROD
-      </p>
     </div>
   )
 }
