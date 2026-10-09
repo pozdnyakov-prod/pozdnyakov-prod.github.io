@@ -1,6 +1,6 @@
 // Первый экран в стиле интерфейса графического редактора: сменяющееся слово
 // выделено рамкой с маркерами и плашкой размеров, курсор «Владимир»
-// подъезжает к слову перед каждой сменой, 3D-предметы стоят вокруг.
+// подъезжает к слову перед каждой сменой (и на телефоне), 3D-предметы вокруг.
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 
@@ -16,9 +16,9 @@ const PERIOD = 3200
 const APPROACH_AT = 2100
 const SWAP_AT = 2700
 
-/* Телефон или «уменьшить движение»: курсор и рамка без анимации */
-function useStaticMode() {
-  const reduce = useReducedMotion()
+/* Узкий экран: курсор крепится к правому нижнему углу рамки зеркально,
+   подпись под стрелкой, чтобы не выходить за край экрана */
+function useIsMobile() {
   const [mobile, setMobile] = useState(false)
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)")
@@ -27,23 +27,30 @@ function useStaticMode() {
     mq.addEventListener("change", update)
     return () => mq.removeEventListener("change", update)
   }, [])
-  return mobile || Boolean(reduce)
+  return mobile
 }
 
-function EditorCursor({ near, isStatic }: { near: boolean; isStatic: boolean }) {
+function EditorCursor({ near, isStatic, mobile }: { near: boolean; isStatic: boolean; mobile: boolean }) {
+  const target = mobile
+    ? near || isStatic
+      ? { x: 8, y: -10 }
+      : { x: -44, y: 16 }
+    : near || isStatic
+      ? { x: -10, y: -12 }
+      : { x: 64, y: 40 }
+
   return (
     <motion.span
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute top-full z-20 flex items-start",
-        // На телефоне курсор неподвижен: под рамкой, справа от плашки размеров
-        isStatic ? "left-1/2" : "left-full"
+        "pointer-events-none absolute top-full z-20 flex",
+        mobile ? "right-0 flex-col items-end" : "left-full items-start"
       )}
       initial={false}
-      animate={isStatic ? { x: 44, y: 22 } : near ? { x: -10, y: -12 } : { x: 64, y: 40 }}
+      animate={target}
       transition={isStatic ? { duration: 0 } : { type: "spring", stiffness: 90, damping: 16 }}
     >
-      <svg viewBox="0 0 24 24" className="h-6 w-6 md:h-7 md:w-7">
+      <svg viewBox="0 0 24 24" className={cn("h-6 w-6 md:h-7 md:w-7", mobile && "-scale-x-100")}>
         <path
           d="M3 2 L21 11 L12.5 13 L8.5 21 Z"
           fill="var(--select)"
@@ -52,7 +59,12 @@ function EditorCursor({ near, isStatic }: { near: boolean; isStatic: boolean }) 
           strokeLinejoin="round"
         />
       </svg>
-      <span className="mt-4 -ml-1 rounded-[5px] bg-select px-2 py-0.5 text-[0.75rem] font-semibold tracking-normal whitespace-nowrap text-white md:text-sm">
+      <span
+        className={cn(
+          "rounded-[5px] bg-select px-2 py-0.5 text-[0.75rem] font-semibold tracking-normal whitespace-nowrap text-white md:text-sm",
+          mobile ? "-mt-0.5 mr-3" : "mt-4 -ml-1"
+        )}
+      >
         Владимир
       </span>
     </motion.span>
@@ -60,7 +72,9 @@ function EditorCursor({ near, isStatic }: { near: boolean; isStatic: boolean }) 
 }
 
 function SelectedWord() {
-  const isStatic = useStaticMode()
+  // Анимация везде, кроме включённого в системе «уменьшить движение»
+  const isStatic = Boolean(useReducedMotion())
+  const mobile = useIsMobile()
   const [index, setIndex] = useState(0)
   const [near, setNear] = useState(false)
   const [sizes, setSizes] = useState<{ w: number; h: number }[]>([])
@@ -154,13 +168,13 @@ function SelectedWord() {
         {size && (
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute top-full left-1/2 mt-2.5 -translate-x-1/2 rounded-[4px] bg-select px-1.5 py-0.5 font-sans text-[0.7rem] font-medium tracking-normal whitespace-nowrap text-white tabular-nums md:text-xs"
+            className="pointer-events-none absolute top-full left-0 mt-2.5 rounded-[4px] md:left-1/2 md:-translate-x-1/2 bg-select px-1.5 py-0.5 font-sans text-[0.7rem] font-medium tracking-normal whitespace-nowrap text-white tabular-nums md:text-xs"
           >
             {Math.round(size.w)} × {Math.round(size.h)}
           </span>
         )}
 
-        <EditorCursor near={near} isStatic={isStatic} />
+        <EditorCursor near={near} isStatic={isStatic} mobile={mobile} />
       </motion.span>
     </span>
   )
