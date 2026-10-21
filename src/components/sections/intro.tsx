@@ -10,8 +10,9 @@
 //
 // После последнего мазка интро уходит вглубь (уменьшается, темнеет), а сайт
 // выезжает поверх него отдельной карточкой: прогресс ухода пишется в
-// CSS-переменную --intro-exit, по ней первый экран скругляет верх.
-import { useEffect, useRef, useState } from "react"
+// CSS-переменную --intro-exit, по ней первый экран скругляет верх. Когда
+// сайт встал на место, интро убирается со страницы: назад к нему не вернуться.
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { useReducedMotion } from "motion/react"
 
 const VB_W = 1440
@@ -159,6 +160,16 @@ export function Intro() {
 
   const [layout, setLayout] = useState<Layout>({ ready: false, s: 1, x1: 128, x2: 1000, cx: 978 })
   const [assets, setAssets] = useState<HTMLImageElement[] | null>(null)
+  // Интро пройдено и убрано; removed — сколько оно занимало в потоке страницы
+  const [gone, setGone] = useState(false)
+  const removed = useRef(0)
+
+  // Убрать интро и сдвинуть скролл на его высоту, чтобы сайт не дёрнулся
+  useLayoutEffect(() => {
+    if (!gone || !removed.current) return
+    window.scrollTo({ top: Math.max(0, window.scrollY - removed.current), behavior: "instant" })
+    removed.current = 0
+  }, [gone])
   const widths = useRef<{ w1: number; w2: number } | null>(null)
 
   // Общее для кадра: вид, готовая закрашенная картинка, флаг «перерисовать»
@@ -292,7 +303,16 @@ export function Intro() {
       root.style.setProperty("--intro-exit", "1")
       if (brushRef.current) brushRef.current.style.opacity = "0"
       if (hintRef.current) hintRef.current.style.opacity = "0"
-      return () => root.style.removeProperty("--intro-exit")
+      const onScroll = () => {
+        if (wrap.getBoundingClientRect().bottom > 0) return
+        removed.current = wrap.offsetHeight
+        setGone(true)
+      }
+      window.addEventListener("scroll", onScroll, { passive: true })
+      return () => {
+        window.removeEventListener("scroll", onScroll)
+        root.style.removeProperty("--intro-exit")
+      }
     }
 
     const total = path.getTotalLength()
@@ -322,8 +342,20 @@ export function Intro() {
     const scrolled = () => -wrap.getBoundingClientRect().top
     const vh = () => stickyRef.current?.offsetHeight ?? window.innerHeight
 
+    // Сайт целиком выехал — интро больше не нужно
+    let finished = false
+    const finish = () => {
+      if (finished) return
+      finished = true
+      stop()
+      writeExit(1)
+      removed.current = wrap.offsetHeight - vh()
+      setGone(true)
+    }
+
     const frame = () => {
       const top = scrolled()
+      if (top >= TRAVEL + vh()) return finish()
       writeExit(clamp01((top - TRAVEL) / vh()))
       const p0 = clamp01(top / TRAVEL)
       sp = sp === null ? p0 : sp + (p0 - sp) * 0.11
@@ -396,8 +428,8 @@ export function Intro() {
     const io = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) return start()
       stop()
-      // Проскочили интро якорем или вернулись наверх — состояние без анимации
-      writeExit(scrolled() > TRAVEL ? 1 : 0)
+      // Проскочили интро якорем — сразу убрать
+      if (scrolled() > TRAVEL) finish()
     })
     io.observe(wrap)
     return () => {
@@ -407,6 +439,8 @@ export function Intro() {
       root.style.removeProperty("--intro-exit")
     }
   }, [reduce])
+
+  if (gone) return null
 
   const { s, x1, x2 } = layout
   const clip = clipRect(layout)

@@ -43,9 +43,11 @@ export function Header() {
 
   // Меню появляется, когда первый экран выехал поверх интро больше чем наполовину
   useEffect(() => {
-    const intro = document.getElementById("intro")
-    if (!intro) return setAfterIntro(true)
-    const update = () => setAfterIntro(intro.getBoundingClientRect().bottom < window.innerHeight * 1.5)
+    // Интро убирается со страницы после прохождения — тогда меню видно всегда
+    const update = () => {
+      const intro = document.getElementById("intro")
+      setAfterIntro(!intro || intro.getBoundingClientRect().bottom < window.innerHeight * 1.5)
+    }
     update()
     window.addEventListener("scroll", update, { passive: true })
     window.addEventListener("resize", update)
