@@ -6,7 +6,7 @@
 // На десктопе всё лежит на «сцене» в пропорциях макета: 1u = 20 px макета,
 // u = min(1vw, 1.6dvh), поэтому композиция масштабируется целиком 1 в 1.
 import type { CSSProperties } from "react"
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react"
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 
 import { Model } from "@/components/decor"
@@ -193,38 +193,142 @@ const OBJECTS = {
   bezier: { src: "/hero/bezier.webp", alt: "Кривая Безье с маркерами" },
 }
 
-/* Скрепка поверх названия: нарисована вектором в цвет макета */
-const CLIP_PATH = "M30 46 H246 a14 14 0 0 0 0 -28 H38 a8 8 0 0 0 0 16 H232"
+/*
+  Скрепка, продетая через буквы, как в макете. Координаты — в пикселях
+  при кегле 137.2 (размер надписи на макете 2000 px), поэтому вся скрепка
+  масштабируется вместе с текстом. Два слоя: задний лежит под буквами
+  (проводки уходят за штрихи и видны в просветах), передний — поверх.
+*/
+const FONT = 137.2
+const WIRE = 9
 
-function Clip({ className, style }: { className?: string; style?: CSSProperties }) {
+type ClipGeometry = {
+  box: [number, number]
+  back: string[]
+  front: string[]
+  /* смещение блика: свет сверху-слева */
+  light: [number, number]
+  /* откуда скрепка «надевается» при появлении, в долях кегля */
+  from: { x?: string; y?: string }
+}
+
+/* Десктоп: горизонтальная, зацеплена за V и продета через P */
+const CLIP_DESKTOP: ClipGeometry = {
+  box: [276.83, 137.2],
+  back: [
+    // нижняя петля: из-под V → правый загиб снаружи чаши P → назад под буквы → петля слева от V
+    "M55.5 64.5 H259.5 A11.75 11.75 0 0 1 259.5 88 H29.7 A7.2 7.2 0 0 1 29.7 73.6 H44",
+    // внутренний проводок: от штриха V до чаши P, весь под буквами
+    "M84 79 H235",
+  ],
+  // верхний проводок поверх V и ножки P, упирается в чашу
+  front: ["M51.5 53.5 H243"],
+  light: [0, -1.7],
+  from: { x: "0.35em" },
+}
+
+/* Телефон: вертикальная, сцепляет строки — петля зацеплена за нижнюю
+   перекладину D в POZDNYAKOV, скрепка продета через чашу P в PROD */
+const CLIP_MOBILE: ClipGeometry = {
+  box: [146.35, 320.14],
+  back: [
+    // из-под D → петля под чашей P → вверх под буквами → петля внутри D
+    "M76.17 139.76 V280.99 A11.74 11.74 0 0 1 52.69 280.99 V109.03 A7.2 7.2 0 0 1 67.1 109.03 V120.74",
+    // внутренний проводок виден только в просвете чаши P
+    "M61.69 215.86 V263.06",
+  ],
+  // передний проводок поверх перекладины P, упирается в низ чаши
+  front: ["M87.08 140.86 V247.69"],
+  light: [-1.5, -0.5],
+  from: { y: "-0.55em" },
+}
+
+function ClipWires({
+  paths,
+  light,
+  shadows = [],
+  shadowId,
+}: {
+  paths: string[]
+  light: [number, number]
+  shadows?: string[]
+  shadowId?: string
+}) {
   return (
-    <svg
-      viewBox="0 0 280 60"
+    <>
+      {shadowId &&
+        shadows.map((d) => (
+          <path
+            key={`s${d}`}
+            d={d}
+            fill="none"
+            stroke="rgba(0,0,0,0.15)"
+            strokeWidth={WIRE}
+            strokeLinecap="round"
+            transform="translate(2.5 6)"
+            filter={`url(#${shadowId})`}
+          />
+        ))}
+      {/* трубка: тень снизу, тело, блик сверху — как пластиковая скрепка в макете */}
+      {paths.map((d) => (
+        <g key={d} fill="none" strokeLinecap="round" strokeLinejoin="round">
+          <path d={d} stroke="#43b597" strokeWidth={WIRE} transform={`translate(${-light[0] * 0.2} ${-light[1] * 0.2})`} />
+          <path d={d} stroke="#62d4bb" strokeWidth={WIRE - 2} transform={`translate(${light[0] * 0.35} ${light[1] * 0.35})`} />
+          <path d={d} stroke="#8fe6d4" strokeWidth={WIRE - 4.6} transform={`translate(${light[0] * 0.95} ${light[1] * 0.95})`} />
+          <path d={d} stroke="#c4f6eb" strokeWidth={1.6} transform={`translate(${light[0] * 1.4} ${light[1] * 1.4})`} />
+        </g>
+      ))}
+    </>
+  )
+}
+
+function PaperClip({
+  geometry,
+  className,
+  style,
+  delay = 0.9,
+}: {
+  geometry: ClipGeometry
+  className?: string
+  style?: CSSProperties
+  delay?: number
+}) {
+  const reduce = useReducedMotion()
+  const id = useId().replace(/:/g, "")
+  const [w, h] = geometry.box
+  const motionProps = reduce
+    ? {}
+    : {
+        // «защёлкивается», когда надпись попадает в экран
+        initial: { opacity: 0, ...geometry.from },
+        whileInView: { opacity: 1, x: 0, y: 0 },
+        viewport: { once: true, amount: 0.6 },
+        transition: { delay, type: "spring" as const, stiffness: 170, damping: 13, opacity: { delay, duration: 0.2 } },
+      }
+  const layer = (z: string, paths: string[], shadows: string[]) => (
+    <motion.svg
+      {...motionProps}
+      viewBox={`0 0 ${w} ${h}`}
       aria-hidden="true"
-      className={cn("pointer-events-none absolute overflow-visible", className)}
-      style={style}
+      className={cn("pointer-events-none absolute overflow-visible", z, className)}
+      style={{ width: `${w / FONT}em`, height: `${h / FONT}em`, ...style }}
     >
-      <path
-        d={CLIP_PATH}
-        fill="none"
-        stroke="rgba(0,0,0,0.16)"
-        strokeWidth="9"
-        strokeLinecap="round"
-        transform="translate(4 8)"
-        style={{ filter: "blur(3px)" }}
-      />
-      <path d={CLIP_PATH} fill="none" stroke="#4fcfb4" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-      <path
-        d={CLIP_PATH}
-        fill="none"
-        stroke="#bff4e7"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        transform="translate(0 -1.6)"
-        opacity="0.9"
-      />
-    </svg>
+      {shadows.length > 0 && (
+        <defs>
+          <filter id={id} x="-20%" y="-50%" width="140%" height="200%">
+            <feGaussianBlur stdDeviation="3.5" />
+          </filter>
+        </defs>
+      )}
+      <ClipWires paths={paths} light={geometry.light} shadows={shadows} shadowId={id} />
+    </motion.svg>
+  )
+  return (
+    <>
+      {/* тень всей скрепки ложится на бумагу, под буквы */}
+      {layer("-z-10", geometry.back, [...geometry.back, ...geometry.front])}
+      {layer("z-10", geometry.front, [])}
+    </>
   )
 }
 
@@ -396,13 +500,12 @@ function Stage() {
           className="font-display text-center leading-none font-bold tracking-[-0.01em] whitespace-nowrap select-none"
           style={{ fontSize: u(6.86) }}
         >
-          POZDNYAKOV
-          {/* Дефис спрятан под скрепкой, как на макете */}
-          <span className="relative inline-block">
-            <span className="text-transparent">-</span>
-            <Clip className="top-[0.2em] left-[-0.95em] h-[0.46em] w-[2.35em]" />
+          POZDNYAKO
+          <span className="relative isolate inline-block">
+            V<span className="text-transparent">-</span>P
+            <PaperClip geometry={CLIP_DESKTOP} className="top-0 left-0" />
           </span>
-          PROD
+          ROD
         </p>
       </motion.div>
     </div>
@@ -443,13 +546,14 @@ function MobileStack() {
       <div className="relative mt-14">
         <p
           aria-hidden="true"
-          className="font-display text-center text-[10vw] leading-[1.05] font-bold tracking-[-0.01em] select-none"
+          className="font-display relative isolate text-center text-[10vw] leading-[1.25] font-bold tracking-[-0.01em] select-none"
         >
-          POZDNYAKOV
-          <span className="relative inline-block">
-            <span className="text-transparent">-</span>
-            <Clip className="top-[0.2em] left-[-0.95em] h-[0.46em] w-[2.35em]" />
+          POZ
+          <span className="relative">
+            D
+            <PaperClip geometry={CLIP_MOBILE} className="top-0 left-0" delay={0.4} />
           </span>
+          NYAKOV
           <br />
           PROD
         </p>
