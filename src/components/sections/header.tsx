@@ -54,7 +54,7 @@ export function Header() {
       <NavBar items={NAV} leading={<HomeButton visible={logoHidden} />} />
 
       <header className="relative z-30 flex items-center justify-between px-4 pt-5 md:px-14 md:pt-10">
-        <a ref={logoRef} href="#top" className="text-[1.7rem] font-semibold tracking-[-0.06em] md:text-[1.9rem]">
+        <a ref={logoRef} href="#top" className="font-display text-[1.35rem] font-extrabold tracking-[-0.02em] md:text-[1.45rem]">
           P-PROD
         </a>
 

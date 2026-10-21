@@ -57,10 +57,15 @@ export function Model({
   duration = 7,
   delay = 0,
   rotate = 0,
+  style,
+  shadow = true,
 }: {
   src: string
   alt: string
   className?: string
+  style?: React.CSSProperties
+  /* false, если тень уже есть в самой картинке */
+  shadow?: boolean
   drift?: [number, number]
   duration?: number
   delay?: number
@@ -71,6 +76,7 @@ export function Model({
   return (
     <motion.div
       className={cn("pointer-events-none", className)}
+      style={style}
       initial={reduce ? false : { opacity: 0, scale: 0.9 }}
       animate={
         moving
@@ -88,7 +94,10 @@ export function Model({
         src={src}
         alt={alt}
         draggable={false}
-        className="h-full w-full object-contain drop-shadow-[0_18px_22px_rgba(0,0,0,0.16)] select-none"
+        className={cn(
+          "h-full w-full object-contain select-none",
+          shadow && "drop-shadow-[0_18px_22px_rgba(0,0,0,0.16)]"
+        )}
         style={{ rotate: `${rotate}deg` }}
       />
     </motion.div>
