@@ -379,9 +379,10 @@ function Facts({ compact = false }: { compact?: boolean }) {
     <div
       className={cn(
         "flex border-[1.5px] border-ink/85",
-        compact ? "flex-col gap-4 rounded-[28px] px-6 py-5" : "h-full items-center justify-evenly"
+        compact ? "flex-col gap-4 rounded-[22px] px-6 py-5" : "h-full items-center justify-between"
       )}
-      style={compact ? undefined : { borderRadius: u(2.9) }}
+      // радиус и поля по макету: 35 и 50 px при высоте 113
+      style={compact ? undefined : { borderRadius: u(1.75), paddingInline: u(2.5) }}
     >
       {facts.map((f, i) => (
         <div
@@ -394,11 +395,11 @@ function Facts({ compact = false }: { compact?: boolean }) {
           style={compact ? { gap: "14px" } : { gap: u(1), paddingLeft: i > 0 ? u(2.4) : 0, height: u(2.6) }}
         >
           {f.avatars ? (
-            <NicheAvatars size={compact ? "40px" : u(2.75)} />
+            <NicheAvatars size={compact ? "40px" : u(2.35)} />
           ) : (
             <span
               className="font-display leading-none font-extrabold tracking-[-0.02em]"
-              style={{ fontSize: compact ? "2.4rem" : u(2.55) }}
+              style={{ fontSize: compact ? "2.4rem" : u(2.27) }}
             >
               {f.big}
               {f.plus && <span className="text-red">+</span>}
@@ -411,7 +412,7 @@ function Facts({ compact = false }: { compact?: boolean }) {
             >
               {f.label}
             </span>
-            <span className="tracking-[-0.01em] text-ink/85" style={{ fontSize: compact ? "0.95rem" : u(0.98) }}>
+            <span className="tracking-[-0.01em] text-ink/85" style={{ fontSize: compact ? "0.95rem" : u(0.91) }}>
               {f.text}
             </span>
           </span>
