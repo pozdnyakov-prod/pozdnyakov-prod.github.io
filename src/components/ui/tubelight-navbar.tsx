@@ -17,6 +17,8 @@ interface NavBarProps {
   items: NavItem[]
   className?: string
   leading?: ReactNode
+  /* false — меню спрятано (например, пока идёт интро) */
+  visible?: boolean
 }
 
 /* Активен блок, верх которого последним прошёл линию на 40% высоты экрана.
@@ -48,13 +50,15 @@ function useActiveSection(items: NavItem[]) {
   return [active, setActive] as const
 }
 
-export function NavBar({ items, className, leading }: NavBarProps) {
+export function NavBar({ items, className, leading, visible = true }: NavBarProps) {
   const [activeTab, setActiveTab] = useActiveSection(items)
 
   return (
     <div
       className={cn(
         "fixed bottom-0 sm:top-0 sm:bottom-auto left-1/2 -translate-x-1/2 z-50 mb-6 sm:mb-0 sm:pt-6",
+        "transition-opacity duration-500",
+        !visible && "pointer-events-none opacity-0",
         className,
       )}
     >

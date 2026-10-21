@@ -2,6 +2,7 @@
 @import "@fontsource-variable/onest";
 @import "@fontsource-variable/caveat";
 @import "@fontsource-variable/unbounded";
+@import "@fontsource-variable/manrope";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -134,6 +135,17 @@
 }
 .marquee {
   animation: marquee 32s linear infinite;
+}
+
+/* Интро: линия под «Листайте» вытягивается сверху и уходит вниз */
+@keyframes hintline {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+.intro-hint-line {
+  animation: hintline 1.8s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

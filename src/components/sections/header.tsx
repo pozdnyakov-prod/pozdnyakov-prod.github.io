@@ -39,6 +39,21 @@ function HomeButton({ visible }: { visible: boolean }) {
 export function Header() {
   const logoRef = useRef<HTMLAnchorElement>(null)
   const [logoHidden, setLogoHidden] = useState(false)
+  const [afterIntro, setAfterIntro] = useState(false)
+
+  // Меню появляется, когда первый экран выехал поверх интро больше чем наполовину
+  useEffect(() => {
+    const intro = document.getElementById("intro")
+    if (!intro) return setAfterIntro(true)
+    const update = () => setAfterIntro(intro.getBoundingClientRect().bottom < window.innerHeight * 1.5)
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+    window.addEventListener("resize", update)
+    return () => {
+      window.removeEventListener("scroll", update)
+      window.removeEventListener("resize", update)
+    }
+  }, [])
 
   // Кнопка «PP» видна, только пока логотип P-PROD за пределами экрана
   useEffect(() => {
@@ -51,7 +66,7 @@ export function Header() {
 
   return (
     <>
-      <NavBar items={NAV} leading={<HomeButton visible={logoHidden} />} />
+      <NavBar items={NAV} visible={afterIntro} leading={<HomeButton visible={logoHidden} />} />
 
       <header className="relative z-30 flex items-center justify-between px-4 pt-5 md:px-14 md:pt-10">
         <a ref={logoRef} href="#top" className="font-display text-[1.35rem] font-extrabold tracking-[-0.02em] md:text-[1.45rem]">

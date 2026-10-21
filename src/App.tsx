@@ -1,3 +1,4 @@
+import { Intro } from "@/components/sections/intro"
 import { Hero } from "@/components/sections/hero"
 import { Problem } from "@/components/sections/problem"
 import { Service } from "@/components/sections/service"
@@ -12,6 +13,7 @@ import { Contacts } from "@/components/sections/contacts"
 export default function App() {
   return (
     <>
+      <Intro />
       <main id="top">
         <Hero />
         <Problem />

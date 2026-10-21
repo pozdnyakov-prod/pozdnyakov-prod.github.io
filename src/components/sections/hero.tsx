@@ -565,9 +565,16 @@ function MobileStack() {
 
 export function Hero() {
   return (
+    // Выезжает поверх интро карточкой: верх скруглён, пока интро уходит
     <section
-      className="relative min-h-[100dvh] overflow-hidden md:flex md:items-end md:justify-center"
-      style={{ "--u": "min(1vw, 1.6dvh)" } as CSSProperties}
+      className="relative z-10 min-h-[100dvh] overflow-hidden bg-paper shadow-[0_-24px_60px_rgba(0,0,0,0.28)] md:flex md:items-end md:justify-center"
+      style={
+        {
+          "--u": "min(1vw, 1.6dvh)",
+          borderTopLeftRadius: "calc((1 - var(--intro-exit, 1)) * 40px)",
+          borderTopRightRadius: "calc((1 - var(--intro-exit, 1)) * 40px)",
+        } as CSSProperties
+      }
     >
       <div className="md:absolute md:inset-x-0 md:top-0 md:z-30">
         <Header />
